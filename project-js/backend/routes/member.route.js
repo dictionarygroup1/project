@@ -1,0 +1,87 @@
+const express = require('express')
+const memberRoute = express.Router();
+
+// Member Model
+let MemberModel = require('../models/Member');
+
+
+// Get All Data
+memberRoute.route('/').get((req,res,next)=>{
+    MemberModel.find((error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.json(data);
+        }
+    })
+})
+
+// Create member data
+memberRoute.route('/create-member').post((req,res,next)=>{
+    MemberModel.create(req.body,(error,data)=>{
+        if(error){
+            return next(error)
+        }
+        else {
+            res.json(data)
+        }
+    })
+})
+
+/*
+memberRoute.route('/create-member').post(async(req,res)=>{
+    const member = new MemberModel({
+        fname:req.nody.fname,
+        lname:req.body.lname,
+        username:req.body.username,
+        password:req.body.password
+    })
+    try{
+        const newMember = await member.save()
+        res.status(201).json(newMember)
+    }catch(err){
+        res.status(400).json({message:err.message});
+        console.log(err);
+    }
+})
+*/
+
+// Edit member data
+memberRoute.route('/edit-member/:id').get((req,res,next)=>{
+    MemberModel.findById(req.params.id,(error,data)=>{
+        if(error){
+            return next(error)
+        }
+        else {
+            res.json(data)
+        }
+    })
+})
+
+// Update member data
+memberRoute.route('/update-member/:id').put((req,res,next)=>{
+    MemberModel.findByIdAndUpdate(req.params.id,{
+        $set:req.body
+    },(error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.json(data)
+            console.log('Member Updated')
+        }
+    })
+})
+
+// Delete member data
+memberRoute.route('/del-member/:id').delete((req,res,next)=>{
+    MemberModel.findByIdAndDelete(req.params.id,(error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.status(200).json({
+                msg:data
+            })
+        }
+    })
+})
+module.exports = memberRoute
