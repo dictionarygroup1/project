@@ -3,7 +3,7 @@ let cors = require('cors')
 let mongoose = require('mongoose')
 let database = require('./database')
 let bodyParser = require('body-parser')
-
+let passport = require('passport');
 // Connect Db
 mongoose.Promise = global.Promise;
 mongoose.connect(database.db,{
@@ -36,6 +36,9 @@ app.use((req,res,next)=>{
     next(createError(404))
 })
 
+// USE Passport
+app.use(passport.initialize());
+require('./config/passport')(passport);
 // error Handler
 app.use((err,req,res,next)=>{
     console.log(err.message);

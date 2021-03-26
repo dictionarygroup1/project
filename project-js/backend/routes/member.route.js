@@ -1,6 +1,9 @@
-const express = require('express')
+const express = require('express');
+const Member = require('../models/Member');
 const memberRoute = express.Router();
-
+const key = require('../database').secret;
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 // Member Model
 let MemberModel = require('../models/Member');
 
@@ -27,25 +30,6 @@ memberRoute.route('/create-member').post((req,res,next)=>{
         }
     })
 })
-
-/*
-memberRoute.route('/create-member').post(async(req,res)=>{
-    const member = new MemberModel({
-        fname:req.nody.fname,
-        lname:req.body.lname,
-        username:req.body.username,
-        password:req.body.password
-    })
-    try{
-        const newMember = await member.save()
-        res.status(201).json(newMember)
-    }catch(err){
-        res.status(400).json({message:err.message});
-        console.log(err);
-    }
-})
-*/
-
 // Edit member data
 memberRoute.route('/edit-member/:id').get((req,res,next)=>{
     MemberModel.findById(req.params.id,(error,data)=>{
@@ -84,4 +68,19 @@ memberRoute.route('/del-member/:id').delete((req,res,next)=>{
         }
     })
 })
+
+// Login member data
+
+memberRoute.route('/login/:username/:password').post((req,res,next)=>{
+   MemberModel.findOne({username:req.params.username, password:req.params.password} ,(error,data)=>{
+       if(error){
+           return next(error)
+       } else{
+           res.json(data)
+       }
+   })
+})
+
+  
+
 module.exports = memberRoute

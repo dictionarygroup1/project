@@ -4,6 +4,8 @@ import Sign_in from "@/components/Login.vue";
 import adduser from "@/components/AppList.vue";
 import CraeteMember from "@/components/api_test/CreateMember.vue";
 import ViewMember from "@/components/api_test/ViewMember.vue";
+import AdminLogin from "@/components/admin/Login.vue";
+import Dashboard from "@/components/admin/Dashboard.vue";
 
 const routes = [
   {
@@ -30,6 +32,16 @@ const routes = [
     path:"/view",
     name:"viewmember",
     component:ViewMember,
+  },
+  {
+    path:"/console",
+    name:"AdminLogin",
+    component:AdminLogin
+  },
+  {
+    path:"/console/dashboard",
+    name:"Dashboard",
+    component:Dashboard
   }
 ];
 

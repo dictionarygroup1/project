@@ -1,9 +1,5 @@
 <template>
-   
-
-    <div class="container-mb-5">
-        <rounter-view></rounter-view>
-    </div>
+    <div>adasdasd</div>
 </template>
 
 <script>
