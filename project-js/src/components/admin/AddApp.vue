@@ -10,7 +10,7 @@
                 </div>
                 <div class="user-info">
                   <span class="user-name">
-                    KITTISAK 
+                    {{admin_data.fname}} 
                   </span>
                     <span class="user-role">ผู้ดูแลระบบ</span>
                     <span class="user-status">
@@ -89,10 +89,63 @@
             <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    จำนวนการดาวน์โหลด
+                    เพิ่มแอปพลิเคชั่นใหม่
                   </div>
                   <div class="card-body">
-                    <div id="chart"></div>
+                    <form @submit.prevent="formSubmit">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="" class="img-fluid" style="width:100%" alt="" id="preview_logo">
+                                
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label" for="app_name">ชื่อแอปพลิเคชั่น</label>
+                                        <input type="text" class="form-control" v-model="app.app_name">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label" for="des">รายละเอียด</label>
+                                        <textarea v-model="app.des" class="form-control" cols="30" rows="10"></textarea> 
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="category">ประเภทแอปพลิเคชัน</label>
+                                        <select class="form-select" v-model="app.category">
+                                            <option >เกม</option>
+                                            <option >การถ่ายภาพ</option>
+                                            <option >การศึกษา</option>
+                                            <option >การสื่อสาร</option>
+                                            <option >การศึกษา</option>
+                                            <option >กีฬา</option>
+                                            <option >ช็อปปิ้ง</option>                                            
+                                        </select>
+                                        <span>{{app.category}}</span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="dev">ชื่อผู้พัฒนา</label>
+                                        <input type="text" class="form-control" v-model="app.dev_name">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label" for="icon">อัปโหลด icon</label>
+                                        <input class="form-control" type="file" id="file" ref="file" accept="image/*" v-on:change="onFilePicked()">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="preview_more">
+                                            <label  class="form-label">อัปโหลดรูปตัวอย่าง</label>
+                                            <div id="preview_app_list">
+                                                
+                                            </div>
+                                            <label for="app_pre" class="app_pre_upload mt-3">+</label>
+                                            <input type="file" ref="app_pre" id="app_pre" class="multi_file" @change="AddpreviewList()">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 d-flex justify-content-end mb-5">
+                                        <button class="btn btn-primary">บันทึกข้อมูล</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     
                   </div>
                 </div>
@@ -106,6 +159,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body{
   font-family: 'Kanit', sans-serif!important;
+}
+input#app_pre {
+    opacity: 0;
+}
+#preview_app_list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+label.app_pre_upload {
+    width: 150px;
+    height: 150px;
+    font-size: 24px;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 :root{
   --wraper-bg : #EFEFEF ;
@@ -722,16 +793,29 @@ a#t1-close {
 
 <script>
 import $ from 'jquery'
+import axios from 'axios';
+
 export default {
     data(){
         return {
-
+            admin_data : JSON.parse(localStorage.getItem('logged')),
+            app:{
+                app_name : '',
+                dev_name : '',
+                icon:'',
+                preview:[],
+                des:'',
+                category:'',
+            },
+            img:{
+                app_icon:'',
+                preview_icon:[]
+            }
         }
     },
     created(){
-        let session = JSON.parse(localStorage.getItem('logged'))
-        console.log(session);
-        if(!session){
+        let session = localStorage.getItem('logged')
+        if(session == ""){
             this.$router.push('/console');
         }
     },
@@ -764,6 +848,34 @@ export default {
         $("#show-sidebar").click(function() {
             $(".page-wrapper").addClass("toggled");
         });
-    }
+    },
+    methods:{
+        onFilePicked(){
+            this.app.icon = this.$refs.file.files[0].name
+            console.log(this.app.icon);
+            let reader = new FileReader();
+            reader.onload = (e)=>{
+                $('#preview_logo').attr('src',e.target.result);
+            }
+            reader.readAsDataURL(this.$refs.file.files[0]);
+        },
+        AddpreviewList(){
+            let pre = this.$refs.app_pre.files[0].name;
+            this.app.preview.push(pre);
+            let reader = new FileReader();
+            reader.onload= (e)=>{
+                $('#preview_app_list').append(`<img style='width:150px;object-fit:cover;height:150px' src='${e.target.result}'>`);
+            }
+            console.log(this.app.preview);
+            reader.readAsDataURL(this.$refs.app_pre.files[0]);
+        },
+        formSubmit(){
+            const appURL = "http://localhost:4000/api/app/create";
+            axios.post(appURL,this.app).then(()=>{
+                console.log("SUCCESS");
+            }).catch(err=>{
+            console.log(err);
+            })
+    }   }
 }
 </script>

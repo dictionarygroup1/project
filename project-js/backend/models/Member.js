@@ -14,6 +14,9 @@ let memberSchema = new Schema({
         password:{
             type:String
         },
+        pic:{
+            type:String
+        },
         isAdmin:{
             type:Boolean,
             default:false

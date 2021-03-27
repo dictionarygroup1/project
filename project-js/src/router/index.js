@@ -6,6 +6,9 @@ import CraeteMember from "@/components/api_test/CreateMember.vue";
 import ViewMember from "@/components/api_test/ViewMember.vue";
 import AdminLogin from "@/components/admin/Login.vue";
 import Dashboard from "@/components/admin/Dashboard.vue";
+import AddApp from "@/components/admin/AddApp.vue";
+import CatApp from "@/components/admin/CatApp.vue";
+import AllApp from "@/components/admin/AllApp.vue";
 
 const routes = [
   {
@@ -42,6 +45,24 @@ const routes = [
     path:"/console/dashboard",
     name:"Dashboard",
     component:Dashboard
+  }
+  ,
+  {
+    path:"/console/app/cat_app",
+    name:"CatApp",
+    component:CatApp
+  }
+  ,
+  {
+    path:"/console/app/view_app",
+    name:"AllApp",
+    component:AllApp
+  }
+  ,
+  {
+    path:"/console/app/add_app",
+    name:"AddApp",
+    component:AddApp
   }
 ];
 

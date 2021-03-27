@@ -1,9 +1,5 @@
 const express = require('express');
-const Member = require('../models/Member');
 const memberRoute = express.Router();
-const key = require('../database').secret;
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
 // Member Model
 let MemberModel = require('../models/Member');
 

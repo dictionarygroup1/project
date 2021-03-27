@@ -3,7 +3,6 @@ let cors = require('cors')
 let mongoose = require('mongoose')
 let database = require('./database')
 let bodyParser = require('body-parser')
-let passport = require('passport');
 // Connect Db
 mongoose.Promise = global.Promise;
 mongoose.connect(database.db,{
@@ -16,6 +15,7 @@ mongoose.connect(database.db,{
 }
 
 const memberAPI = require('./routes/member.route');
+const appsAPI = require('./routes/apps.route');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -25,6 +25,7 @@ app.use(cors())
 
 // API
 app.use('/api',memberAPI);
+app.use('/api/app',appsAPI)
 // Create PORT
 const port = process.env.PORT || 4000
 const server = app.listen(port,()=>{
@@ -36,9 +37,6 @@ app.use((req,res,next)=>{
     next(createError(404))
 })
 
-// USE Passport
-app.use(passport.initialize());
-require('./config/passport')(passport);
 // error Handler
 app.use((err,req,res,next)=>{
     console.log(err.message);

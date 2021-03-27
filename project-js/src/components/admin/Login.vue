@@ -101,10 +101,9 @@ export default {
         }
     },
     created(){
-        let session = JSON.parse(localStorage.getItem('logged'))
-        console.log(session);
-        if(!session){
-            this.$router.push('/console');
+        let session = localStorage.getItem('logged')
+        if(session != null || session != ""){
+            this.$router.push('/console/dashboard');
         }
     }
 }
