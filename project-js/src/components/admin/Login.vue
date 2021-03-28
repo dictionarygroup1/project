@@ -102,7 +102,7 @@ export default {
     },
     created(){
         let session = localStorage.getItem('logged')
-        if(session != null || session != ""){
+        if(session != null){
             this.$router.push('/console/dashboard');
         }
     }

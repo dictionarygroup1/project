@@ -42,11 +42,7 @@
                         </router-link>
                         <div class="sidebar-submenu">
                             <ul>
-                                <li>
-                                    <router-link to="/console/app/cat_app">
-                                        ประเภทแอปพลิเคชัน
-                                    </router-link>
-                                </li>
+                                
                                 <li>
                                     <router-link to="/console/app/view_app">แอปพลิเคชันทั้งหมด</router-link>
                                 </li>
@@ -64,10 +60,10 @@
                         <div class="sidebar-submenu">
                             <ul>
                                 <li>
-                                    <router-link to="#">ผู้ใช้ทั้งหมด</router-link>
+                                    <router-link to="/console/user/view_user">ผู้ใช้ทั้งหมด</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="#">เพิ่มผู้ใช้</router-link>
+                                    <router-link to="/console/user/add_user">เพิ่มผู้ใช้</router-link>
                                 </li>
                             </ul>
                         </div>
@@ -78,7 +74,7 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="#">
+            <router-link to="/api/logout">
                 <i class="fa fa-power-off"></i>
             </router-link>
         </div>
@@ -92,7 +88,7 @@
                     เพิ่มแอปพลิเคชั่นใหม่
                   </div>
                   <div class="card-body">
-                    <form @submit.prevent="formSubmit">
+                    <form @submit.prevent="formSubmit" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-4">
                                 <img src="" class="img-fluid" style="width:100%" alt="" id="preview_logo">
@@ -119,11 +115,14 @@
                                             <option >กีฬา</option>
                                             <option >ช็อปปิ้ง</option>                                            
                                         </select>
-                                        <span>{{app.category}}</span>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="dev">ชื่อผู้พัฒนา</label>
                                         <input type="text" class="form-control" v-model="app.dev_name">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="link">ลิงค์ดาวน์โหลด</label>
+                                        <input type="text" class="form-control" id="link" v-model="app.link">
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label class="form-label" for="icon">อัปโหลด icon</label>
@@ -136,7 +135,7 @@
                                                 
                                             </div>
                                             <label for="app_pre" class="app_pre_upload mt-3">+</label>
-                                            <input type="file" ref="app_pre" id="app_pre" class="multi_file" @change="AddpreviewList()">
+                                            <input type="file" ref="app_pre" id="app_pre" class="multi_file" multiple @change="AddpreviewList()">
                                         </div>
                                     </div>
                                     <div class="col-md-12 d-flex justify-content-end mb-5">
@@ -792,6 +791,7 @@ a#t1-close {
 </style>
 
 <script>
+
 import $ from 'jquery'
 import axios from 'axios';
 
@@ -802,12 +802,13 @@ export default {
             app:{
                 app_name : '',
                 dev_name : '',
-                icon:'',
+                icon:{},
                 preview:[],
                 des:'',
                 category:'',
+                link:''
             },
-            img:{
+            upload:{
                 app_icon:'',
                 preview_icon:[]
             }
@@ -852,7 +853,7 @@ export default {
     methods:{
         onFilePicked(){
             this.app.icon = this.$refs.file.files[0].name
-            console.log(this.app.icon);
+            this.upload.app_icon = this.$refs.file.files[0];
             let reader = new FileReader();
             reader.onload = (e)=>{
                 $('#preview_logo').attr('src',e.target.result);
@@ -862,20 +863,55 @@ export default {
         AddpreviewList(){
             let pre = this.$refs.app_pre.files[0].name;
             this.app.preview.push(pre);
+            this.upload.preview_icon.push(this.$refs.app_pre.files[0]);
             let reader = new FileReader();
             reader.onload= (e)=>{
                 $('#preview_app_list').append(`<img style='width:150px;object-fit:cover;height:150px' src='${e.target.result}'>`);
             }
-            console.log(this.app.preview);
             reader.readAsDataURL(this.$refs.app_pre.files[0]);
+        
         },
         formSubmit(){
-            const appURL = "http://localhost:4000/api/app/create";
-            axios.post(appURL,this.app).then(()=>{
-                console.log("SUCCESS");
-            }).catch(err=>{
-            console.log(err);
-            })
-    }   }
+            console.log(typeof this.upload.preview_icon);
+            let multiple = [];
+            const formData = new FormData();
+            const formData2 = new FormData();
+            for (const value of this.upload.preview_icon) {
+                multiple.push(value)
+            }
+                formData2.append('file',this.upload.app_icon);
+            for (const element of multiple) {
+                formData.append('multi',element)
+            }
+            
+            try{
+                axios.post('http://localhost:4000/upload/multi',formData).then(()=>{
+                    axios.post('http://localhost:4000/upload',formData2).then(()=>{
+                        const appURL = "http://localhost:4000/api/app/create";
+                        axios.post(appURL,this.app).then(()=>{
+                            this.$swal("เพิ่มข้อมูลสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อดำเนินการต่อ","success").then(()=>{
+                                location.reload();
+                            })
+                        }).catch(err=>{
+                        console.log(err);
+                        })
+                    })
+                })
+            }
+            catch(err){
+                console.log(err);
+            }
+                
+        },
+        Logout(){
+            localStorage.removeItem('logged')
+            if(localStorage.getItem('logged') == null){
+              this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
+                 location.reload();
+              })
+            }
+        }
+    }
 }
+
 </script>

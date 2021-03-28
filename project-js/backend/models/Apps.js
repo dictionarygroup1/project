@@ -20,6 +20,9 @@ let appsSchema = new Schema({
     category:{
         type:String
     },
+    link:{
+        type:String
+    },
     create_on:{
         type:Date,
         default:Date.now

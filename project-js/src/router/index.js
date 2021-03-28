@@ -4,11 +4,15 @@ import Sign_in from "@/components/Login.vue";
 import adduser from "@/components/AppList.vue";
 import CraeteMember from "@/components/api_test/CreateMember.vue";
 import ViewMember from "@/components/api_test/ViewMember.vue";
+/** Admin Route */
 import AdminLogin from "@/components/admin/Login.vue";
 import Dashboard from "@/components/admin/Dashboard.vue";
 import AddApp from "@/components/admin/AddApp.vue";
-import CatApp from "@/components/admin/CatApp.vue";
 import AllApp from "@/components/admin/AllApp.vue";
+import EditApp from "@/components/admin/EditApp.vue";
+import ViewUser from "@/components/admin/ViewUser.vue";
+import AddUser from "@/components/admin/AddUser.vue";
+import EditUser from "@/components/admin/EditUser.vue";
 
 const routes = [
   {
@@ -47,12 +51,7 @@ const routes = [
     component:Dashboard
   }
   ,
-  {
-    path:"/console/app/cat_app",
-    name:"CatApp",
-    component:CatApp
-  }
-  ,
+  
   {
     path:"/console/app/view_app",
     name:"AllApp",
@@ -63,6 +62,25 @@ const routes = [
     path:"/console/app/add_app",
     name:"AddApp",
     component:AddApp
+  }
+  ,
+  {
+    path:"/console/app/edit_app/:id",
+    name:"EditApp",
+    component:EditApp
+  }
+  ,{
+    path:"/console/user/add_user",
+    name:"AddUser",
+    component:AddUser
+  },{
+    path:"/console/user/view_user",
+    name:"ViewUser",
+    component:ViewUser
+  },{
+    path:"/console/user/edit_user/:id",
+    name:"EditUser",
+    component:EditUser
   }
 ];
 

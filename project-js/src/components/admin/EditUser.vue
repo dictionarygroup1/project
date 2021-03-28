@@ -10,7 +10,7 @@
                 </div>
                 <div class="user-info">
                   <span class="user-name">
-                    KITTISAK 
+                    {{admin_data.fname}} 
                   </span>
                     <span class="user-role">ผู้ดูแลระบบ</span>
                     <span class="user-status">
@@ -42,7 +42,7 @@
                         </router-link>
                         <div class="sidebar-submenu">
                             <ul>
-                                
+                            
                                 <li>
                                     <router-link to="/console/app/view_app">แอปพลิเคชันทั้งหมด</router-link>
                                 </li>
@@ -74,7 +74,7 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="#" v-on:click="Logout">
+            <router-link to="" @click="Logout">
                 <i class="fa fa-power-off"></i>
             </router-link>
         </div>
@@ -85,10 +85,49 @@
             <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    จำนวนการดาวน์โหลด
+                    แก้ไขข้อมูลผู้ใช้
                   </div>
                   <div class="card-body">
-                    <div id="chart"></div>
+                    <form @submit.prevent="formSubmit">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="app_name">ชื่อจริง</label>
+                                        <input type="text" class="form-control" v-model="member.fname">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="des">นามสกุล</label>
+                                        <input type="text" class="form-control" v-model="member.lname">
+                                        
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="category">ชื่อผู้ใช้</label>
+                                        <input type="text" class="form-control" v-model="member.username">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="dev">รหัสผ่าน</label>
+                                        <input type="password" v-model="member.password" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label" for="dev">แก้ไขสถานะ</label>
+                                        <select v-model="member.isAdmin" class="form-select">
+                                           
+                                            <option >ผู้ใช้ทั่วไป</option>
+                                            <option >ผู้ดูแลระบบ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3 d-flex justify-content-end align-items-center">
+                                        <span>สร้างบัญชีเมื่อวันที่ : {{member.createon}}</span>
+                                    </div>
+                                    
+                                    <div class="col-md-12 d-flex justify-content-end mb-5">
+                                        <button class="btn btn-success">บันทึกข้อมูล</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     
                   </div>
                 </div>
@@ -102,6 +141,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body{
   font-family: 'Kanit', sans-serif!important;
+}
+img.del_preview {
+    cursor: pointer;
+}
+input#app_pre {
+    opacity: 0;
+}
+#preview_app_list , .preview_app {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+label.app_pre_upload {
+    width: 150px;
+    height: 150px;
+    font-size: 24px;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 :root{
   --wraper-bg : #EFEFEF ;
@@ -717,50 +778,73 @@ a#t1-close {
 </style>
 
 <script>
-import $_ from 'jquery'
+
+import $ from 'jquery'
+import axios from 'axios';
+
 export default {
     data(){
         return {
-
+            admin_data : JSON.parse(localStorage.getItem('logged')),
+            member:{}
         }
     },
     created(){
         let session = localStorage.getItem('logged')
-        if(session == null){
+        if(session == ""){
             this.$router.push('/console');
         }
+
+        const apiURL = `http://localhost:4000/api/edit-member/${this.$route.params.id}`;
+        axios.get(apiURL).then(res=>{
+            this.member = res.data
+        })
+       
     },
     mounted(){
-        $_(".sidebar-dropdown > a").click(function() {
-            $_(".sidebar-submenu").slideUp(200);
+        $(".sidebar-dropdown > a").click(function() {
+            $(".sidebar-submenu").slideUp(200);
             if (
-            $_(this)
+            $(this)
                 .parent()
                 .hasClass("active")
             ) {
-            $_(".sidebar-dropdown").removeClass("active");
-            $_(this)
+            $(".sidebar-dropdown").removeClass("active");
+            $(this)
                 .parent()
                 .removeClass("active");
             } else {
-            $_(".sidebar-dropdown").removeClass("active");
-            $_(this)
+            $(".sidebar-dropdown").removeClass("active");
+            $(this)
                 .next(".sidebar-submenu")
                 .slideDown(200);
-            $_(this)
+            $(this)
                 .parent()
                 .addClass("active");
             }
         });
     
-        $_("#close-sidebar").click(function() {
-            $_(".page-wrapper").removeClass("toggled");
+        $("#close-sidebar").click(function() {
+            $(".page-wrapper").removeClass("toggled");
         });
-        $_("#show-sidebar").click(function() {
-            $_(".page-wrapper").addClass("toggled");
+        $("#show-sidebar").click(function() {
+            $(".page-wrapper").addClass("toggled");
         });
     },
     methods:{
+        
+        formSubmit(){
+            const apiURL = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
+            axios.put(apiURL,this.member).then(res=>{
+                console.log(res);
+                this.$swal("ดำเนินการสำเร็จ","กรุณากดปุ่ม OK เพื่อดำเนินการต่อ",'success').then(()=>{
+                    this.$router.push('/console/user/view_user')
+                })
+            }).catch(error=>{
+                console.log(error);
+            })
+                
+        },
         Logout(){
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
@@ -771,4 +855,5 @@ export default {
         }
     }
 }
+
 </script>

@@ -10,7 +10,7 @@
                 </div>
                 <div class="user-info">
                   <span class="user-name">
-                    KITTISAK 
+                    {{admin_data.fname}} 
                   </span>
                     <span class="user-role">ผู้ดูแลระบบ</span>
                     <span class="user-status">
@@ -42,7 +42,6 @@
                         </router-link>
                         <div class="sidebar-submenu">
                             <ul>
-                                
                                 <li>
                                     <router-link to="/console/app/view_app">แอปพลิเคชันทั้งหมด</router-link>
                                 </li>
@@ -58,7 +57,7 @@
                             <span>ผู้ใช้</span>
                         </router-link>
                         <div class="sidebar-submenu">
-                            <ul>
+                           <ul>
                                 <li>
                                     <router-link to="/console/user/view_user">ผู้ใช้ทั้งหมด</router-link>
                                 </li>
@@ -85,11 +84,40 @@
             <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    จำนวนการดาวน์โหลด
+                    แอปพลิเคชันทั้งหมด
                   </div>
                   <div class="card-body">
-                    <div id="chart"></div>
-                    
+                      <table class="table table-hover">
+                          <thead>
+                          <tr align=center>
+                            
+                                <th>ชื่อจริง</th>
+                                <th>นามสกุล</th>
+                                <th>สถานะ</th>
+                                <th>แก้ไข/ลบ</th>
+                            
+                          </tr>
+                          </thead>
+                            
+                          <tbody>
+                            <tr align=center v-for="member in members" :key="member._id">
+                                <td>
+                                    {{member.fname}}
+                                </td>
+                                <td>
+                                    {{member.lname}}
+                                </td>
+                                <td>
+                                    <p v-if="member.isAdmin === true">ผู้ดูแลระบบ</p>
+                                    <p v-else>ผู้ใช้ทั่วไป</p>
+                                </td>
+                                <td>
+                                    <router-link  class="btn btn-warning" style="margin-right:1rem;" :to="{name:'EditUser',params:{id:member._id}}">แก้ไข</router-link>
+                                    <button :disabled="admin_data._id === member._id" type="button" @click.prevent="delFn(member._id)" class="btn btn-danger" >ลบ</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                      </table>
                   </div>
                 </div>
             </div>
@@ -102,6 +130,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body{
   font-family: 'Kanit', sans-serif!important;
+}
+input#app_pre {
+    opacity: 0;
+}
+#preview_app_list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+label.app_pre_upload {
+    width: 150px;
+    height: 150px;
+    font-size: 24px;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 :root{
   --wraper-bg : #EFEFEF ;
@@ -717,50 +763,77 @@ a#t1-close {
 </style>
 
 <script>
-import $_ from 'jquery'
+
+import $ from 'jquery'
+import axios from 'axios';
+
 export default {
     data(){
         return {
-
+            admin_data : JSON.parse(localStorage.getItem('logged')),
+            members:[]
         }
     },
     created(){
         let session = localStorage.getItem('logged')
-        if(session == null){
+        if(session == "" || session == undefined){
             this.$router.push('/console');
         }
+
+        const apiURL = "http://localhost:4000/api/";
+        axios.get(apiURL).then(res=>{
+            this.members = res.data
+            
+        })
     },
     mounted(){
-        $_(".sidebar-dropdown > a").click(function() {
-            $_(".sidebar-submenu").slideUp(200);
+        $(".sidebar-dropdown > a").click(function() {
+            $(".sidebar-submenu").slideUp(200);
             if (
-            $_(this)
+            $(this)
                 .parent()
                 .hasClass("active")
             ) {
-            $_(".sidebar-dropdown").removeClass("active");
-            $_(this)
+            $(".sidebar-dropdown").removeClass("active");
+            $(this)
                 .parent()
                 .removeClass("active");
             } else {
-            $_(".sidebar-dropdown").removeClass("active");
-            $_(this)
+            $(".sidebar-dropdown").removeClass("active");
+            $(this)
                 .next(".sidebar-submenu")
                 .slideDown(200);
-            $_(this)
+            $(this)
                 .parent()
                 .addClass("active");
             }
         });
     
-        $_("#close-sidebar").click(function() {
-            $_(".page-wrapper").removeClass("toggled");
+        $("#close-sidebar").click(function() {
+            $(".page-wrapper").removeClass("toggled");
         });
-        $_("#show-sidebar").click(function() {
-            $_(".page-wrapper").addClass("toggled");
+        $("#show-sidebar").click(function() {
+            $(".page-wrapper").addClass("toggled");
         });
     },
     methods:{
+        delFn(id){
+            const apiURL = `http://localhost:4000/api/del-member/${id}`;
+            this.$swal({
+                title: 'คุณต้องการลบข้อมูลใช่หรือไม่',
+                type:'warning',
+                showCancelButton:true,
+                cancelButtonText : "ไม่ต้องการ",
+                confirmButtonText : "ใช่"
+            }).then((result)=>{
+                if(result.value){
+                    axios.delete(apiURL).then(()=>{
+                        this.$swal('ดำเนินการลบสำเร็จ','คลิกปุ่ม OK เพื่อดำเนินการต่อ','success');
+                        location.reload();
+                    })
+                }
+            })
+        },
         Logout(){
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
@@ -771,4 +844,5 @@ export default {
         }
     }
 }
+
 </script>
