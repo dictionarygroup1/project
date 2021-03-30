@@ -95,6 +95,69 @@
             </div>
           </div>
         </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                  <div class="card-body rounded">
+                    <div class="card-header mb-3">
+                      แอปพลิเคชันล่าสุด
+                    </div>
+                    <div class="card-content bg-g round-5">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align=center>
+                            <th>ชื่อแอปพลิเคชั่น</th>
+                            <th>ชื่อผู้พัฒนา</th>
+                            <th>เพิ่มเมื่อ</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr align=center v-for="app in apps" :key="app._id">
+                            <td>{{app.app_name}}</td>
+                            <td>{{app.dev_name}}</td>
+                            <td>{{app.create_on.substr(0,10)}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body rounded">
+                    <div class="card-header mb-3">
+                      ผู้ใช้ที่เพิ่มล่าสุด
+                    </div>
+                    <div class="card-content bg-g round-5">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align=center>
+                            <th>ชื่อจริง - นามสกุล</th>
+                            <th>ชื่อผู้ใช้</th>
+                            <th>สถานะ</th>
+                            <th>สร้างเมื่อ</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr align=center v-for="member in members" :key="member._id">
+                            <td>{{member.fname + ' ' + member.lname}}</td>
+                            <td>{{member.username}}</td>
+                            <td>
+                              <p v-if="member.isAdmin">ผู้ดูแลระบบ</p>
+                              <p v-else>ผู้ใช้ทั่วไป</p>
+                            </td>
+                            <td>{{member.createon.substr(0,10)}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
     </main>
 </div>    
 </template>
@@ -102,6 +165,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body{
   font-family: 'Kanit', sans-serif!important;
+}
+.round-5{
+  border-radius: 5px;
+}
+.bg-g{
+  background:#F8F8F8;
 }
 :root{
   --wraper-bg : #EFEFEF ;
@@ -718,10 +787,12 @@ a#t1-close {
 
 <script>
 import $_ from 'jquery'
+import axios from 'axios';
 export default {
     data(){
         return {
-
+            apps:[],
+            members:[]
         }
     },
     created(){
@@ -729,6 +800,17 @@ export default {
         if(session == null){
             this.$router.push('/console');
         }
+
+        // Get Last App
+        const lastAPI = "http://localhost:4000/api/app/get_5"
+        axios.get(lastAPI).then((res)=>{
+          this.apps = res.data;
+        })
+        // Get Member
+        const lastMemAPI = "http://localhost:4000/api/load_data"
+        axios.get(lastMemAPI).then((res)=>{
+          this.members = res.data
+        })
     },
     mounted(){
         $_(".sidebar-dropdown > a").click(function() {

@@ -56,4 +56,16 @@ appRoute.route('/del/:id').delete((req,res,next)=>{
     })
 })
 
+// Get last application
+appRoute.route('/get_5').get((req,res,next)=>{
+    AppsModel.find((error,data)=>{
+        if(error){
+            return next(error)
+        }
+        else {
+            res.json(data)
+        }
+    }).sort({create_on:-1}).limit(5);
+})
+
 module.exports = appRoute

@@ -77,6 +77,16 @@ memberRoute.route('/login/:username/:password').post((req,res,next)=>{
    })
 })
 
+// Load last member
+memberRoute.route('/load_data').get((req,res,next)=>{
+    MemberModel.find((error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    }).sort({createon:-1}).limit(5)
+})
 
 
   
