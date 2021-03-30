@@ -28,6 +28,6 @@ let appsSchema = new Schema({
         default:Date.now
     }
 },{
-    colllection : 'apps'
+    collection : 'apps'
 });
 module.exports = mongoose.model('Apps',appsSchema)

@@ -26,7 +26,7 @@ let memberSchema = new Schema({
             default:Date.now
         }
 },{
-    colllection: 'members'
+    collection: 'members'
 })
 
 module.exports = mongoose.model('Member',memberSchema)
