@@ -1110,7 +1110,6 @@ export default {
         })
     },
     Download(id,link){
-      console.log(id);
         if(this.isLogin == null){
           this.$swal.fire({
             title:"เข้าสู่ระบบ",
@@ -1125,7 +1124,18 @@ export default {
               }
           })
         } else {
-            location.href = link
+            // เช็คว่าเคยดาวน์โหลดแล้วหรือยัง
+            const checkAPI = `http://localhost:4000/api/down/check_down/${this.login._id}/${id}`;
+            axios.get(checkAPI).then((data)=>{
+              console.log(data.data);
+              if(data.data == ""){
+                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,mem_id:this.login._id}).then(()=>{
+                  location.href = link;
+                })
+              } else {
+                location.href = link;
+              }
+            })
         }
     },
     Logout(){

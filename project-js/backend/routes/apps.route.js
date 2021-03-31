@@ -48,6 +48,18 @@ appRoute.route('/update/:id').put((req,res,next)=>{
     })
 })
 
+// ค้นหาแอป
+appRoute.route('/find/:id').get((req,res,next)=>{
+    AppsModel.findOne(req.params.id,(error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+
 // Delete App
 appRoute.route('/del/:id').delete((req,res,next)=>{
     AppsModel.findByIdAndDelete(req.params.id,(error,data)=>{
