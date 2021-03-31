@@ -69,8 +69,11 @@
             <div class="login_con" @click="showLogin" v-show="isLogin == null">
                 <img src="../assets/ionic-ios-contact-gray.svg" alt=""> เข้าสู่ระบบ
             </div>
-            <div class="account" v-show="isLogin">
+            <div class="account" v-show="isLogin" style="position:relative">
                 <img src="../assets/ionic-ios-contact-gray.svg" alt=""> {{login.fname}}
+                <div class="logout" @click="Logout">
+                  ออกจากระบบ
+                </div>
             </div>
         </div>
     </nav>
@@ -170,7 +173,7 @@
                     </div>
                   </div>
                   <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <a class="app_download w-100" v-bind:href="game.link">
+                    <a class="app_download w-100" @click="Download(game._id,game.link)" style="cursor:pointer">
                       รับ
                     </a>
                   </div>
@@ -184,7 +187,6 @@
           </div>
         </div>
       </div>
-      {{games.link}}
     </main>
 
   <!-- เข้าสู่ระบบ -->
@@ -206,7 +208,6 @@
                         <div class="col-md-12 mb-3">
                             <div class="form-gruop">
                                 <input type="text" v-model="member.username" placeholder="Username" required class="form-control">
-                                <span>{{member.username}}</span>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -238,6 +239,25 @@
 </div>  
 </template>
 <style scoped>
+.account:hover .logout {
+    display: block;
+    top:-40px;
+}
+.logout {
+    display: none;
+    position: absolute;
+    top: -10px;
+    text-align: center;
+    width:100%;
+    padding: 8px 30px;
+    color: #EF6060;
+    background: rgba(221, 221, 221, 0.9);
+    animation:fadein 1s 1 ease-in-out;
+    opacity: 1;
+    transition: 400ms  ease-in;
+}
+
+
 .hr {
     width: 15rem;
     margin: 0 auto;
@@ -255,6 +275,10 @@ a.app_download {
     text-align: center;
 }
 .app-name , .app-name a{
+  direction: ltr;
+    height: 47px;
+    text-overflow: ellipsis;
+    overflow: hidden;
     font-size: 16px;
     text-decoration: none;
     color: black;
@@ -362,6 +386,7 @@ h3 ,.or , label{
     padding: 5px;
     gap: 20px;
     align-items: center;
+    cursor:pointer;
 }
 .login_con  {
     color: #707070;
@@ -1035,18 +1060,25 @@ export default {
             username:'',
             password:''
           },
-          login:[],
+          login:{
+            fname:"f"
+          },
           isLogin:localStorage.getItem('isLogin'),
           games:[]
       }
   },
   created(){
-    this.login = JSON.parse(localStorage.getItem('mem_log'));
+    if(localStorage.getItem('mem_log') == null){
+      this.login = {
+        fname : 'f'
+      }
+    } else {
+      this.login = JSON.parse(localStorage.getItem('mem_log'));
+    }
     // Get game carsousel data
     axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
         this.games = res.data;
     })
-    console.log(this.games);
   }
   ,
   methods:{
@@ -1076,6 +1108,34 @@ export default {
             }
             
         })
+    },
+    Download(id,link){
+      console.log(id);
+        if(this.isLogin == null){
+          this.$swal.fire({
+            title:"เข้าสู่ระบบ",
+            icon:"warning",
+            text:"กรุณาเข้าสู่ระบบเพื่อดาวน์โหลดแอปพลิเคชัน",
+            confirmButtonText:"เข้าสู่ระบบ",
+            cancelButtonText:"ยกเลิก",
+            showCancelButton:true
+          }).then((res)=>{
+              if(res.isConfirmed === true){
+                $_('.login_section').toggleClass("show",1000); 
+              }
+          })
+        } else {
+            location.href = link
+        }
+    },
+    Logout(){
+      localStorage.removeItem('mem_log')
+      localStorage.removeItem('isLogin')
+      if(localStorage.getItem('mem_log') == null && localStorage.getItem('isLogin') == null){
+        this.$swal.fire('ออกจากระบบสำเร็จ','คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
+          location.reload();
+        })
+      }
     }
   }
 }

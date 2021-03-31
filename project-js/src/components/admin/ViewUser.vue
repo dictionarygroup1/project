@@ -821,7 +821,7 @@ export default {
             const apiURL = `http://localhost:4000/api/del-member/${id}`;
             this.$swal({
                 title: 'คุณต้องการลบข้อมูลใช่หรือไม่',
-                type:'warning',
+                icon:'warning',
                 showCancelButton:true,
                 cancelButtonText : "ไม่ต้องการ",
                 confirmButtonText : "ใช่"

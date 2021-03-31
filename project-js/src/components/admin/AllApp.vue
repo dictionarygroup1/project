@@ -94,6 +94,7 @@
                                 <th>ICON</th>
                                 <th>ชื่อแอปพลิเคชั่น</th>
                                 <th>ชื่อผู้พัฒนา</th>
+                                <th>ประเภท</th>
                                 <th>แก้ไข/ลบ</th>
                             
                           </tr>
@@ -110,6 +111,9 @@
                                 </td>
                                 <td>
                                     {{app.dev_name}}
+                                </td>
+                                <td>
+                                    {{app.category}}
                                 </td>
                                 <td>
                                     <router-link class="btn btn-warning" style="margin-right:1rem;" :to="{name:'EditApp',params:{id:app._id}}">แก้ไข</router-link>

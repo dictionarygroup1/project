@@ -76,7 +76,7 @@ appRoute.route('/home_load/:category').get((req,res,next)=>{
         } else {
             res.json(data)
         }
-    })
+    }).limit(12)
 })
 
 module.exports = appRoute
