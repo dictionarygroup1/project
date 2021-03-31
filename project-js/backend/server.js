@@ -38,6 +38,7 @@ mongoose.connect(database.db,{
 
 const memberAPI = require('./routes/member.route');
 const appsAPI = require('./routes/apps.route');
+const downloadAPI = require('./routes/download.route');
 //const WebAPI = require('./routes/webloader.route');
 const app = express();
 app.use(bodyParser.json());
@@ -49,6 +50,7 @@ app.use(cors())
 // API
 app.use('/api',memberAPI);
 app.use('/api/app',appsAPI)
+app.use('/api/down',downloadAPI)
 // Create PORT
 const port = process.env.PORT || 4000
 const server = app.listen(port,()=>{
