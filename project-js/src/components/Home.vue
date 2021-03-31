@@ -173,7 +173,7 @@
                     </div>
                   </div>
                   <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <a class="app_download w-100" @click="Download(game._id,game.link)" style="cursor:pointer">
+                    <a class="app_download w-100" @click="Download(game._id,game.link,game.app_name)" style="cursor:pointer">
                       รับ
                     </a>
                   </div>
@@ -1109,7 +1109,7 @@ export default {
             
         })
     },
-    Download(id,link){
+    Download(id,link,name){
         if(this.isLogin == null){
           this.$swal.fire({
             title:"เข้าสู่ระบบ",
@@ -1129,7 +1129,7 @@ export default {
             axios.get(checkAPI).then((data)=>{
               console.log(data.data);
               if(data.data == ""){
-                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,mem_id:this.login._id}).then(()=>{
+                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
                   location.href = link;
                 })
               } else {

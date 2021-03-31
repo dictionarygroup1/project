@@ -88,8 +88,11 @@
                     จำนวนการดาวน์โหลด
                   </div>
                   <div class="card-body">
-                    <div id="chart"></div>
-                    
+                    <iframe 
+                    style="background: #FFFFFF;
+                    border: none;
+                    border-radius: 2px;
+                    " width="100%" height="600px" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=5a84ab93-77a9-4dbc-b4d6-a47fe991477e&theme=light"></iframe>
                   </div>
                 </div>
             </div>

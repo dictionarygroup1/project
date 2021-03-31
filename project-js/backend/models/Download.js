@@ -5,6 +5,9 @@ let downloadSchema = new Schema({
         app_id : {
             type:String
         },
+        app_name:{
+            type:String
+        },
         mem_id : {
             type:String
         },
