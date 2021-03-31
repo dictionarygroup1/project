@@ -87,7 +87,7 @@
           </div>
         </div>
       </div>
-      <div class="container">
+      <div class="container mb-3">
         <div class="row">
           <div class="col-md-4">
             <div class="card">
@@ -136,6 +136,55 @@
           </div>
         </div>
       </div>
+      
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card b-t">
+              <div class="card-header d-flex w-100">
+                  <div class="left d-flex justify-content-start w-100">
+                    เกมสนุก ๆ มากมายให้เลือกหา
+                  </div>
+                  <div class="right d-flex justify-content-end w-100 align-items-center">
+                    <router-link class="home-link" to="/app/เกม">เลือกดูทั้งหมด</router-link>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div v-for="game in games" :key="game._id" class="col-md-3 mb-2 mt-2">
+              <div class="container-fluid p-0">
+                <div class="row" style="height:80px">
+                  <div class="col-md-3 d-flex align-items-center">
+                    <img :src="'../../uploads/'+game.icon" alt="" class="img-fluid">
+                  </div>
+                  <div class="col-md-5 mt-2 p-0">
+                    <div class="app-name">
+                      <router-link style="text-decoration:none" :to="'/app/view/'+game.app_name">
+                        {{game.app_name}}
+                      </router-link>
+                    </div>
+                    <div class="app-dev">
+                      {{game.dev_name}}
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <a class="app_download w-100" v-bind:href="game.link">
+                      รับ
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="hr"></div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      {{games.link}}
     </main>
 
   <!-- เข้าสู่ระบบ -->
@@ -189,6 +238,39 @@
 </div>  
 </template>
 <style scoped>
+.hr {
+    width: 15rem;
+    margin: 0 auto;
+    border-bottom: 1px solid #D8D8D8;
+}
+a.app_download {
+    display: block;
+    color: #EF6060;
+    text-decoration: none;
+    background: #EFEFEF;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+}
+.app-name , .app-name a{
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+.app-dev {
+    font-size: 11px;
+    color: #747474;
+}
+.home-link{
+  text-decoration: none;
+  font-size: 20px;
+  color:#EF6060;
+}
+.b-t{
+  border-top:1px solid  #D8D8D8;
+}
 .hide{
   display:none!important;
 }
@@ -954,12 +1036,17 @@ export default {
             password:''
           },
           login:[],
-          isLogin:localStorage.getItem('isLogin')
+          isLogin:localStorage.getItem('isLogin'),
+          games:[]
       }
   },
   created(){
     this.login = JSON.parse(localStorage.getItem('mem_log'));
-    console.log(this.login);
+    // Get game carsousel data
+    axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
+        this.games = res.data;
+    })
+    console.log(this.games);
   }
   ,
   methods:{
