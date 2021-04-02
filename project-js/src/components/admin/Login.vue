@@ -1,4 +1,5 @@
 <template>
+<span v-show="isTrue">asdasd</span>
     <div id="form-login" class="d-flex justify-content-center align-items-center">
         <form @submit.prevent="Login">
             <div class="form-container">
@@ -77,7 +78,8 @@ export default {
             member:{
                 username:'',
                 password:''
-            }
+            },
+            isTrue:false
         }
     },
     methods:{

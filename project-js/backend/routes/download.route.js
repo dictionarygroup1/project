@@ -46,8 +46,8 @@ downloadRoute.route('/edit/:id').get((req,res,next)=>{
         }
     })
 })
+// UPDATE DEOM .,,v 
 
-// Update data
 downloadRoute.route('/update/:id').put((req,res,next)=>{
     downloadModel.findByIdAndUpdate(req.params.id,{
         $set: req.body
