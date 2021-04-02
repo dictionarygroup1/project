@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/components/Home.vue";
 import Sign_in from "@/components/Login.vue";
-import adduser from "@/components/AppList.vue";
 import CraeteMember from "@/components/api_test/CreateMember.vue";
 import ViewMember from "@/components/api_test/ViewMember.vue";
+import ViewApp from "@/components/ViewApp.vue"
 /** Admin Route */
 import AdminLogin from "@/components/admin/Login.vue";
 import Dashboard from "@/components/admin/Dashboard.vue";
@@ -26,9 +26,9 @@ const routes = [
     component: Sign_in,
   },
   {
-    path: "/add",
-    name: "adduser",
-    component: adduser,
+    path:"/app/view/:id",
+    name:"ViewApp",
+    component:ViewApp
   },
   {
     path:"/api/create",

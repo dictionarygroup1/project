@@ -50,7 +50,7 @@ appRoute.route('/update/:id').put((req,res,next)=>{
 
 // ค้นหาแอป
 appRoute.route('/find/:id').get((req,res,next)=>{
-    AppsModel.findOne(req.params.id,(error,data)=>{
+    AppsModel.findById(req.params.id,(error,data)=>{
         if(error){
             return next(error)
         } else {

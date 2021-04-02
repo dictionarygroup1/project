@@ -107,7 +107,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="category">ประเภทแอปพลิเคชัน</label>
                                         <select class="form-select" v-model="app.category">
-                                            <option >เกม</option>
+                                            <option selected>เกม</option>
                                             <option >การถ่ายภาพ</option>
                                             <option >การศึกษา</option>
                                             <option >การสื่อสาร</option>
@@ -166,6 +166,7 @@ input#app_pre {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    flex-wrap: wrap;
 }
 label.app_pre_upload {
     width: 150px;

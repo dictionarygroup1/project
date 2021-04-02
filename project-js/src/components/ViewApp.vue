@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
@@ -78,115 +78,64 @@
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
-      <div class="container mb-3">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="main-header">
-                <div class="main-header-text">
-                  ค้นพบสิ่งใหม่ๆได้ที่นี่
-                  <span>เราสรรหาแค่แอปพลิเคชันดี ๆ ให้คุณ</span>
+        <div class="container b-b" style="padding-bottom:2rem">
+            <div class="row">
+                <div class="col-2">
+                    <img :src="'../../uploads/' + apps.icon" alt="">
+                </div>
+                <div class="col-10 d-flex align-items-center">
+                    <div class="header-tag">
+                        <h3>{{apps.app_name}}</h3>
+                        <h5>{{apps.dev_name}}</h5>
+                        <a class="app_download mt-3" @click="Download(game._id,game.link,game.app_name)" style="cursor:pointer">
+                        รับ
+                        </a>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="container mb-3">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body round-5">
-                  <div class="card-content">
-                    <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            ตัวอย่าง
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-             <div class="card">
-              <div class="card-body round-5">
-                  <div class="card-content">
-                    <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
-                    </div>
-                    <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-             <div class="card">
-              <div class="card-body round-5">
-                  <div class="card-content">
-                    <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
-                    </div>
-                    <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="container ">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card b-t">
-              <div class="card-header d-flex w-100">
-                  <div class="left d-flex justify-content-start w-100">
-                    เกมสนุก ๆ มากมายให้เลือกหา
-                  </div>
-                  <div class="right d-flex justify-content-end w-100 align-items-center">
-                    <router-link class="home-link" to="/app/เกม">เลือกดูทั้งหมด</router-link>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div v-for="game in games" :key="game._id" class="col-md-3 mb-2 mt-2">
-              <div class="container-fluid p-0">
-                <div class="row" style="height:80px">
-                  <div class="col-md-3 d-flex align-items-center">
-                    <img :src="'../../uploads/'+game.icon" alt="" class="img-fluid">
-                  </div>
-                  <div class="col-md-5 mt-2 p-0">
-                    <div class="app-name">
-                      <router-link style="text-decoration:none" :to="{name:'ViewApp',params:{id:game._id}}">
-                        {{game.app_name}}
-                      </router-link>
-                    </div>
-                    <div class="app-dev">
-                      {{game.dev_name}}
-                    </div>
-                  </div>
-                  <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <a class="app_download w-100" @click="Download(game._id,game.link,game.app_name)" style="cursor:pointer">
-                      รับ
-                    </a>
-                  </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="hr"></div>
-                  </div>
+                <div class="col-12 b-b">
+                   <vueper-slides
+                        class="no-shadow" 
+                        :visible-slides="3"
+                        :draggingDistance="70"
+                        :gap="3"
+                        :bullets="false"
+                        :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+                        fixed-height="230px"
+                        >
+                       <vueper-slide style="border-radius:5px"
+                            v-for="(img,i) in apps.preview" 
+                            :key="i" 
+                            :image="'../../uploads/'+img">
+                       </vueper-slide>
+                   </vueper-slides>
                 </div>
-              </div>
-          </div>
+            </div>
         </div>
-      </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header mt-2">รายละเอียด</div>
+                        <div class="card-body">
+                            <div class="card-text mb-5">
+                                {{apps.des}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
   <!-- เข้าสู่ระบบ -->
@@ -239,6 +188,14 @@
 </div>  
 </template>
 <style scoped>
+.vueperslides--fixed-height .vueperslide, .vueperslides--fixed-height .vueperslides__inner, .vueperslides--fixed-height .vueperslides__parallax-wrapper {
+    border-radius: 5px;
+}
+.vueperslides__arrow svg {
+
+    stroke-width: .5!important;
+
+}
 .account:hover .logout {
     display: block;
     top:-40px;
@@ -264,19 +221,19 @@
     border-bottom: 1px solid #D8D8D8;
 }
 a.app_download {
-    display: block;
-    color: #EF6060;
+    color: #EFEFEF;
     text-decoration: none;
-    background: #EFEFEF;
-    padding: 5px 10px;
+    background: #EF6060;
+    padding: 9px 70px;
     border-radius: 20px;
     font-size: 14px;
     width: 100%;
     text-align: center;
+    display: table-cell;
 }
 .app-name , .app-name a{
   direction: ltr;
-     text-overflow: ellipsis;
+    text-overflow: ellipsis;
     overflow: hidden;
     font-size: 16px;
     text-decoration: none;
@@ -294,6 +251,9 @@ a.app_download {
 .b-t{
   border-top:1px solid  #D8D8D8;
 }
+.b-b{
+  border-bottom:2px solid  #EFEFEF;
+}
 .hide{
   display:none!important;
 }
@@ -308,9 +268,7 @@ a.app_download {
 .round-5{
   border-radius: 5px;
 }
-.card-body {
-    background: #EFEFEF;
-}
+
 .main-header-text span {
     font-size: 34px;
 }
@@ -869,6 +827,8 @@ label.app_pre_upload {
 .card-header{
   background:none;
   font-size: 24px;
+  color:#747474;
+  border: none;
 }
 .card .card-icon i {
     color:#8160EF;
@@ -1052,7 +1012,10 @@ a#t1-close {
 <script>
 import $_ from 'jquery'
 import axios from 'axios'
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 export default {
+    components: { VueperSlides, VueperSlide },
   data(){
       return {
           member:{
@@ -1063,7 +1026,7 @@ export default {
             fname:"f"
           },
           isLogin:localStorage.getItem('isLogin'),
-          games:[]
+          apps:[]
       }
   },
   created(){
@@ -1075,8 +1038,8 @@ export default {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
     // Get game carsousel data
-    axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
-        this.games = res.data;
+    axios.get(`http://localhost:4000/api/app/find/${this.$route.params.id}`).then(res=>{
+        this.apps = res.data;
     })
   }
   ,

@@ -9,7 +9,7 @@ const multer = require('multer');
 const upload = multer({
    storage:multer.diskStorage({
        destination:(req,file,cb)=>{
-            cb(null,'../public/uploads');
+            cb(null,`../public/uploads/`);
        },
        filename:(req,file,cb)=>{
            let newfile = file.originalname
@@ -17,7 +17,7 @@ const upload = multer({
        }
    }),
    fileFilter:(req,file,cb)=>{
-       if(!file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)){
+       if(!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp)$/)){
            return cb(new Error('เฉพาะไฟล์รูปภาพเท่านั้น!'),false)
        }
        cb(null,true)
