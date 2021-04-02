@@ -9,4 +9,5 @@ const options = {
     confirmButtonColor: '#62b5c5',
     cancelButtonColor: '#ff7674',
   };
+
 createApp(App).use(router).use(swal,options).mount('#app')

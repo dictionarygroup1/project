@@ -1,179 +1,341 @@
-<template>
-<div class="page-wrapper chiller-theme">
+﻿<template>
+    <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
 
             <div class="sidebar-header">
-                <div class="user-pic">
-                   <img src="../../assets/test.png" alt="">
-              
-                </div>
-                <div class="user-info">
-                  <span class="user-name">
-                    KITTISAK 
-                  </span>
-                    <span class="user-role">ผู้ดูแลระบบ</span>
-                    <span class="user-status">
-                <i class="fa fa-circle" style="padding-right: 10px;color: #68bd29;"></i>
-                <span>ออนไลน์</span>
-            </span>
+                <div class="search-container">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="../assets/ionic-ios-search.svg" alt="">
+                    </div>
+                    <div class="col-md-10">
+                      <input type="text" class="search-btn" placeholder="ค้นหา">
+                    </div>
+                  </div>
                 </div>
             </div>
 
-            <div class="sidebar-menu">
-                <ul>
-                   
-                    <li class="header-menu">
-                        <router-link to="#">
-                            <span>เมนูหลัก</span>
-                        </router-link>
-                    </li>
-                    <li > 
-                        <router-link to="/console/dashboard">
-                          <img src="../../assets/material-dashboard.svg" alt="">
-                          <span>แดชบอร์ด</span>    
+            <div class="sidebar-menu" style="padding:10px;">
+                 <ul>
+                    <li class="mb-1"> 
+                        <router-link to="/">
+                          <img src="../assets/ionic-ios-star-outline.svg" alt="">
+                          <span>ค้นพบสิ่งใหม่ ๆ</span>    
                        </router-link>
                     </li>
-                    <li class="sidebar-dropdown">
-                        <router-link to="#">
-                            <img src="../../assets/ionic-ios-apps.svg">
-                            <span>แอปพลิเคชัน</span>
-
-                        </router-link>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                
-                                <li>
-                                    <router-link to="/console/app/view_app">แอปพลิเคชันทั้งหมด</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/console/app/add_app">เพิ่มแอปพลิเคชัน</router-link>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="mb-1">
+                        <router-link :to="{name:'ViewCat',params:{category:'เกม'}}">
+                            <img src="../assets/awesome-gamepad.svg">
+                            <span>เกม</span>
+                        </router-link> 
                     </li>
-                    <li class="sidebar-dropdown">
-                        <router-link to="#">
-                            <img src="../../assets/ionic-ios-contact.svg">
-                            <span>ผู้ใช้</span>
-                        </router-link>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <router-link to="/console/user/view_user">ผู้ใช้ทั้งหมด</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/console/user/add_user">เพิ่มผู้ใช้</router-link>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="mb-1">
+                        <router-link :to="{name:'ViewCat',params:{category:'การถ่ายภาพ'}}">
+                            <img src="../assets/awesome-camera.svg">
+                            <span>การถ่ายภาพ</span>
+                        </router-link> 
                     </li>
-                    
+                    <li class="mb-1">
+                        <router-link :to="{name:'ViewCat',params:{category:'การศึกษา'}}" >
+                            <img src="../assets/awesome-graduation-cap.svg">
+                            <span>การศึกษา</span>
+                        </router-link> 
+                    </li>
+                    <li class="mb-1">
+                        <router-link :to="{name:'ViewCat',params:{category:'การสื่อสาร'}}">
+                            <img src="../assets/ionic-ios-videocam.svg">
+                            <span>การสื่อสาร</span>
+                        </router-link> 
+                    </li>
+                    <li class="mb-1">
+                        <router-link :to="{name:'ViewCat',params:{category:'กีฬา'}}" >
+                            <img src="../assets/ionic-ios-american-football.svg">
+                            <span>กีฬา</span>
+                        </router-link> 
+                    </li>
+                    <li class="mb-1" >
+                        <router-link :to="{name:'ViewCat',params:{category:'ช็อปปิ้ง'}}">
+                            <img src="../assets/ionic-ios-cart.svg">
+                            <span>ช็อปปิ้ง</span>
+                        </router-link> 
+                    </li>
+                   
                 </ul>
             </div>
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="#" v-on:click="Logout">
-                <i class="fa fa-power-off"></i>
-            </router-link>
+            <div class="login_con" @click="showLogin" v-show="isLogin == null">
+                <img src="../assets/ionic-ios-contact-gray.svg" alt=""> เข้าสู่ระบบ
+            </div>
+            <div class="account" v-show="isLogin" style="position:relative">
+              <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
+                  <img src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
+              </router-link>
+                
+                <div class="logout" @click="Logout">
+                  ออกจากระบบ
+                </div>
+            </div>
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    จำนวนการดาวน์โหลด
+        <div class="container ">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card b-b">
+              <div class="card-header d-flex w-100 ">
+                  <div class="left d-flex justify-content-start w-100">
+                    บัญชีของฉัน
                   </div>
-                  <div class="card-body">
-                    <iframe 
-                    style="background: #FFFFFF;
-                    border: none;
-                    border-radius: 2px;
-                    " width="100%" height="600px" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=5a84ab93-77a9-4dbc-b4d6-a47fe991477e&autoRefresh=60&theme=light"></iframe>
+                  <div class="right d-flex justify-content-end w-100 align-items-center">
+                    <router-link class="home-link" to="/app/เกม">
+                        <img :src="'../../uploads/profiles/'+login.pic" width="30" style="margin-right:10px;" alt="" >    แก้ไขข้อมูล
+                    </router-link>
                   </div>
-                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card">
-                  <div class="card-body rounded">
-                    <div class="card-header mb-3">
-                      แอปพลิเคชันล่าสุด
+        <div class="row b-t">
+            <h5 class="p-4">แอปพลิเคชันของฉัน</h5>
+          <div v-for="app in apps" :key="app._id" class="col-md-3 mb-2 mt-2">
+              <div class="container-fluid p-0">
+                <div class="row" style="height:80px">
+                  <div class="col-md-3 d-flex align-items-center">
+                    <img :src="'../../uploads/'+app.icon" alt="" class="img-fluid">
+                  </div>
+                  <div class="col-md-5 mt-2 p-0">
+                    <div class="app-name">
+                      <router-link style="text-decoration:none"  :to="{name:'ViewApp',params:{id:app.app_id}}">
+                        {{app.app_name}}
+                      </router-link>
                     </div>
-                    <div class="card-content bg-g round-5">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr align=center>
-                            <th>ชื่อแอปพลิเคชั่น</th>
-                            <th>ชื่อผู้พัฒนา</th>
-                            <th>เพิ่มเมื่อ</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr align=center v-for="app in apps" :key="app._id">
-                            <td>{{app.app_name}}</td>
-                            <td>{{app.dev_name}}</td>
-                            <td>{{app.create_on.substr(0,10)}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="app-dev">
+                      {{app.dev_name}}
                     </div>
                   </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body rounded">
-                    <div class="card-header mb-3">
-                      ผู้ใช้ที่เพิ่มล่าสุด
-                    </div>
-                    <div class="card-content bg-g round-5">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr align=center>
-                            <th>ชื่อจริง - นามสกุล</th>
-                            <th>ชื่อผู้ใช้</th>
-                            <th>สถานะ</th>
-                            <th>สร้างเมื่อ</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr align=center v-for="member in members" :key="member._id">
-                            <td>{{member.fname + ' ' + member.lname}}</td>
-                            <td>{{member.username}}</td>
-                            <td>
-                              <p v-if="member.isAdmin">ผู้ดูแลระบบ</p>
-                              <p v-else>ผู้ใช้ทั่วไป</p>
-                            </td>
-                            <td>{{member.createon.substr(0,10)}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <a class="app_download w-100" @click="Download(app._id,app.link,app.app_name)" style="cursor:pointer">
+                      รับ
+                    </a>
                   </div>
                 </div>
-            </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="hr"></div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
+      </div>
+
     </main>
-</div>    
+
+</div>  
 </template>
+<style scoped>
+.vueperslides--fixed-height .vueperslide, .vueperslides--fixed-height .vueperslides__inner, .vueperslides--fixed-height .vueperslides__parallax-wrapper {
+    border-radius: 5px;
+}
+.vueperslides__arrow svg {
+
+    stroke-width: .5!important;
+
+}
+.account:hover .logout {
+    display: block;
+    top:-40px;
+}
+.logout {
+    display: none;
+    position: absolute;
+    top: -10px;
+    text-align: center;
+    width:100%;
+    padding: 8px 30px;
+    color: #EF6060;
+    background: rgba(221, 221, 221, 0.9);
+    animation:fadein 1s 1 ease-in-out;
+    opacity: 1;
+    transition: 400ms  ease-in;
+}
+
+
+.hr {
+    width: 15rem;
+    margin: 0 auto;
+    border-bottom: 1px solid #D8D8D8;
+}
+a.app_download {
+    display: block;
+    color: #EF6060;
+    text-decoration: none;
+    background: #EFEFEF;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+}
+.app-name , .app-name a{
+  direction: ltr;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+.app-dev {
+    font-size: 11px;
+    color: #747474;
+}
+.home-link{
+  text-decoration: none;
+  font-size: 20px;
+  color:#EF6060;
+}
+.b-t{
+  border-top:1px solid  #D8D8D8;
+}
+.b-b{
+  border-bottom:2px solid  #EFEFEF;
+}
+.hide{
+  display:none!important;
+}
+.card-text{
+  color:#747474;
+}
+.card-content {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+.round-5{
+  border-radius: 5px;
+}
+
+.main-header-text span {
+    font-size: 34px;
+}
+
+.main-header-text {
+    padding: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.main-header {
+    margin-top: -20px;
+    padding: 20px;
+    background: url('../assets/header.svg');
+    height: 400px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+a.router-link-active.router-link-exact-active.close-sec.btn.btn-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.show{
+  display: flex !important;
+}
+div.login_section , .regis_section {
+    position: fixed;
+    top: 0;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    transition: all 1s ease-in-out 0s;
+    animation:showon 1s 1 ease-in-out;
+}
+@keyframes showon{
+  from{
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+.form-container{
+    background:white;
+    padding:25px 50px;
+    border-radius: 10px;
+    width:500px;
+    box-shadow: 0 3px 20px rgba(0,0,0,.17);
+}
+
+.btn-coral{
+    background:#EF6060;
+    color: white;
+}
+.btn-register{
+    background:#EFEFEF;
+    color:#747474;
+}
+.account {
+    background: #CCCCCC;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    gap: 20px;
+    align-items: center;
+    cursor:pointer;
+}
+.login_con  {
+    color: #707070;
+    display: flex;
+    width: 100%;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.search-container {
+    background: #D8D8D8;
+    padding: 10px;
+    display: flex;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+</style>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body{
   font-family: 'Kanit', sans-serif!important;
 }
-.round-5{
-  border-radius: 5px;
+input#app_pre {
+    opacity: 0;
 }
-.bg-g{
-  background:#F8F8F8;
+.side-active{
+  background: #CCCCCC;
+}
+#preview_app_list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+label.app_pre_upload {
+    width: 150px;
+    height: 150px;
+    font-size: 24px;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 :root{
   --wraper-bg : #EFEFEF ;
@@ -352,9 +514,15 @@ body{
   /*--------------------sidebar-header----------------------*/
   
   .sidebar-wrapper .sidebar-header {
-    padding: 20px;
+    padding:10px;
+    margin-top: 20px;
     overflow: hidden;
   }
+  .search-container input {
+    background: none;
+    outline: none;
+    border: none;
+}
   
   .sidebar-wrapper .sidebar-header .user-pic {
     float: left;
@@ -607,6 +775,8 @@ body{
 .card-header{
   background:none;
   font-size: 24px;
+  color:#747474;
+  border: none;
 }
 .card .card-icon i {
     color:#8160EF;
@@ -790,70 +960,119 @@ a#t1-close {
 
 <script>
 import $_ from 'jquery'
-import axios from 'axios';
+import axios from 'axios'
 export default {
-    data(){
-        return {
-            apps:[],
-            members:[]
-        }
-    },
-    created(){
-        let session = localStorage.getItem('logged')
-        if(session == null){
-            this.$router.push('/console');
-        }
-
-        // Get Last App
-        const lastAPI = "http://localhost:4000/api/app/get_5"
-        axios.get(lastAPI).then((res)=>{
-          this.apps = res.data;
-        })
-        // Get Member
-        const lastMemAPI = "http://localhost:4000/api/load_data"
-        axios.get(lastMemAPI).then((res)=>{
-          this.members = res.data
-        })
-    },
-    mounted(){
-        $_(".sidebar-dropdown > a").click(function() {
-            $_(".sidebar-submenu").slideUp(200);
-            if (
-            $_(this)
-                .parent()
-                .hasClass("active")
-            ) {
-            $_(".sidebar-dropdown").removeClass("active");
-            $_(this)
-                .parent()
-                .removeClass("active");
-            } else {
-            $_(".sidebar-dropdown").removeClass("active");
-            $_(this)
-                .next(".sidebar-submenu")
-                .slideDown(200);
-            $_(this)
-                .parent()
-                .addClass("active");
-            }
-        });
-    
-        $_("#close-sidebar").click(function() {
-            $_(".page-wrapper").removeClass("toggled");
-        });
-        $_("#show-sidebar").click(function() {
-            $_(".page-wrapper").addClass("toggled");
-        });
-    },
-    methods:{
-        Logout(){
-            localStorage.removeItem('logged')
-            if(localStorage.getItem('logged') == null){
-              this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
-                 location.reload();
-              })
-            }
-        }
+  data(){
+      return {
+          member:{
+            username:'',
+            password:''
+          },
+          login:{
+            fname:"f"
+          },
+          isLogin:localStorage.getItem('isLogin'),
+          apps:[],
+          apps_data : [],
+          regis:{
+            fname:'',
+            lname:'',
+            username:'',
+            password:'',
+            pic:'',
+          },
+          upload:'',
+          user_app:[]
+      }
+  },
+  created(){
+    if(localStorage.getItem('mem_log') == null){
+        this.$router.push('/');
+      this.login = {
+        fname : 'f'
+      }
+    } else {
+      this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
+    // Get game carsousel data
+    /*
+    axios.get(`http://localhost:4000/api/down/show/${this.$route.params.id}`).then(res=>{
+        this.apps = res.data;
+    })
+    axios.get("http://localhost:4000/api/app/").then((res)=>{
+        this.apps_data = res.data
+    })
+    */
+   const downloadAPI = `http://localhost:4000/api/down/show/${this.$route.params.id}`;
+   const AppAPI = `http://localhost:4000/api/app/`
+
+    const axiosOne = axios.get(downloadAPI);
+    const axiosTwo = axios.get(AppAPI);
+
+    let resDownload , appLoad;
+    axios.all([axiosOne,axiosTwo]).then(axios.spread((...res)=>{
+        resDownload = Array.from(res[0].data)
+        appLoad = Array.from(res[1].data)
+        let arr = []
+        for(let i=0;i<resDownload.length;i++){
+            for(let j=0;j<appLoad.length;j++){
+                if(resDownload[i].app_id == appLoad[j]._id){
+                    arr.push({
+                        app_name:appLoad[j].app_name,
+                        dev_name:appLoad[j].dev_name,
+                        icon:appLoad[j].icon,
+                        mem_id:resDownload[i].mem_id
+                    })
+                }
+            }
+        }
+        this.apps = arr;
+    })).catch(err=>{
+        console.log(err);
+    })
+
+
+  }
+  ,
+  methods:{
+    Download(id,link,name){
+        if(this.isLogin == null){
+          this.$swal.fire({
+            title:"เข้าสู่ระบบ",
+            icon:"warning",
+            text:"กรุณาเข้าสู่ระบบเพื่อดาวน์โหลดแอปพลิเคชัน",
+            confirmButtonText:"เข้าสู่ระบบ",
+            cancelButtonText:"ยกเลิก",
+            showCancelButton:true
+          }).then((res)=>{
+              if(res.isConfirmed === true){
+                $_('.login_section').toggleClass("show",1000); 
+              }
+          })
+        } else {
+            // เช็คว่าเคยดาวน์โหลดแล้วหรือยัง
+            const checkAPI = `http://localhost:4000/api/down/check_down/${this.login._id}/${id}`;
+            axios.get(checkAPI).then((data)=>{
+              console.log(data.data);
+              if(data.data == ""){
+                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
+                  window.open(link);
+                })
+              } else {
+                window.open(link);
+              }
+            })
+        }
+    },
+    Logout(){
+      localStorage.removeItem('mem_log')
+      localStorage.removeItem('isLogin')
+      if(localStorage.getItem('mem_log') == null && localStorage.getItem('isLogin') == null){
+        this.$swal.fire('ออกจากระบบสำเร็จ','คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
+          location.reload();
+        })
+      }
+    }
+  }
 }
 </script>

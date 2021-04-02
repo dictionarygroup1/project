@@ -17,45 +17,45 @@
             </div>
 
             <div class="sidebar-menu" style="padding:10px;">
-                <ul>
+                 <ul>
                     <li class="mb-1"> 
                         <router-link to="/" class="side-active rounded">
                           <img src="../assets/ionic-ios-star-outline.svg" alt="">
-                          <span>แดชบอร์ด</span>    
+                          <span>ค้นพบสิ่งใหม่ ๆ</span>    
                        </router-link>
                     </li>
                     <li class="mb-1">
-                        <router-link to="#">
+                        <router-link :to="{name:'ViewCat',params:{category:'เกม'}}">
                             <img src="../assets/awesome-gamepad.svg">
                             <span>เกม</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link to="#">
+                        <router-link :to="{name:'ViewCat',params:{category:'การถ่ายภาพ'}}">
                             <img src="../assets/awesome-camera.svg">
                             <span>การถ่ายภาพ</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link to="#">
+                        <router-link :to="{name:'ViewCat',params:{category:'การศึกษา'}}" >
                             <img src="../assets/awesome-graduation-cap.svg">
                             <span>การศึกษา</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link to="#">
+                        <router-link :to="{name:'ViewCat',params:{category:'การสื่อสาร'}}">
                             <img src="../assets/ionic-ios-videocam.svg">
                             <span>การสื่อสาร</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link to="#">
+                        <router-link :to="{name:'ViewCat',params:{category:'กีฬา'}}" >
                             <img src="../assets/ionic-ios-american-football.svg">
                             <span>กีฬา</span>
                         </router-link> 
                     </li>
                     <li class="mb-1" >
-                        <router-link to="#">
+                        <router-link :to="{name:'ViewCat',params:{category:'ช็อปปิ้ง'}}">
                             <img src="../assets/ionic-ios-cart.svg">
                             <span>ช็อปปิ้ง</span>
                         </router-link> 
@@ -70,7 +70,11 @@
                 <img src="../assets/ionic-ios-contact-gray.svg" alt=""> เข้าสู่ระบบ
             </div>
             <div class="account" v-show="isLogin" style="position:relative">
-                <img src="../assets/ionic-ios-contact-gray.svg" alt=""> {{login.fname}}
+              <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
+                  <img src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
+              </router-link>
+                
                 <div class="logout" @click="Logout">
                   ออกจากระบบ
                 </div>
@@ -175,6 +179,68 @@
                         <div class="col-md-12 mb-3">
                             <div class="form-gruop text-center">
                                 <rounter-link to="/console/register" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
+                            </div>
+                        </div>
+                    </div>
+             </div>  
+            </div>
+        </form>
+      </div>
+    </div>
+<!-- สมัครสมาชิก -->
+    <div class="regis_section">
+      <div class="login_form" style="position:relative">
+        <router-link class="close-sec btn btn-close" to='#' @click="showRegis"></router-link>
+        <form @submit.prevent="Register">
+            <div class="form-container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div class="form-img p-3">
+                                <img v-if="regis.pic==''" src="../assets/ionic-ios-contact-coral.svg" alt="">
+                                <img v-else src="" class="img-fluid" style="width:120px" alt="" id="preview_logo">
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-3 mb-4 text-center">
+                            <h3>สมัครสมาชิก</h3>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="regis.fname" placeholder="ชื่อจริง" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="regis.lname" placeholder="นามสกุล" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="regis.username" placeholder="ชื่อผู้ใช้" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="password" v-model="regis.password" placeholder="รหัสผ่าน" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input  type="file" id="file" ref="file" accept="image/*" placeholder="อัปโหลดรูปภาพของคุณ" required v-on:change="onFilePicked()" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                            <div class="form-gruop">
+                                <button type="submit" class="btn btn-coral form-control"> สมัครสมาชิก </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-1 mb-1 text-center">
+                            <span class="or">หรือ</span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop text-center">
+                                <rounter-link @click="showLogin" class="btn btn-register form-control">เข้าสู่ระบบ</rounter-link>
                             </div>
                         </div>
                     </div>
@@ -296,7 +362,7 @@ a.router-link-active.router-link-exact-active.close-sec.btn.btn-close {
 .show{
   display: flex !important;
 }
-div.login_section {
+div.login_section , .regis_section {
     position: fixed;
     top: 0;
     background: rgba(0,0,0,0.5);
@@ -1026,7 +1092,15 @@ export default {
             fname:"f"
           },
           isLogin:localStorage.getItem('isLogin'),
-          apps:[]
+          apps:[],
+          regis:{
+            fname:'',
+            lname:'',
+            username:'',
+            password:'',
+            pic:'',
+          },
+          upload:''
       }
   },
   created(){
@@ -1046,6 +1120,10 @@ export default {
   methods:{
     showLogin(){
       $_('.login_section').toggleClass("show",1000); 
+    },
+    showRegis(){
+      $_('.login_section').removeClass("show")
+      $_('.regis_section').toggleClass('show',1000)  
     },
     Login(){
         const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
@@ -1092,10 +1170,10 @@ export default {
               console.log(data.data);
               if(data.data == ""){
                 axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
-                  location.href = link;
+                  window.open(link);
                 })
               } else {
-                location.href = link;
+                window.open(link);
               }
             })
         }
@@ -1108,6 +1186,20 @@ export default {
           location.reload();
         })
       }
+    },
+    Register(){
+      const formData = new FormData();
+      formData.append('file',this.upload);
+      axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
+        const appURL = "http://localhost:4000/api/create-member";
+          axios.post(appURL,this.regis).then(()=>{
+              this.$swal("สมัครสมาชิกสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อเข้าสู่ระบบ","success").then(()=>{
+                    location.reload();
+              })
+          }).catch(err=>{
+          console.log(err);
+          })
+      })
     }
   }
 }

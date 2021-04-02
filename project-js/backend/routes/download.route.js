@@ -71,6 +71,17 @@ downloadRoute.route('/del/:id').delete((req,res,next)=>{
     })
 })
 
+//Show account Download
+downloadRoute.route('/show/:mem_id').get((req,res,next)=>{
+    downloadModel.find({mem_id:req.params.mem_id},(error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
 // Check account Download
 downloadRoute.route('/check_down/:mem_id/:app_id').get((req,res,next)=>{
     downloadModel.find({app_id:req.params.mem_id,app_id:req.params.app_id},(error,data)=>{

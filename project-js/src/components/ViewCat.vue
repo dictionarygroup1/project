@@ -1,8 +1,8 @@
-<template>
+﻿<template>
+
     <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
-
             <div class="sidebar-header">
                 <div class="search-container">
                   <div class="row">
@@ -17,45 +17,45 @@
             </div>
 
             <div class="sidebar-menu" style="padding:10px;">
-                <ul>
+                 <ul>
                     <li class="mb-1"> 
-                        <router-link to="/" class="side-active rounded">
+                        <router-link to="/" >
                           <img src="../assets/ionic-ios-star-outline.svg" alt="">
                           <span>ค้นพบสิ่งใหม่ ๆ</span>    
                        </router-link>
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'เกม'}}">
+                        <router-link :class="{'side-active rounded':param=='เกม'}" :to="{name:'ViewCat',params:{category:'เกม'}}">
                             <img src="../assets/awesome-gamepad.svg">
                             <span>เกม</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'การถ่ายภาพ'}}">
+                        <router-link :class="{'side-active rounded':param=='การถ่ายภาพ'}" :to="{name:'ViewCat',params:{category:'การถ่ายภาพ'}}">
                             <img src="../assets/awesome-camera.svg">
                             <span>การถ่ายภาพ</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'การศึกษา'}}">
+                        <router-link :class="{'side-active rounded':param=='การศึกษา'}" :to="{name:'ViewCat',params:{category:'การศึกษา'}}">
                             <img src="../assets/awesome-graduation-cap.svg">
                             <span>การศึกษา</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'การสื่อสาร'}}">
+                        <router-link :class="{'side-active rounded':param=='การสื่อสาร'}" :to="{name:'ViewCat',params:{category:'การสื่อสาร'}}">
                             <img src="../assets/ionic-ios-videocam.svg">
                             <span>การสื่อสาร</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'กีฬา'}}" >
+                        <router-link :class="{'side-active rounded':param=='กีฬา'}" :to="{name:'ViewCat',params:{category:'กีฬา'}}" >
                             <img src="../assets/ionic-ios-american-football.svg">
                             <span>กีฬา</span>
                         </router-link> 
                     </li>
                     <li class="mb-1" >
-                        <router-link :to="{name:'ViewCat',params:{category:'ช็อปปิ้ง'}}">
+                        <router-link :class="{'side-active rounded':param=='ช็อปปิ้ง'}" :to="{name:'ViewCat',params:{category:'ช็อปปิ้ง'}}">
                             <img src="../assets/ionic-ios-cart.svg">
                             <span>ช็อปปิ้ง</span>
                         </router-link> 
@@ -82,69 +82,7 @@
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
-      <div class="container mb-3">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="main-header">
-                <div class="main-header-text">
-                  ค้นพบสิ่งใหม่ๆได้ที่นี่
-                  <span>เราสรรหาแค่แอปพลิเคชันดี ๆ ให้คุณ</span>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container mb-3">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body round-5">
-                  <div class="card-content">
-                    <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
-                    </div>
-                    <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-             <div class="card">
-              <div class="card-body round-5">
-                  <div class="card-content">
-                    <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
-                    </div>
-                    <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-             <div class="card">
-              <div class="card-body round-5">
-                  <div class="card-content">
-                    <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
-                    </div>
-                    <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="container ">
+       <div class="container ">
         <div class="row">
           <div class="col-md-12">
             <div class="card b-t">
@@ -160,24 +98,24 @@
           </div>
         </div>
         <div class="row">
-          <div v-for="game in games" :key="game._id" class="col-md-3 mb-2 mt-2">
+          <div v-for="app in apps" :key="app._id" class="col-md-3 mb-2 mt-2">
               <div class="container-fluid p-0">
                 <div class="row" style="height:80px">
                   <div class="col-md-3 d-flex align-items-center">
-                    <img :src="'../../uploads/'+game.icon" alt="" class="img-fluid">
+                    <img :src="'../../uploads/'+app.icon" alt="" class="img-fluid">
                   </div>
                   <div class="col-md-5 mt-2 p-0">
                     <div class="app-name">
-                      <router-link style="text-decoration:none" :to="{name:'ViewApp',params:{id:game._id}}">
-                        {{game.app_name}}
+                      <router-link style="text-decoration:none" :to="{name:'ViewApp',params:{id:app._id}}">
+                        {{app.app_name}}
                       </router-link>
                     </div>
                     <div class="app-dev">
-                      {{game.dev_name}}
+                      {{app.dev_name}}
                     </div>
                   </div>
                   <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <a class="app_download w-100" @click="Download(game._id,game.link,game.app_name)" style="cursor:pointer">
+                    <a class="app_download w-100" @click="Download(app._id,app.link,app.app_name)" style="cursor:pointer">
                       รับ
                     </a>
                   </div>
@@ -204,7 +142,6 @@
                         <div class="col-md-12 d-flex justify-content-center">
                             <div class="form-img p-3">
                                 <img src="../assets/ionic-ios-contact-coral.svg" alt="">
-                               
                             </div>
                         </div>
                         <div class="col-md-12 p-3 mb-4 text-center">
@@ -230,7 +167,7 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-gruop text-center">
-                                <rounter-link @click="showRegis" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
+                                <rounter-link to="/console/register" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
                             </div>
                         </div>
                     </div>
@@ -305,6 +242,7 @@
 </div>  
 </template>
 <style scoped>
+
 .account:hover .logout {
     display: block;
     top:-40px;
@@ -403,6 +341,20 @@ a.router-link-active.router-link-exact-active.close-sec.btn.btn-close {
 }
 .show{
   display: flex !important;
+  opacity: 1;
+  margin-left: 0;
+  animation:fadeon .3s ease 1;
+}
+
+@keyframes fadeon{
+    from{
+        opacity: 0;
+        margin-left: 20px;
+    }
+    to{
+        opacity: 1;
+        margin-left: 0;
+    }
 }
 div.login_section , .regis_section {
     position: fixed;
@@ -417,9 +369,6 @@ div.login_section , .regis_section {
     z-index: 999;
     transition: all 1s ease-in-out 0s;
     animation:showon 1s 1 ease-in-out;
-}
-.on{
-  display:block;
 }
 @keyframes showon{
   from{
@@ -938,6 +887,8 @@ label.app_pre_upload {
 .card-header{
   background:none;
   font-size: 24px;
+  color:#747474;
+  border: none;
 }
 .card .card-icon i {
     color:#8160EF;
@@ -1124,6 +1075,7 @@ import axios from 'axios'
 export default {
   data(){
       return {
+          param:this.$route.params.category,
           member:{
             username:'',
             password:''
@@ -1132,7 +1084,7 @@ export default {
             fname:"f"
           },
           isLogin:localStorage.getItem('isLogin'),
-          games:[],
+          apps:[],
           regis:{
             fname:'',
             lname:'',
@@ -1152,11 +1104,20 @@ export default {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
     // Get game carsousel data
-    axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
-        this.games = res.data;
-    })
+      axios.get(`http://localhost:4000/api/app/home_load/${this.$route.params.category}`).then(res=>{
+            this.apps = res.data;
+        })
+      
+        //console.log(this.$route);
   }
-  ,
+  , 
+  watch:{
+      $route(){
+         console.log(this.$route);
+          this.updatePage(this.$route.params.category);
+          
+      }
+  },
   methods:{
     onFilePicked(){
             this.regis.pic = this.$refs.file.files[0].name
@@ -1167,10 +1128,14 @@ export default {
             }
             reader.readAsDataURL(this.$refs.file.files[0]);
         },
+    updatePage(param){
+        axios.get(`http://localhost:4000/api/app/home_load/${param}`).then(res=>{
+            this.apps = res.data;
+            this.param = param;
+        })
+    },
     showLogin(){
-      $_('.regis_section').removeClass('show')  
       $_('.login_section').toggleClass("show",1000); 
-      
     },
     showRegis(){
       $_('.login_section').removeClass("show")
@@ -1200,7 +1165,7 @@ export default {
             
         })
     },
-    Download(id,link,name){
+   Download(id,link,name){
         if(this.isLogin == null){
           this.$swal.fire({
             title:"เข้าสู่ระบบ",

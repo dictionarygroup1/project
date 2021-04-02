@@ -23,6 +23,23 @@ const upload = multer({
        cb(null,true)
    }
 })
+const upload_mem = multer({
+    storage:multer.diskStorage({
+        destination:(req,file,cb)=>{
+             cb(null,`../public/uploads/profiles/`);
+        },
+        filename:(req,file,cb)=>{
+            let newfile = file.originalname
+            cb(null,newfile);
+        }
+    }),
+    fileFilter:(req,file,cb)=>{
+        if(!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp)$/)){
+            return cb(new Error('เฉพาะไฟล์รูปภาพเท่านั้น!'),false)
+        }
+        cb(null,true)
+    }
+ })
 
 
 // Connect Db
@@ -59,6 +76,9 @@ const server = app.listen(port,()=>{
 
 // UPLOAD FILE API
 app.post('/upload',upload.single('file'),(req,res)=>{
+    res.json({file:req.file})
+})
+app.post('/upload_mem',upload_mem.single('file'),(req,res)=>{
     res.json({file:req.file})
 })
 app.post('/upload/multi',upload.array('multi',10),(req,res)=>{

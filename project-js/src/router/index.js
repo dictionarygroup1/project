@@ -4,6 +4,8 @@ import Sign_in from "@/components/Login.vue";
 import CraeteMember from "@/components/api_test/CreateMember.vue";
 import ViewMember from "@/components/api_test/ViewMember.vue";
 import ViewApp from "@/components/ViewApp.vue"
+import ViewCat from "@/components/ViewCat.vue"
+import Account from "@/components/Account.vue";
 /** Admin Route */
 import AdminLogin from "@/components/admin/Login.vue";
 import Dashboard from "@/components/admin/Dashboard.vue";
@@ -24,7 +26,14 @@ const routes = [
     path: "/sign_in",
     name: "Login",
     component: Sign_in,
-  },
+  }
+  ,
+  {
+    path:"/account/:id",
+    name:"Account",
+    component:Account
+  }
+  ,
   {
     path:"/app/view/:id",
     name:"ViewApp",
@@ -51,7 +60,12 @@ const routes = [
     component:Dashboard
   }
   ,
-  
+  {
+    path:"/app/cat/:category",
+    name:"ViewCat",
+    component:ViewCat
+  }
+  ,
   {
     path:"/console/app/view_app",
     name:"AllApp",
