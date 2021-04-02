@@ -71,7 +71,8 @@
             </div>
             <div class="account" v-show="isLogin" style="position:relative">
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
-                  <img src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
                   <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
               </router-link>
                 
@@ -91,8 +92,8 @@
                     บัญชีของฉัน
                   </div>
                   <div class="right d-flex justify-content-end w-100 align-items-center">
-                    <router-link class="home-link" to="/app/เกม">
-                        <img :src="'../../uploads/profiles/'+login.pic" width="30" style="margin-right:10px;" alt="" >    แก้ไขข้อมูล
+                    <router-link class="home-link" to="#" @click="close">
+                        <img :src="'../../uploads/profiles/'+login.pic" width="40" style="margin-right:10px;border-radius:50%" alt="" >    แก้ไขข้อมูล
                     </router-link>
                   </div>
               </div>
@@ -132,20 +133,103 @@
           </div>
         </div>
       </div>
-
     </main>
 
+    <!-- Edit Section -->
+    <div class="edit-container">
+        <div class="edit-form" style="width:990px;position:relative">
+            <router-link class="close-sec btn btn-close" to='#' style="z-index:1000" @click="close"></router-link>
+            <form @submit.prevent="EditUser">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="padding: 20px;box-shadow: 0 3px 20px rgb(0 0 0 / 16%);">
+                                <div class="card-header ">
+                                    แก้ไขบัญชีของคุณ
+                                </div>
+                                <div class="card-body b-t">
+                                   <div class="row">
+                                       <div class="col-12 mb-5">
+                                            <div class="img-profile">
+                                                <div class="img-edit">
+                                                    <img id="preview" :src="'../../uploads/profiles/'+regis.pic"  alt="">
+                                                    <label class="img-edit-input" for="file">แก้ไข</label>
+                                                    <input style="display:none" type="file" name="file" v-on:change="onFilePicked()" id="file" ref="file">
+                                                </div>
+                                            </div>
+                                       </div>
+                                       <div class="col-6 mb-3">
+                                           <input v-model="regis.fname" type="text" class="form-control" placeholder="ชื่อจริง">
+                                       </div>
+                                       <div class="col-6 mb-3">
+                                           <input v-model="regis.lname" type="text" class="form-control" placeholder="นามสกุล">
+                                       </div>
+                                       <div class="col-6 mb-3">
+                                           <input v-model="regis.username" type="text" class="form-control" placeholder="ชื่อผู้ใช้">
+                                       </div>
+                                       <div class="col-6 mb-3">
+                                           <input v-model="regis.password" type="password" class="form-control" placeholder="นามสกุล">
+                                       </div>
+                                       <div class="col-6 offset-6 mb-5">
+                                           <button class="btn d-block btn-coral w-100" style="">บันทึกข้อมูล</button>
+                                       </div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>  
 </template>
 <style scoped>
-.vueperslides--fixed-height .vueperslide, .vueperslides--fixed-height .vueperslides__inner, .vueperslides--fixed-height .vueperslides__parallax-wrapper {
-    border-radius: 5px;
+.edit-container {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
-.vueperslides__arrow svg {
-
-    stroke-width: .5!important;
-
+.img-profile {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
+label.img-edit-input {
+    position: absolute;
+    display: flex;
+    bottom: -100px;
+    cursor:pointer;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background: linear-gradient(
+0deg
+, black 40%, transparent );
+    width: 140px;
+    text-align: center;
+    height: 140px;
+    justify-content: center;
+    align-items: center;
+}
+.img-edit img {
+    width: 100%;
+}
+.img-edit {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 140px;
+}
+
+</style>
+<style scoped>
 .account:hover .logout {
     display: block;
     top:-40px;
@@ -240,7 +324,7 @@ a.app_download {
 }
 a.router-link-active.router-link-exact-active.close-sec.btn.btn-close {
     position: absolute;
-    right: 10px;
+    right: 20px;
     top: 10px;
 }
 .show{
@@ -994,15 +1078,6 @@ export default {
     } else {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
-    // Get game carsousel data
-    /*
-    axios.get(`http://localhost:4000/api/down/show/${this.$route.params.id}`).then(res=>{
-        this.apps = res.data;
-    })
-    axios.get("http://localhost:4000/api/app/").then((res)=>{
-        this.apps_data = res.data
-    })
-    */
    const downloadAPI = `http://localhost:4000/api/down/show/${this.$route.params.id}`;
    const AppAPI = `http://localhost:4000/api/app/`
 
@@ -1018,6 +1093,7 @@ export default {
             for(let j=0;j<appLoad.length;j++){
                 if(resDownload[i].app_id == appLoad[j]._id){
                     arr.push({
+                        app_id :resDownload[j].app_id,
                         app_name:appLoad[j].app_name,
                         dev_name:appLoad[j].dev_name,
                         icon:appLoad[j].icon,
@@ -1029,6 +1105,16 @@ export default {
         this.apps = arr;
     })).catch(err=>{
         console.log(err);
+    })
+
+    // GET MY PROFILE
+    const memberAPI = `http://localhost:4000/api/edit-member/${this.$route.params.id}`
+    axios.get(memberAPI,this.regis).then((res)=>{
+        if(res.data != null){
+            this.regis = res.data;
+        } else{
+            this.$swal.fire("ผิดพลาด","ไม่สามารถดึงข้อมูลจาก server ได้" , "error");
+        }
     })
 
 
@@ -1072,6 +1158,38 @@ export default {
           location.reload();
         })
       }
+    },
+    close(){
+        $_('.edit-container').toggleClass('show');
+    },
+    onFilePicked(){
+            this.regis.pic = this.$refs.file.files[0].name
+            this.upload = this.$refs.file.files[0];
+            let reader = new FileReader();
+            reader.onload = (e)=>{
+                $_('#preview').attr('src',e.target.result);
+            }
+            reader.readAsDataURL(this.$refs.file.files[0]);
+            console.log(this.regis.pic);
+        },
+    EditUser(){
+        const formData = new FormData();
+        formData.append('file',this.upload)
+        axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
+            const updateAPI = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
+            axios.put(updateAPI,this.regis).then((res)=>{
+                if(res.data != null){
+                    this.$swal.fire("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{
+                        localStorage.setItem('mem_log',JSON.stringify(res.data));
+                        location.reload();
+                    })
+                } else {
+                    this.$swal.fire("ดำเนินการไม่สำเร็จ","เกิดข้อผิดพลาด ","error");
+                }
+            })
+        })
+        
+
     }
   }
 }

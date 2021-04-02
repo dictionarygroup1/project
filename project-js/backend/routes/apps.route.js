@@ -24,6 +24,19 @@ appRoute.route('/create').post((req,res,next)=>{
     })
 })
 
+//Update View
+appRoute.route('/update_view/:id').put((req,res,next)=>{
+    AppsModel.findByIdAndUpdate(req.params.id,{
+        $set : req.body
+    },(err,data)=>{
+        if(err){
+            return next(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
 // EDIT APP
 appRoute.route('/edit/:id').get((req,res,next)=>{
     AppsModel.findById(req.params.id,(error,data)=>{

@@ -71,7 +71,8 @@
             </div>
             <div class="account" v-show="isLogin" style="position:relative">
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
-                  <img src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
                   <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
               </router-link>
                 
@@ -1100,7 +1101,8 @@ export default {
             password:'',
             pic:'',
           },
-          upload:''
+          upload:'',
+          view:0
       }
   },
   created(){
@@ -1114,7 +1116,15 @@ export default {
     // Get game carsousel data
     axios.get(`http://localhost:4000/api/app/find/${this.$route.params.id}`).then(res=>{
         this.apps = res.data;
+        let view = res.data.view + 1;
+        axios.put(`http://localhost:4000/api/app/update_view/${this.$route.params.id}`,{view:view}).then(()=>{
+        })
     })
+
+    // Update view 
+  
+  
+    
   }
   ,
   methods:{

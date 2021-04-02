@@ -23,6 +23,11 @@ let appsSchema = new Schema({
     link:{
         type:String
     },
+    view:{
+        type:Number,
+        default:0
+    }
+    ,
     create_on:{
         type:Date,
         default:Date.now

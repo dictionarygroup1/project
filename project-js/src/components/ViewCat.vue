@@ -71,7 +71,8 @@
             </div>
             <div class="account" v-show="isLogin" style="position:relative">
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
-                  <img src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
+                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
                   <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
               </router-link>
                 
@@ -88,7 +89,12 @@
             <div class="card b-t">
               <div class="card-header d-flex w-100">
                   <div class="left d-flex justify-content-start w-100">
-                    เกมสนุก ๆ มากมายให้เลือกหา
+                    <span v-if="param == 'เกม'">เกมสนุก ๆ มากมายให้เลือกหา</span>
+                    <span v-else-if="param == 'การถ่ายภาพ'">พัฒนาฝีมือการถ่ายภาพของคุณด้วยแอปเหล่านี้</span>
+                    <span v-else-if="param == 'การศึกษา'">เรียนรู้นอกห้องเรียนไปด้วยกัน</span>
+                    <span v-else-if="param == 'การสื่อสาร'">พูดคุยแบบเห็นหน้าแบบเรียลไทม์กับเพื่อน ๆ ของคุณ</span>
+                    <span v-else-if="param == 'กีฬา'">ออกกำลังกายไม่ใช่เรื่องยากอีกต่อไป</span>
+                    <span v-else-if="param == 'ช็อปปิ้ง'">เรายกเอาร้านค้าทั้งร้านมาให้คุณ</span>
                   </div>
                   <div class="right d-flex justify-content-end w-100 align-items-center">
                     <router-link class="home-link" to="/app/เกม">เลือกดูทั้งหมด</router-link>
