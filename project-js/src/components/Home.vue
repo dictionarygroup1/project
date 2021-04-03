@@ -83,6 +83,7 @@
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
+      <!-- Header -->
       <div class="container mb-3">
         <div class="row">
           <div class="col-md-12">
@@ -95,6 +96,7 @@
           </div>
         </div>
       </div>
+      <!-- Carousel 3 -->
       <div class="container mb-3">
         <div class="row">
           <div class="col-md-4">
@@ -144,7 +146,7 @@
           </div>
         </div>
       </div>
-      
+      <!-- GAME SECTION -->
       <div class="container ">
         <div class="row">
           <div class="col-md-12">
@@ -179,6 +181,92 @@
                   </div>
                   <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <a class="app_download w-100" @click="Download(game._id,game.link,game.app_name)" style="cursor:pointer">
+                      รับ
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="hr"></div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!-- POPULAR APP -->
+      <div class="container mt-4 mb-4">
+        <div class="row">
+          <div class="col-md-12 ">
+            <div class="card b-t">
+              <div class="card-header d-flex w-100">
+                  <div class="left d-flex justify-content-start w-100">
+                    แอปพลิเคชันยอดนิยม
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 mt-3" v-for="pop in pops" :key="pop._id">
+              <div class="pop-container">
+                <router-link style="text-decoration:none" :to="{name:'ViewApp',params:{id:pop._id}}">
+                  <div class="pop-img">
+                    <img :src="'../../uploads/' + pop.preview[0]" alt="">
+                  </div>
+                   <div class="pop-content">
+                    <div class="pop-cat">
+                      {{pop.category}}
+                    </div>
+                    <div class="pop-name">
+                      {{pop.app_name}}
+                    </div>
+                    <div class="pop-dev_name">
+                      {{pop.dev_name}}
+                    </div>
+                  </div>
+                </router-link>
+               
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAME SECTION -->
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card b-t">
+              <div class="card-header d-flex w-100">
+                  <div class="left d-flex justify-content-start w-100">
+                    พร้อมเปลี่ยนรูปธรรมดา ให้กลายเป็นรูปยอดเยี่ยมหรือยัง
+                  </div>
+                  <div class="right d-flex justify-content-end w-100 align-items-center">
+                    <router-link class="home-link" to="/app/cat/การถ่ายภาพ">เลือกดูทั้งหมด</router-link>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div v-for="camera in cameras" :key="camera._id" class="col-md-3 mb-2 mt-2">
+              <div class="container-fluid p-0">
+                <div class="row" style="height:80px">
+                  <div class="col-md-3 d-flex align-items-center">
+                    <img :src="'../../uploads/'+camera.icon" alt="" class="img-fluid">
+                  </div>
+                  <div class="col-md-5 mt-2 p-0">
+                    <div class="app-name">
+                      <router-link style="text-decoration:none" :to="{name:'ViewApp',params:{id:camera._id}}">
+                        {{camera.app_name}}
+                      </router-link>
+                    </div>
+                    <div class="app-dev">
+                      {{camera.dev_name}}
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <a class="app_download w-100" @click="Download(camera._id,camera.link,camera.app_name)" style="cursor:pointer">
                       รับ
                     </a>
                   </div>
@@ -306,6 +394,43 @@
 </div>  
 </template>
 <style scoped>
+/** POPULAR CSS */
+.pop-content {
+    position: relative;
+    margin-top: 10px;
+}
+.pop-img {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    height: 150px;
+    border-radius: 5px;
+}
+.pop-img img {
+    width: 100%;
+    object-fit: cover;
+}
+.pop-cat, .pop-dev_name {
+    color: #747474;
+}
+.pop-name {
+    font-size: 20px;
+    color: black;
+}
+.pop-cat {
+    font-size: 16px;
+}
+.pop-dev_name {
+    font-size: 16px;
+}
+</style>
+<style scoped>
+.card-header {
+    border-bottom: 0px;
+    border-top: 1px solid #e6e6e6;
+    border-radius: 0;
+}
 .account:hover .logout {
     display: block;
     top:-40px;
@@ -348,6 +473,7 @@ a.app_download {
     font-size: 16px;
     text-decoration: none;
     color: black;
+    max-height: 47px;
 }
 .app-dev {
     font-size: 11px;
@@ -934,7 +1060,8 @@ label.app_pre_upload {
 
 /** CARD CSS */
 .card{
-  border: none !important;;
+  border: none ;
+  border-radius: 0px;
 }
 .card-header{
   background:none;
@@ -1134,6 +1261,7 @@ export default {
           },
           isLogin:localStorage.getItem('isLogin'),
           games:[],
+          cameras:[],
           regis:{
             fname:'',
             lname:'',
@@ -1142,7 +1270,8 @@ export default {
             pic:'',
           },
           upload:'',
-          search:''
+          search:'',
+          pops:[]
       }
   },
   created(){
@@ -1153,9 +1282,19 @@ export default {
     } else {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
-    // Get game carsousel data
+    // Get game  data
     axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
         this.games = res.data;
+    })
+
+    // Get camera  data
+    axios.get('http://localhost:4000/api/app/home_load/การถ่ายภาพ').then(res=>{
+        this.cameras = res.data;
+    })
+
+    // GET POPULAR APP
+    axios.get('http://localhost:4000/api/app/get_pop').then(res=>{
+      this.pops = res.data
     })
   }
   ,

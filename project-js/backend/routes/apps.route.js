@@ -94,6 +94,14 @@ appRoute.route('/get_5').get((req,res,next)=>{
     }).sort({create_on:-1}).limit(5);
 })
 
+//Get Popular app
+appRoute.route('/get_pop').get((req,res,next)=>{
+    AppsModel.find((error,data)=>{
+        if(error) return next(error)
+        else res.json(data)
+    }).sort({view:-1}).limit(4)
+})
+
 // Home Load
 appRoute.route('/home_load/:category').get((req,res,next)=>{
     AppsModel.find({category:req.params.category},(error,data)=>{

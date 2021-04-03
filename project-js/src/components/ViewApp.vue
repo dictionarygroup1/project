@@ -299,12 +299,13 @@ a.app_download {
     display: table-cell;
 }
 .app-name , .app-name a{
-  direction: ltr;
+    direction: ltr;
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 16px;
     text-decoration: none;
     color: black;
+    max-height: 47px;
 }
 .app-dev {
     font-size: 11px;
