@@ -87,26 +87,44 @@
                     แอปพลิเคชันทั้งหมด
                   </div>
                   <div class="card-body">
-                      <table class="table table-hover">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6">
+                            <label for="sea" class="form-label">ค้นหาข้อมูลด้วยชื่อแอปพลิเคชัน</label>
+                            <input v-model="search" id="sea" type="text" placeholder="ค้นหา" class="form-control">
+                          </div>
+                          <div class="col-6">
+                            <label for="cat" class="form-label">เลือกประเภทของแอปพลิเคชัน</label>
+                            <select v-model="category" name="cat" id="cat" class="form-select">
+                                <option >เกม</option>
+                                <option >การถ่ายภาพ</option>
+                                <option >การศึกษา</option>
+                                <option >การสื่อสาร</option>
+                                <option >กีฬา</option>
+                                <option >ช็อปปิ้ง</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <table class="table table-hover mt-5">
                           <thead>
-                          <tr align=center>
-                            
-                                <th>ICON</th>
-                                <th>ชื่อแอปพลิเคชั่น</th>
-                                <th>ชื่อผู้พัฒนา</th>
-                                <th>ประเภท</th>
-                                <th>แก้ไข/ลบ</th>
-                            
-                          </tr>
+                            <tr align=center>
+                              
+                                  <th>ICON</th>
+                                  <th>ชื่อแอปพลิเคชั่น</th>
+                                  <th>ชื่อผู้พัฒนา</th>
+                                  <th>ประเภท</th>
+                                  <th>แก้ไข/ลบ</th>
+                              
+                            </tr>
                           </thead>
                             
                           <tbody>
-                            <tr align=center v-for="app in apps" :key="app._id">
+                            <tr align=center v-for="app in filterList" :key="app._id">
                                 <td>
                                     <img :src="'http://localhost:8080/uploads/'+app.icon" style="width:40px">
                                 </td>
                                 <td>
-                                    
                                     {{app.app_name}}
                                 </td>
                                 <td>
@@ -775,7 +793,9 @@ export default {
     data(){
         return {
             admin_data : JSON.parse(localStorage.getItem('logged')),
-            apps:[]
+            apps:[],
+            search:'',
+            category:''
         }
     },
     created(){
@@ -784,10 +804,9 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = "http://localhost:4000/api/app/";
+        const apiURL = `http://localhost:4000/api/app/${this.search}`;
         axios.get(apiURL).then(res=>{
             this.apps = res.data
-            
         })
     },
     mounted(){
@@ -820,6 +839,22 @@ export default {
             $(".page-wrapper").addClass("toggled");
         });
     },
+    computed:{
+      filterList(){
+           return this.apps.filter((value)=>{
+              if(this.search != ''){
+                return value.app_name.toLowerCase().includes(this.search.toLowerCase())
+              } 
+              else if (this.category != ''){
+                return value.category.toLowerCase().includes(this.category.toLowerCase());
+              }  
+              else {
+                return value;
+              }
+          })
+        }
+    }
+    ,
     methods:{
         delFn(id){
             const apiURL = `http://localhost:4000/api/app/del/${id}`;
