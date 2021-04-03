@@ -811,7 +811,7 @@ export default {
     created(){
         let session = localStorage.getItem('logged')
         if(session == null){
-            this.$router.push('/console');
+            location.href ="http://localhost:8080/console"
         }
 
         // Get Last App

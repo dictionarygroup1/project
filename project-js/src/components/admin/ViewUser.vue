@@ -838,7 +838,7 @@ export default {
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
               this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
-                 location.reload();
+                 location.href ="http://localhost:8080/console";
               })
             }
         }
