@@ -789,9 +789,7 @@ a#t1-close {
 import $ from 'jquery'
 import axios from 'axios';
 export default {
-    components:{
-      Pagination
-    },
+   
     data(){
         return {
             admin_data : JSON.parse(localStorage.getItem('logged')),

@@ -92,9 +92,18 @@
                     style="background: #FFFFFF;
                     border: none;
                     border-radius: 2px;
+                    
                     " width="100%" height="600px" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=5a84ab93-77a9-4dbc-b4d6-a47fe991477e&autoRefresh=60&theme=light"></iframe>
                   </div>
                 </div>
+            </div>
+            <div class="col-6">
+              <div class="user-chart">
+                <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="200" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=f81e0278-08fb-40c8-b581-5dd8e24d046c&autoRefresh=60&theme=light"></iframe>
+              </div>
+            </div>
+            <div class="col-6">
+              <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="200" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=a08e622d-29f6-40ac-abb6-18c613ad0358&autoRefresh=60&theme=light"></iframe>
             </div>
           </div>
         </div>
