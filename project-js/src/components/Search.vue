@@ -1,8 +1,9 @@
 ﻿<template>
+
     <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
-              <div class="sidebar-header">
+            <div class="sidebar-header">
                 <div class="search-container">
                   <div class="row">
                     <div class="col-md-2">
@@ -13,47 +14,48 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
+
             <div class="sidebar-menu" style="padding:10px;">
                  <ul>
                     <li class="mb-1"> 
-                        <router-link to="/">
+                        <router-link to="/" >
                           <img src="../assets/ionic-ios-star-outline.svg" alt="">
                           <span>ค้นพบสิ่งใหม่ ๆ</span>    
                        </router-link>
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'เกม'}}">
+                        <router-link :class="{'side-active rounded':param=='เกม'}" :to="{name:'ViewCat',params:{category:'เกม'}}">
                             <img src="../assets/awesome-gamepad.svg">
                             <span>เกม</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'การถ่ายภาพ'}}">
+                        <router-link :class="{'side-active rounded':param=='การถ่ายภาพ'}" :to="{name:'ViewCat',params:{category:'การถ่ายภาพ'}}">
                             <img src="../assets/awesome-camera.svg">
                             <span>การถ่ายภาพ</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'การศึกษา'}}" >
+                        <router-link :class="{'side-active rounded':param=='การศึกษา'}" :to="{name:'ViewCat',params:{category:'การศึกษา'}}">
                             <img src="../assets/awesome-graduation-cap.svg">
                             <span>การศึกษา</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'การสื่อสาร'}}">
+                        <router-link :class="{'side-active rounded':param=='การสื่อสาร'}" :to="{name:'ViewCat',params:{category:'การสื่อสาร'}}">
                             <img src="../assets/ionic-ios-videocam.svg">
                             <span>การสื่อสาร</span>
                         </router-link> 
                     </li>
                     <li class="mb-1">
-                        <router-link :to="{name:'ViewCat',params:{category:'กีฬา'}}" >
+                        <router-link :class="{'side-active rounded':param=='กีฬา'}" :to="{name:'ViewCat',params:{category:'กีฬา'}}" >
                             <img src="../assets/ionic-ios-american-football.svg">
                             <span>กีฬา</span>
                         </router-link> 
                     </li>
                     <li class="mb-1" >
-                        <router-link :to="{name:'ViewCat',params:{category:'ช็อปปิ้ง'}}">
+                        <router-link :class="{'side-active rounded':param=='ช็อปปิ้ง'}" :to="{name:'ViewCat',params:{category:'ช็อปปิ้ง'}}">
                             <img src="../assets/ionic-ios-cart.svg">
                             <span>ช็อปปิ้ง</span>
                         </router-link> 
@@ -81,26 +83,21 @@
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
-        <div class="container ">
+       <div class="container ">
         <div class="row">
           <div class="col-md-12">
-            <div class="card b-b">
-              <div class="card-header d-flex w-100 ">
-                  <div class="left d-flex justify-content-start w-100">
-                    บัญชีของฉัน
+            <div class="card ">
+              <div class="card-header b-b d-flex w-100" style="border-bottom:1px solid #D8D8D8">
+                  <div class="left d-flex justify-content-start w-100 s">
+                      ผลการค้นหา "{{search}}"
                   </div>
-                  <div class="right d-flex justify-content-end w-100 align-items-center">
-                    <router-link class="home-link" to="#" @click="close">
-                        <img :src="'../../uploads/profiles/'+login.pic" width="40" style="margin-right:10px;border-radius:50%" alt="" >    แก้ไขข้อมูล
-                    </router-link>
-                  </div>
+                 
               </div>
             </div>
           </div>
         </div>
-        <div class="row b-t">
-            <h5 class="p-4">แอปพลิเคชันของฉัน</h5>
-          <div v-for="app in apps" :key="app._id" class="col-md-3 mb-2 mt-2">
+        <div class="row ">
+          <div v-for="app in filterList" :key="app._id" class="col-md-3 mb-2 mt-2">
               <div class="container-fluid p-0">
                 <div class="row" style="height:80px">
                   <div class="col-md-3 d-flex align-items-center">
@@ -108,7 +105,7 @@
                   </div>
                   <div class="col-md-5 mt-2 p-0">
                     <div class="app-name">
-                      <router-link style="text-decoration:none"  :to="{name:'ViewApp',params:{id:app.app_id}}">
+                      <router-link style="text-decoration:none" :to="{name:'ViewApp',params:{id:app._id}}">
                         {{app.app_name}}
                       </router-link>
                     </div>
@@ -133,101 +130,118 @@
       </div>
     </main>
 
-    <!-- Edit Section -->
-    <div class="edit-container">
-        <div class="edit-form" style="width:990px;position:relative">
-            <router-link class="close-sec btn btn-close" to='#' style="z-index:1000" @click="close"></router-link>
-            <form @submit.prevent="EditUser">
+  <!-- เข้าสู่ระบบ -->
+    <div class="login_section">
+      <div class="login_form" style="position:relative">
+        <router-link class="close-sec btn btn-close" to='#' @click="showLogin"></router-link>
+        <form @submit.prevent="Login">
+            <div class="form-container">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card" style="padding: 20px;box-shadow: 0 3px 20px rgb(0 0 0 / 16%);">
-                                <div class="card-header ">
-                                    แก้ไขบัญชีของคุณ
-                                </div>
-                                <div class="card-body b-t">
-                                   <div class="row">
-                                       <div class="col-12 mb-5">
-                                            <div class="img-profile">
-                                                <div class="img-edit">
-                                                    <img id="preview" :src="'../../uploads/profiles/'+regis.pic"  alt="">
-                                                    <label class="img-edit-input" for="file">แก้ไข</label>
-                                                    <input style="display:none" type="file" name="file" v-on:change="onFilePicked()" id="file" ref="file">
-                                                </div>
-                                            </div>
-                                       </div>
-                                       <div class="col-6 mb-3">
-                                           <input v-model="regis.fname" type="text" class="form-control" placeholder="ชื่อจริง">
-                                       </div>
-                                       <div class="col-6 mb-3">
-                                           <input v-model="regis.lname" type="text" class="form-control" placeholder="นามสกุล">
-                                       </div>
-                                       <div class="col-6 mb-3">
-                                           <input v-model="regis.username" type="text" class="form-control" placeholder="ชื่อผู้ใช้">
-                                       </div>
-                                       <div class="col-6 mb-3">
-                                           <input v-model="regis.password" type="password" class="form-control" placeholder="นามสกุล">
-                                       </div>
-                                       <div class="col-6 offset-6 mb-5">
-                                           <button class="btn d-block btn-coral w-100" style="">บันทึกข้อมูล</button>
-                                       </div>
-                                   </div>
-                                </div>
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div class="form-img p-3">
+                                <img src="../assets/ionic-ios-contact-coral.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-3 mb-4 text-center">
+                            <h3>เข้าสู่ระบบ</h3>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="member.username" placeholder="Username" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="password" v-model="member.password" placeholder="Password" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                            <div class="form-gruop">
+                                <button type="submit" class="btn btn-coral form-control"> เข้าสู่ระบบ </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-1 mb-1 text-center">
+                            <span class="or">หรือ</span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop text-center">
+                                <rounter-link to="/console/register" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
+             </div>  
+            </div>
+        </form>
+      </div>
     </div>
+<!-- สมัครสมาชิก -->
+    <div class="regis_section">
+      <div class="login_form" style="position:relative">
+        <router-link class="close-sec btn btn-close" to='#' @click="showRegis"></router-link>
+        <form @submit.prevent="Register">
+            <div class="form-container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div class="form-img p-3">
+                                <img v-if="regis.pic==''" src="../assets/ionic-ios-contact-coral.svg" alt="">
+                                <img v-else src="" class="img-fluid" style="width:120px" alt="" id="preview_logo">
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-3 mb-4 text-center">
+                            <h3>สมัครสมาชิก</h3>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="regis.fname" placeholder="ชื่อจริง" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="regis.lname" placeholder="นามสกุล" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="text" v-model="regis.username" placeholder="ชื่อผู้ใช้" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input type="password" v-model="regis.password" placeholder="รหัสผ่าน" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop">
+                                <input  type="file" id="file" ref="file" accept="image/*" placeholder="อัปโหลดรูปภาพของคุณ" required v-on:change="onFilePicked()" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-1">
+                            <div class="form-gruop">
+                                <button type="submit" class="btn btn-coral form-control"> สมัครสมาชิก </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-1 mb-1 text-center">
+                            <span class="or">หรือ</span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-gruop text-center">
+                                <rounter-link @click="showLogin" class="btn btn-register form-control">เข้าสู่ระบบ</rounter-link>
+                            </div>
+                        </div>
+                    </div>
+             </div>  
+            </div>
+        </form>
+      </div>
+    </div>
+
 </div>  
 </template>
 <style scoped>
-.edit-container {
-    position: absolute;
-    z-index: 999;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    background: rgba(0,0,0,0.45);
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-.img-profile {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
-label.img-edit-input {
-    position: absolute;
-    display: flex;
-    bottom: -100px;
-    cursor:pointer;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    background: linear-gradient(
-0deg
-, black 40%, transparent );
-    width: 140px;
-    text-align: center;
-    height: 140px;
-    justify-content: center;
-    align-items: center;
-}
-.img-edit img {
-    width: 100%;
-}
-.img-edit {
-    position: relative;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 140px;
-}
 
-</style>
-<style scoped>
 .account:hover .logout {
     display: block;
     top:-40px;
@@ -265,7 +279,7 @@ a.app_download {
 }
 .app-name , .app-name a{
   direction: ltr;
-    text-overflow: ellipsis;
+     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 16px;
     text-decoration: none;
@@ -283,9 +297,6 @@ a.app_download {
 .b-t{
   border-top:1px solid  #D8D8D8;
 }
-.b-b{
-  border-bottom:2px solid  #EFEFEF;
-}
 .hide{
   display:none!important;
 }
@@ -300,7 +311,9 @@ a.app_download {
 .round-5{
   border-radius: 5px;
 }
-
+.card-body {
+    background: #EFEFEF;
+}
 .main-header-text span {
     font-size: 34px;
 }
@@ -322,11 +335,25 @@ a.app_download {
 }
 a.router-link-active.router-link-exact-active.close-sec.btn.btn-close {
     position: absolute;
-    right: 20px;
+    right: 10px;
     top: 10px;
 }
 .show{
   display: flex !important;
+  opacity: 1;
+  margin-left: 0;
+  animation:fadeon .3s ease 1;
+}
+
+@keyframes fadeon{
+    from{
+        opacity: 0;
+        margin-left: 20px;
+    }
+    to{
+        opacity: 1;
+        margin-left: 0;
+    }
 }
 div.login_section , .regis_section {
     position: fixed;
@@ -356,7 +383,9 @@ div.login_section , .regis_section {
     width:500px;
     box-shadow: 0 3px 20px rgba(0,0,0,.17);
 }
-
+h3 ,.or , label{
+    color:#747474;
+}
 .btn-coral{
     background:#EF6060;
     color: white;
@@ -1039,13 +1068,13 @@ a#t1-close {
   }
 }
 </style>
-
 <script>
 import $_ from 'jquery'
 import axios from 'axios'
 export default {
   data(){
       return {
+          search:this.$route.params.app_name,
           member:{
             username:'',
             password:''
@@ -1055,7 +1084,6 @@ export default {
           },
           isLogin:localStorage.getItem('isLogin'),
           apps:[],
-          apps_data : [],
           regis:{
             fname:'',
             lname:'',
@@ -1064,62 +1092,63 @@ export default {
             pic:'',
           },
           upload:'',
-          search: ''
+          search_:''
       }
   },
   created(){
     if(localStorage.getItem('mem_log') == null){
-        this.$router.push('/');
       this.login = {
         fname : 'f'
       }
     } else {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
-   const downloadAPI = `http://localhost:4000/api/down/show/${this.$route.params.id}`;
-   const AppAPI = `http://localhost:4000/api/app/`
-
-    const axiosOne = axios.get(downloadAPI);
-    const axiosTwo = axios.get(AppAPI);
-
-    let resDownload , appLoad;
-    axios.all([axiosOne,axiosTwo]).then(axios.spread((...res)=>{
-        resDownload = Array.from(res[0].data)
-        appLoad = Array.from(res[1].data)
-        let arr = []
-        for(let i=0;i<resDownload.length;i++){
-            for(let j=0;j<appLoad.length;j++){
-                if(resDownload[i].app_id == appLoad[j]._id){
-                    arr.push({
-                        app_id :resDownload[j].app_id,
-                        app_name:appLoad[j].app_name,
-                        dev_name:appLoad[j].dev_name,
-                        icon:appLoad[j].icon,
-                        mem_id:resDownload[i].mem_id
-                    })
-                }
-            }
-        }
-        this.apps = arr;
-    })).catch(err=>{
-        console.log(err);
-    })
-
-    // GET MY PROFILE
-    const memberAPI = `http://localhost:4000/api/edit-member/${this.$route.params.id}`
-    axios.get(memberAPI,this.regis).then((res)=>{
-        if(res.data != null){
-            this.regis = res.data;
-        } else{
-            this.$swal.fire("ผิดพลาด","ไม่สามารถดึงข้อมูลจาก server ได้" , "error");
-        }
-    })
-
-
+    // Get game carsousel data
+      axios.get(`http://localhost:4000/api/app`).then(res=>{
+            this.apps = res.data;
+        })
   }
   ,
+  computed:{
+      filterList(){
+        return this.apps.filter(app_name => {
+            return app_name.app_name.toLowerCase().includes(this.search.toLowerCase())
+        })  
+      }
+  },
   methods:{
-    Download(id,link,name){
+    showLogin(){
+      $_('.login_section').toggleClass("show",1000); 
+    },
+    showRegis(){
+      $_('.login_section').removeClass("show")
+      $_('.regis_section').toggleClass('show',1000)  
+    },
+    Login(){
+        const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
+
+        axios.post(apiURL).then(res=>{
+          
+            if(res.data.isAdmin){
+              localStorage.setItem('logged',JSON.stringify(res.data));
+                if(localStorage.getItem('logged')!= null || localStorage.getItem('logged')!= undefined){
+                  this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ Admin", "success").then(()=>{
+                      this.$router.push('/console/dashboard')
+                  })
+                } 
+            }else {
+              localStorage.setItem('mem_log',JSON.stringify(res.data));
+              this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ", "success").then(()=>{
+                  localStorage.setItem('isLogin',true)
+                  location.reload();
+                  
+              })
+              
+            }
+            
+        })
+    },
+   Download(id,link,name){
         if(this.isLogin == null){
           this.$swal.fire({
             title:"เข้าสู่ระบบ",
@@ -1157,35 +1186,19 @@ export default {
         })
       }
     },
-    close(){
-        $_('.edit-container').toggleClass('show');
-    },
-    onFilePicked(){
-            this.regis.pic = this.$refs.file.files[0].name
-            this.upload = this.$refs.file.files[0];
-            let reader = new FileReader();
-            reader.onload = (e)=>{
-                $_('#preview').attr('src',e.target.result);
-            }
-            reader.readAsDataURL(this.$refs.file.files[0]);
-            console.log(this.regis.pic);
-        },
-    EditUser(){
-        const formData = new FormData();
-        formData.append('file',this.upload)
-        axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
-            const updateAPI = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
-            axios.put(updateAPI,this.regis).then((res)=>{
-                if(res.data != null){
-                    this.$swal.fire("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{
-                        localStorage.setItem('mem_log',JSON.stringify(res.data));
-                        location.reload();
-                    })
-                } else {
-                    this.$swal.fire("ดำเนินการไม่สำเร็จ","เกิดข้อผิดพลาด ","error");
-                }
-            })
-        })
+    Register(){
+      const formData = new FormData();
+      formData.append('file',this.upload);
+      axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
+        const appURL = "http://localhost:4000/api/create-member";
+          axios.post(appURL,this.regis).then(()=>{
+              this.$swal("สมัครสมาชิกสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อเข้าสู่ระบบ","success").then(()=>{
+                    location.reload();
+              })
+          }).catch(err=>{
+          console.log(err);
+          })
+      })
     },
     Search(){
       this.$router.push({name:'Search',params:{app_name:this.search}});

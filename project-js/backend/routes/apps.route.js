@@ -24,6 +24,7 @@ appRoute.route('/create').post((req,res,next)=>{
     })
 })
 
+
 //Update View
 appRoute.route('/update_view/:id').put((req,res,next)=>{
     AppsModel.findByIdAndUpdate(req.params.id,{

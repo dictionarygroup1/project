@@ -10,7 +10,7 @@
                       <img src="../assets/ionic-ios-search.svg" alt="">
                     </div>
                     <div class="col-md-10">
-                      <input type="text" class="search-btn" placeholder="ค้นหา">
+                      <input  @keyup.enter="Search" v-model="search" type="text" class="search-btn" placeholder="ค้นหา">
                     </div>
                   </div>
                 </div>
@@ -154,7 +154,7 @@
                     เกมสนุก ๆ มากมายให้เลือกหา
                   </div>
                   <div class="right d-flex justify-content-end w-100 align-items-center">
-                    <router-link class="home-link" to="/app/เกม">เลือกดูทั้งหมด</router-link>
+                    <router-link class="home-link" to="/app/cat/เกม">เลือกดูทั้งหมด</router-link>
                   </div>
               </div>
             </div>
@@ -1141,7 +1141,8 @@ export default {
             password:'',
             pic:'',
           },
-          upload:''
+          upload:'',
+          search:''
       }
   },
   created(){
@@ -1252,6 +1253,9 @@ export default {
           console.log(err);
           })
       })
+    },
+    Search(){
+      this.$router.push({name:'Search',params:{app_name:this.search}});
     }
   }
 }

@@ -5,6 +5,8 @@ import ViewMember from "@/components/api_test/ViewMember.vue";
 import ViewApp from "@/components/ViewApp.vue"
 import ViewCat from "@/components/ViewCat.vue"
 import Account from "@/components/Account.vue";
+import Search from "@/components/Search.vue";
+
 /** Admin Route */
 import AdminLogin from "@/components/admin/Login.vue";
 import Dashboard from "@/components/admin/Dashboard.vue";
@@ -28,6 +30,12 @@ const routes = [
     component:Account
   }
   ,
+  {
+    path:"/search/:app_name",
+    name:"Search",
+    component:Search
+  },
+
   {
     path:"/app/view/:id",
     name:"ViewApp",
