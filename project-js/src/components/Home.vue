@@ -105,7 +105,7 @@
                   <div class="card-content">
                     <div class="d-flex justify-content-start w-100 card-text flex-column">
                       <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
+                      <p>เรามีแอปพลิเคชันเกี่ยวกับการสื่อสารดี ๆ มากมายให้คุณเลือกใช้</p>
                     </div>
                     <div class="d-flex justify-content-end w-100">
                         <img src="#" class="w-80" alt="">
