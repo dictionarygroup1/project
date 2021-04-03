@@ -284,6 +284,7 @@ a.app_download {
     font-size: 16px;
     text-decoration: none;
     color: black;
+    max-height: 47px;
 }
 .app-dev {
     font-size: 11px;
