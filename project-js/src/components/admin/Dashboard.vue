@@ -10,7 +10,7 @@
                 </div>
                 <div class="user-info">
                   <span class="user-name">
-                    KITTISAK 
+                    {{admin_data.fname}} 
                   </span>
                     <span class="user-role">ผู้ดูแลระบบ</span>
                     <span class="user-status">
@@ -803,6 +803,7 @@ import axios from 'axios';
 export default {
     data(){
         return {
+            admin_data : JSON.parse(localStorage.getItem('logged')),
             apps:[],
             members:[]
         }
