@@ -108,7 +108,9 @@
                       <p>เรามีแอปพลิเคชันเกี่ยวกับการสื่อสารดี ๆ มากมายให้คุณเลือกใช้</p>
                     </div>
                     <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
+                        <div class="car-img">
+                          <img src="../../src/assets/bg1.jpg" style="width:100%" alt="">
+                        </div>
                     </div>
                   </div>
               </div>
@@ -119,11 +121,13 @@
               <div class="card-body round-5">
                   <div class="card-content">
                     <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
+                      <p>การศึกษา</p>
+                      <p>เราพร้อมนำเสนอแอปพลิเคชันที่ช่วยทำให้ห้องเรียน อยู่กับคุณได้ตลอดเวลา</p>
                     </div>
                     <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
+                         <div class="car-img">
+                          <img src="../../src/assets/car-2.jpg" style="width:100%" alt="">
+                        </div>
                     </div>
                   </div>
               </div>
@@ -134,11 +138,13 @@
               <div class="card-body round-5">
                   <div class="card-content">
                     <div class="d-flex justify-content-start w-100 card-text flex-column">
-                      <p>การสื่อสาร</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur </p>
+                      <p>เกม</p>
+                      <p>ยกทัพย์ความสุขส่งมอบถึงมือคุณ</p>
                     </div>
                     <div class="d-flex justify-content-end w-100">
-                        <img src="#" class="w-80" alt="">
+                        <div class="car-img">
+                          <img src="../../src/assets/car-3.jpg" style="width:100%" alt="">
+                        </div>
                     </div>
                   </div>
               </div>
@@ -395,6 +401,19 @@
 </template>
 <style scoped>
 /** POPULAR CSS */
+.car-img img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+.car-img {
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    display: block;
+}
 .pop-content {
     position: relative;
     margin-top: 10px;
