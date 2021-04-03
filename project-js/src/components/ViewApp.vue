@@ -10,7 +10,7 @@
                       <img src="../assets/ionic-ios-search.svg" alt="">
                     </div>
                     <div class="col-md-10">
-                      <input type="text" class="search-btn" placeholder="ค้นหา">
+                      <input  @keyup.enter="Search" v-model="search" type="text" class="search-btn" placeholder="ค้นหา">
                     </div>
                   </div>
                 </div>
@@ -1210,6 +1210,9 @@ export default {
           console.log(err);
           })
       })
+    },
+    Search(){
+      this.$router.push({name:'Search',params:{app_name:this.search}});
     }
   }
 }

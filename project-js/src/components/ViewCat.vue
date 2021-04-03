@@ -10,7 +10,7 @@
                       <img src="../assets/ionic-ios-search.svg" alt="">
                     </div>
                     <div class="col-md-10">
-                      <input type="text" class="search-btn" placeholder="ค้นหา">
+                      <input  @keyup.enter="Search" v-model="search" type="text" class="search-btn" placeholder="ค้นหา">
                     </div>
                   </div>
                 </div>
@@ -96,9 +96,7 @@
                     <span v-else-if="param == 'กีฬา'">ออกกำลังกายไม่ใช่เรื่องยากอีกต่อไป</span>
                     <span v-else-if="param == 'ช็อปปิ้ง'">เรายกเอาร้านค้าทั้งร้านมาให้คุณ</span>
                   </div>
-                  <div class="right d-flex justify-content-end w-100 align-items-center">
-                    <router-link class="home-link" to="/app/เกม">เลือกดูทั้งหมด</router-link>
-                  </div>
+                  
               </div>
             </div>
           </div>
@@ -1222,6 +1220,9 @@ export default {
           console.log(err);
           })
       })
+    },
+    Search(){
+      this.$router.push({name:'Search',params:{app_name:this.search}});
     }
   }
 }
