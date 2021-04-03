@@ -73,7 +73,7 @@
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
                   <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
                   <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
-                  <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
+                  <span style="color : #707070 ; padding-left:10px"> {{login.fname + ' ' + login.lname}}</span>
               </router-link>
                 
                 <div class="logout" @click="Logout">

@@ -73,7 +73,7 @@
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
                   <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
                   <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
-                  <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
+                  <span style="color : #707070 ; padding-left:10px"> {{login.fname + ' ' + login.lname}}</span>
               </router-link>
                 
                 <div class="logout" @click="Logout">
@@ -92,7 +92,7 @@
                     <div class="header-tag">
                         <h3>{{apps.app_name}}</h3>
                         <h5>{{apps.dev_name}}</h5>
-                        <a class="app_download mt-3" @click="Download(game._id,game.link,game.app_name)" style="cursor:pointer">
+                        <a class="app_download mt-3" @click="Download(apps._id,apps.link,apps.app_name)" style="cursor:pointer">
                         รับ
                         </a>
                     </div>
