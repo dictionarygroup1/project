@@ -102,8 +102,8 @@ appRoute.route('/get_pop').get((req,res,next)=>{
     }).sort({view:-1}).limit(4)
 })
 //Check App
-appRoute.route('/chk_app/:app_name').post((req,res,next)=>{
-    AppsModel.findOne(req.params.username,(error,data)=>{
+appRoute.route('/chk_app/:app_name').get((req,res,next)=>{
+    AppsModel.findOne({app_name:req.params.app_name},(error,data)=>{
         if(error){
             return next(error)
         } else {

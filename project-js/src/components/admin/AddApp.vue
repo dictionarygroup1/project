@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
@@ -873,7 +873,6 @@ export default {
         
         },
         formSubmit(){
-            console.log(typeof this.upload.preview_icon);
             let multiple = [];
             const formData = new FormData();
             const formData2 = new FormData();
@@ -886,10 +885,7 @@ export default {
             }
             
             try{
-                axios.post(`http://localhost:4000/api/app/chk_app/${this.app.app_name}`).then(res=>{
-                  if(res.data != ''){
-                    this.$swal.fire("ผิดพลาด",'ชื่อแอปพลิเคชันซ้ำ กรุณาใช้ชื่อแอปพลิเคชันอื่น','warning')
-                  } else {
+                
                     axios.post('http://localhost:4000/upload/multi',formData).then(()=>{
                       axios.post('http://localhost:4000/upload',formData2).then(()=>{
                           const appURL = "http://localhost:4000/api/app/create";
@@ -902,8 +898,7 @@ export default {
                           })
                       })
                     })
-                  }
-                })
+               
             }
             catch(err){
                 console.log(err);

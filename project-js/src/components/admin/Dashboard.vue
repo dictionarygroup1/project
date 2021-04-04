@@ -1,5 +1,5 @@
 <template>
-<div class="page-wrapper chiller-theme">
+<div class="page-wrapper chiller-theme" style="background:#efefef">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
 
@@ -84,9 +84,6 @@
           <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                  <div class="card-header">
-                    จำนวนการดาวน์โหลด
-                  </div>
                   <div class="card-body">
                     <iframe 
                     style="background: #FFFFFF;
@@ -97,25 +94,25 @@
                   </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-6 mt-3">
               <div class="user-chart">
                 <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="200" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=f81e0278-08fb-40c8-b581-5dd8e24d046c&autoRefresh=60&theme=light"></iframe>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-6 mt-3">
               <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="200" src="https://charts.mongodb.com/charts-project-js-fxiuz/embed/charts?id=a08e622d-29f6-40ac-abb6-18c613ad0358&autoRefresh=60&theme=light"></iframe>
             </div>
           </div>
         </div>
         <div class="container">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 mt-3">
               <div class="card">
                   <div class="card-body rounded">
                     <div class="card-header mb-3">
                       แอปพลิเคชันล่าสุด
                     </div>
-                    <div class="card-content bg-g round-5">
+                    <div class="card-content round-5">
                       <table class="table table-hover">
                         <thead>
                           <tr align=center>
@@ -136,13 +133,13 @@
                   </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mt-3">
                 <div class="card">
                   <div class="card-body rounded">
                     <div class="card-header mb-3">
                       ผู้ใช้ที่เพิ่มล่าสุด
                     </div>
-                    <div class="card-content bg-g round-5">
+                    <div class="card-content round-5">
                       <table class="table table-hover">
                         <thead>
                           <tr align=center>
@@ -639,7 +636,7 @@ body{
   /*-----------------------------chiller-theme-------------------------------------------------*/
   
   .chiller-theme .sidebar-wrapper {
-      background:#EFEFEF;
+      background:#FBFBFB;
   }
   /*
   .chiller-theme .sidebar-wrapper .sidebar-header,
