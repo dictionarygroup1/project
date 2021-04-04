@@ -101,6 +101,16 @@ appRoute.route('/get_pop').get((req,res,next)=>{
         else res.json(data)
     }).sort({view:-1}).limit(4)
 })
+//Check App
+appRoute.route('/chk_app/:app_name').post((req,res,next)=>{
+    AppsModel.findOne(req.params.username,(error,data)=>{
+        if(error){
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
 
 // Home Load
 appRoute.route('/home_load/:category').get((req,res,next)=>{
