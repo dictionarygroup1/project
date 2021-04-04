@@ -1,4 +1,5 @@
 const express = require('express');
+const Member = require('../models/Member');
 const memberRoute = express.Router();
 // Member Model
 let MemberModel = require('../models/Member');
@@ -34,6 +35,17 @@ memberRoute.route('/edit-member/:id').get((req,res,next)=>{
         }
         else {
             res.json(data)
+        }
+    })
+})
+
+// Check Before register
+memberRoute.route('/chk_mem/:username').post((req,res,next)=>{
+    MemberModel.find({username:req.params.username},(error,data)=>{
+        if(error){
+            return next(error);
+        } else {
+            res.json(data);
         }
     })
 })

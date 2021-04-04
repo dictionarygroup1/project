@@ -1190,15 +1190,27 @@ export default {
     Register(){
       const formData = new FormData();
       formData.append('file',this.upload);
-      axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
-        const appURL = "http://localhost:4000/api/create-member";
-          axios.post(appURL,this.regis).then(()=>{
-              this.$swal("สมัครสมาชิกสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อเข้าสู่ระบบ","success").then(()=>{
-                    location.reload();
-              })
-          }).catch(err=>{
-          console.log(err);
-          })
+      axios.post(`http://localhost:4000/api/chk_mem/${this.regis.username}`).then((res)=>{
+        if(res.data == ''){
+            axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
+              const appURL = "http://localhost:4000/api/create-member";
+                axios.post(appURL,this.regis).then(()=>{
+                    this.$swal("สมัครสมาชิกสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อเข้าสู่ระบบ","success").then(()=>{
+                        this.regis ={
+                          fname:'',
+                          lname:'',
+                          username:'',
+                          password:'',
+                          pic:'',
+                        }
+                    })
+                }).catch(err=>{
+                console.log(err);
+                })
+            })
+        } else {
+          this.$swal.fire("ผิดพลาด","กรุณาใช้ผู้ใช้อื่น","warning")
+        }
       })
     },
     Search(){
