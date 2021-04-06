@@ -53,7 +53,7 @@ memberRoute.route('/chk_mem/:username').post((req,res,next)=>{
 // Update member data
 memberRoute.route('/update-member/:id').put((req,res,next)=>{
     MemberModel.findByIdAndUpdate(req.params.id,{
-        $set:req.body
+        $set : req.body
     },(error,data)=>{
         if(error){
             return next(error)

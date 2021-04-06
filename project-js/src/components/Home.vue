@@ -289,7 +289,7 @@
     </main>
 
   <!-- เข้าสู่ระบบ -->
-    <div class="login_section">
+    <div id="login" class="login_section" style="display:none;">
       <div class="login_form" style="position:relative">
         <router-link class="close-sec btn btn-close" to='#' @click="showLogin"></router-link>
         <form @submit.prevent="Login">
@@ -335,7 +335,7 @@
       </div>
     </div>
 <!-- สมัครสมาชิก -->
-    <div class="regis_section">
+    <div class="regis_section" style="display:none">
       <div class="login_form" style="position:relative">
         <router-link class="close-sec btn btn-close" to='#' @click="showRegis"></router-link>
         <form @submit.prevent="Register">
@@ -557,7 +557,7 @@ div.login_section , .regis_section {
     width: 100%;
     height: 100vh;
     opacity: 1;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999;
@@ -1328,9 +1328,9 @@ export default {
             reader.readAsDataURL(this.$refs.file.files[0]);
         },
     showLogin(){
-      $_('.regis_section').removeClass('show')  
-      $_('.login_section').toggleClass("show",1000); 
-      
+      //$_('.regis_section').removeClass('show')
+      $_('#login').fadeToggle();
+     
     },
     showRegis(){
       $_('.login_section').removeClass("show")
