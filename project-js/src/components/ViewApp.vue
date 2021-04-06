@@ -144,16 +144,17 @@
     </main>
 
   <!-- เข้าสู่ระบบ -->
-    <div class="login_section">
+    <div class="login_section" >
       <div class="login_form" style="position:relative">
-        <router-link class="close-sec btn btn-close" to='#' @click="showLogin"></router-link>
         <form @submit.prevent="Login">
             <div class="form-container">
+              <button type="button" class="close-sec btn btn-close" @click="showLogin"></button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
                             <div class="form-img p-3">
                                 <img src="../assets/ionic-ios-contact-coral.svg" alt="">
+                               
                             </div>
                         </div>
                         <div class="col-md-12 p-3 mb-4 text-center">
@@ -179,7 +180,7 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-gruop text-center">
-                                <rounter-link to="/console/register" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
+                                <rounter-link @click="showRegis" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
                             </div>
                         </div>
                     </div>
@@ -190,10 +191,10 @@
     </div>
 <!-- สมัครสมาชิก -->
     <div class="regis_section">
-      <div class="login_form" style="position:relative">
-        <router-link class="close-sec btn btn-close" to='#' @click="showRegis"></router-link>
+      <div class="login_form">
         <form @submit.prevent="Register">
             <div class="form-container">
+              <button type="button" class="close-sec btn btn-close" @click="showLogin"></button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
@@ -255,13 +256,10 @@
 </div>  
 </template>
 <style scoped>
-.vueperslides--fixed-height .vueperslide, .vueperslides--fixed-height .vueperslides__inner, .vueperslides--fixed-height .vueperslides__parallax-wrapper {
-    border-radius: 5px;
-}
-.vueperslides__arrow svg {
-
-    stroke-width: .5!important;
-
+.card-header {
+    border-bottom: 0px;
+    border-top: 1px solid #e6e6e6;
+    border-radius: 0;
 }
 .account:hover .logout {
     display: block;
@@ -288,19 +286,19 @@
     border-bottom: 1px solid #D8D8D8;
 }
 a.app_download {
-    color: #EFEFEF;
+    display: block;
+    color: #EF6060;
     text-decoration: none;
-    background: #EF6060;
-    padding: 9px 70px;
+    background: #EFEFEF;
+    padding: 5px 10px;
     border-radius: 20px;
     font-size: 14px;
     width: 100%;
     text-align: center;
-    display: table-cell;
 }
 .app-name , .app-name a{
-    direction: ltr;
-    text-overflow: ellipsis;
+  direction: ltr;
+     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 16px;
     text-decoration: none;
@@ -319,9 +317,6 @@ a.app_download {
 .b-t{
   border-top:1px solid  #D8D8D8;
 }
-.b-b{
-  border-bottom:2px solid  #EFEFEF;
-}
 .hide{
   display:none!important;
 }
@@ -336,7 +331,9 @@ a.app_download {
 .round-5{
   border-radius: 5px;
 }
-
+.card-body {
+    background: #EFEFEF;
+}
 .main-header-text span {
     font-size: 34px;
 }
@@ -361,31 +358,33 @@ a.router-link-active.router-link-exact-active.close-sec.btn.btn-close {
     right: 10px;
     top: 10px;
 }
-.show{
-  display: flex !important;
+button.close-sec {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
 }
-div.login_section , .regis_section {
+.login_form{
+  width:100%;
+  height: 100vh;
+  position: relative;
+}
+.login_section , .regis_section {
     position: fixed;
     top: 0;
     background: rgba(0,0,0,0.5);
     width: 100%;
     height: 100vh;
-    opacity: 1;
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 999;
-    transition: all 1s ease-in-out 0s;
-    animation:showon 1s 1 ease-in-out;
 }
-@keyframes showon{
-  from{
-    opacity: 0;
-  } to {
-    opacity: 1;
-  }
-}
+
 .form-container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
     background:white;
     padding:25px 50px;
     border-radius: 10px;
@@ -1129,12 +1128,14 @@ export default {
   }
   ,
   methods:{
-    showLogin(){
-      $_('.login_section').toggleClass("show",1000); 
+     showLogin(){
+      $_('.login_section').fadeToggle('slow');
+      $_('.regis_section').hide('slow')
+     
     },
     showRegis(){
-      $_('.login_section').removeClass("show")
-      $_('.regis_section').toggleClass('show',1000)  
+      $_('.regis_section').fadeToggle('slow')
+      $_('.login_section').hide("slow")
     },
     Login(){
         const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
