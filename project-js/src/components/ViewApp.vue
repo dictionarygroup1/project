@@ -143,12 +143,12 @@
         </div>
     </main>
 
-  <!-- เข้าสู่ระบบ -->
+    <!-- เข้าสู่ระบบ -->
     <div class="login_section" >
       <div class="login_form" style="position:relative">
         <form @submit.prevent="Login">
             <div class="form-container">
-              <button type="button" class="close-sec btn btn-close" @click="showLogin"></button>
+              <button type="button" class="close-sec btn btn-close" @click="hide"></button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
@@ -188,13 +188,11 @@
             </div>
         </form>
       </div>
-    </div>
-<!-- สมัครสมาชิก -->
-    <div class="regis_section">
-      <div class="login_form">
+      <!-- สมัครสมาชิก -->
+      <div class="regis_form">
         <form @submit.prevent="Register">
             <div class="form-container">
-              <button type="button" class="close-sec btn btn-close" @click="showLogin"></button>
+              <button type="button" class="close-sec btn btn-close" @click="hide"></button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
@@ -242,7 +240,7 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-gruop text-center">
-                                <rounter-link @click="showLogin" class="btn btn-register form-control">เข้าสู่ระบบ</rounter-link>
+                                <rounter-link @click="showLoginS" class="btn btn-register form-control">เข้าสู่ระบบ</rounter-link>
                             </div>
                         </div>
                     </div>
@@ -251,7 +249,6 @@
         </form>
       </div>
     </div>
-
 
 </div>  
 </template>
@@ -363,7 +360,7 @@ button.close-sec {
     right: 1rem;
     top: 1rem;
 }
-.login_form{
+.login_form , .regis_form{
   width:100%;
   height: 100vh;
   position: relative;
@@ -1129,13 +1126,18 @@ export default {
   ,
   methods:{
      showLogin(){
-      $_('.login_section').fadeToggle('slow');
-      $_('.regis_section').hide('slow')
-     
+      $_('.login_section').fadeIn('slow');     
     },
     showRegis(){
-      $_('.regis_section').fadeToggle('slow')
-      $_('.login_section').hide("slow")
+      $_('.login_form').fadeOut()
+      $_('.regis_form').fadeIn()
+    },
+    showLoginS(){
+      $_('.regis_form').fadeOut()
+      $_('.login_form').fadeIn()
+    },
+    hide(){
+      $_('.login_section').fadeOut();    
     },
     Login(){
         const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
