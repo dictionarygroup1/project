@@ -293,7 +293,7 @@
       <div class="login_form" style="position:relative">
         <form @submit.prevent="Login">
             <div class="form-container">
-              <button type="button" class="close-sec btn btn-close" @click="showLogin"></button>
+              <button type="button" class="close-sec btn btn-close" @click="hide"></button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
@@ -339,7 +339,7 @@
       <div class="login_form">
         <form @submit.prevent="Register">
             <div class="form-container">
-              <button type="button" class="close-sec btn btn-close" @click="showLogin"></button>
+              <button type="button" class="close-sec btn btn-close" @click="hide"></button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
@@ -1326,36 +1326,38 @@ export default {
             reader.readAsDataURL(this.$refs.file.files[0]);
         },
     showLogin(){
-      $_('.login_section').fadeToggle('slow');
-      $_('.regis_section').hide('slow')
-     
+      $_('.login_section').fadeToggle('slow');     
     },
     showRegis(){
       $_('.regis_section').fadeToggle('slow')
-      $_('.login_section').hide("slow")
+    },
+    hide(){
+      $_('.login_section').hide('slow');    
+      $_('.regis_section').hide('slow')
     },
     Login(){
         const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
 
         axios.post(apiURL).then(res=>{
-          
-            if(res.data.isAdmin){
-              localStorage.setItem('logged',JSON.stringify(res.data));
-                if(localStorage.getItem('logged')!= null || localStorage.getItem('logged')!= undefined){
-                  this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ Admin", "success").then(()=>{
-                      this.$router.push('/console/dashboard')
-                  })
-                } 
-            }else {
-              localStorage.setItem('mem_log',JSON.stringify(res.data));
-              this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ", "success").then(()=>{
-                  localStorage.setItem('isLogin',true)
-                  location.reload();
-                  
-              })
-              
+            if(res.data == null)
+                this.$swal.fire("เข้าสู่ระบบไม่สำเร็จ","กรุณาพิมพ์ชื่อผู้ใช้หรือรหัสให้ถูกต้อง","error");
+            else{
+              if(res.data.isAdmin){
+                localStorage.setItem('logged',JSON.stringify(res.data));
+                  if(localStorage.getItem('logged')!= null || localStorage.getItem('logged')!= undefined){
+                    this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ Admin", "success").then(()=>{
+                        this.$router.push('/console/dashboard')
+                    })
+                  } 
+              }else if(res.data.isAdmin == false){
+                localStorage.setItem('mem_log',JSON.stringify(res.data));
+                this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ", "success").then(()=>{
+                    localStorage.setItem('isLogin',true)
+                    location.reload();
+                    
+                }) 
+              } 
             }
-            
         })
     },
     Download(id,link,name){
