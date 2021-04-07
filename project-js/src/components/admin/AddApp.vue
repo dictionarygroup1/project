@@ -792,10 +792,8 @@ a#t1-close {
 </style>
 
 <script>
-
 import $ from 'jquery'
 import axios from 'axios';
-
 export default {
     data(){
         return {

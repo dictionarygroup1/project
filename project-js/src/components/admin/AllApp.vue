@@ -2,7 +2,6 @@
 <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
-
             <div class="sidebar-header">
                 <div class="user-pic">
                    <img src="../../assets/test.png" alt="">
@@ -134,7 +133,7 @@
                                     {{app.category}}
                                 </td>
                                 <td>
-                                    <router-link class="btn btn-warning" style="margin-right:1rem;" :to="{name:'EditApp',params:{id:app._id}}">แก้ไข</router-link>
+                                   <router-link class="btn btn-warning" style="margin-right:1rem;" :to="{name:' EditApp',params:{id:app._id}}">แก้ไข</router-link>
                                     <button type="button" @click.prevent="delFn(app._id)" class="btn btn-danger" >ลบ</button>
                                 </td>
                             </tr>
