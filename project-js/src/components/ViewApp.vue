@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header b-t">
                             ตัวอย่าง
                         </div>
                     </div>
@@ -328,9 +328,7 @@ a.app_download {
 .round-5{
   border-radius: 5px;
 }
-.card-body {
-    background: #EFEFEF;
-}
+
 .main-header-text span {
     font-size: 34px;
 }
