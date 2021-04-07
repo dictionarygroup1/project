@@ -111,7 +111,6 @@
                                             <option >การถ่ายภาพ</option>
                                             <option >การศึกษา</option>
                                             <option >การสื่อสาร</option>
-                                            <option >การศึกษา</option>
                                             <option >กีฬา</option>
                                             <option >ช็อปปิ้ง</option>                                            
                                         </select>
