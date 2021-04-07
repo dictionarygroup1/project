@@ -83,8 +83,8 @@
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
-        <div class="container b-b" style="padding-bottom:2rem">
-            <div class="row">
+        <div id="app_content" class="container mt-3">
+          <div class="row mb-3">
                 <div class="col-2">
                     <img :src="'../../uploads/' + apps.icon" alt="">
                 </div>
@@ -98,8 +98,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container mt-3">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -112,13 +110,13 @@
                    <vueper-slides
                         class="no-shadow" 
                         :visible-slides="3"
-                        :draggingDistance="70"
                         :gap="3"
+                        :slide-ratio="1 / 4"
                         :bullets="false"
-                        :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
                         fixed-height="230px"
+                        :dragging-distance="70"
                         >
-                       <vueper-slide style="border-radius:5px"
+                       <vueper-slide @click="showSlide" style="border-radius:5px"
                             v-for="(img,i) in apps.preview" 
                             :key="i" 
                             :image="'../../uploads/'+img">
@@ -126,12 +124,10 @@
                    </vueper-slides>
                 </div>
             </div>
-        </div>
-        <div class="container">
             <div class="row">
-                <div class="col-12">
+               <div class="col-12">
                     <div class="card">
-                        <div class="card-header mt-2">รายละเอียด</div>
+                        <div class="card-header ">รายละเอียด</div>
                         <div class="card-body">
                             <div class="card-text mb-5">
                                 {{apps.des}}
@@ -140,6 +136,28 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="preview_content" class="container mt-3" style="display:none">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-end mb-3">
+              <button @click="hidePreview" class="btn btn-close" type="button"></button>
+            </div>
+          </div>
+          <div class="row">
+            <vueper-slides
+                class="no-shadow" 
+                :bullets="false"
+                fixed-height="700px"
+                :dragging-distance="70"
+                >
+                <vueper-slide @click="hideSlide" style="border-radius:5px"
+                    v-for="(img,i) in apps.preview" 
+                    :key="i" 
+                    :image="'../../uploads/'+img">
+                </vueper-slide>
+            </vueper-slides>
+          </div>
         </div>
     </main>
 
@@ -253,6 +271,7 @@
 </div>  
 </template>
 <style scoped>
+
 .card-header {
     border-bottom: 0px;
     border-top: 1px solid #e6e6e6;
@@ -284,13 +303,13 @@
 }
 a.app_download {
     display: block;
-    color: #EF6060;
+    background: #EF6060;
     text-decoration: none;
-    background: #EFEFEF;
+    color: white;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 14px;
-    width: 100%;
+    width: 50%;
     text-align: center;
 }
 .app-name , .app-name a{
@@ -1136,6 +1155,14 @@ export default {
     },
     hide(){
       $_('.login_section').fadeOut();    
+    },
+    showSlide(){
+      $_('#app_content').fadeOut()
+      $_('#preview_content').delay(500).fadeIn()
+    },
+    hidePreview(){
+      $_('#preview_content').fadeOut()
+      $_('#app_content').delay(500).fadeIn()
     },
     Login(){
         const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
