@@ -4,7 +4,7 @@ let mongoose = require('mongoose')
 let database = require('./database')
 let bodyParser = require('body-parser')
 const multer = require('multer');
-
+const path = require('path')
 
 const upload = multer({
    storage:multer.diskStorage({
@@ -68,6 +68,14 @@ app.use(cors())
 app.use('/api',memberAPI);
 app.use('/api/app',appsAPI)
 app.use('/api/down',downloadAPI)
+
+if(process.env.NODE_ENV == 'production'){
+    app.use(express.static(path.join(__dirname,'../dist')))
+    app.get('*',(req,res)=>{
+        res.sendFile(path.join(__dirname,"../dist/index.html"));
+    })
+}
+
 // Create PORT
 const port = process.env.PORT || 4000
 const server = app.listen(port,()=>{
