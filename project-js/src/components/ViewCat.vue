@@ -1148,24 +1148,25 @@ export default {
         const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
 
         axios.post(apiURL).then(res=>{
-          
-            if(res.data.isAdmin){
-              localStorage.setItem('logged',JSON.stringify(res.data));
-                if(localStorage.getItem('logged')!= null || localStorage.getItem('logged')!= undefined){
-                  this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ Admin", "success").then(()=>{
-                      this.$router.push('/console/dashboard')
-                  })
-                } 
-            }else {
-              localStorage.setItem('mem_log',JSON.stringify(res.data));
-              this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ", "success").then(()=>{
-                  localStorage.setItem('isLogin',true)
-                  location.reload();
-                  
-              })
-              
+            if(res.data == null)
+                this.$swal.fire("เข้าสู่ระบบไม่สำเร็จ","กรุณาพิมพ์ชื่อผู้ใช้หรือรหัสให้ถูกต้อง","error");
+            else{
+              if(res.data.isAdmin){
+                localStorage.setItem('logged',JSON.stringify(res.data));
+                  if(localStorage.getItem('logged')!= null || localStorage.getItem('logged')!= undefined){
+                    this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ Admin", "success").then(()=>{
+                        this.$router.push('/console/dashboard')
+                    })
+                  } 
+              }else if(res.data.isAdmin == false){
+                localStorage.setItem('mem_log',JSON.stringify(res.data));
+                this.$swal("เข้าสู่ระบบสำเร็จ","ยินดีต้อนรับเข้าสู่ระบบ", "success").then(()=>{
+                    localStorage.setItem('isLogin',true)
+                    location.reload();
+                    
+                }) 
+              } 
             }
-            
         })
     },
    Download(id,link,name){
