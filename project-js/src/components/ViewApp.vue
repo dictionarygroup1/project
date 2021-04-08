@@ -86,7 +86,7 @@
         <div id="app_content" class="container mt-3">
           <div class="row mb-3">
                 <div class="col-2">
-                    <img :src="'../../uploads/' + apps.icon" alt="">
+                    <img :src="'../../uploads/' + apps.icon" alt="" style="width:180px">
                 </div>
                 <div class="col-10 d-flex align-items-center">
                     <div class="header-tag">
