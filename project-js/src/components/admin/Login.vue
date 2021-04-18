@@ -28,14 +28,7 @@
                                 <button type="submit" class="btn btn-violet form-control"> เข้าสู่ระบบ </button>
                             </div>
                         </div>
-                        <div class="col-md-12 p-1 mb-1 text-center">
-                            <span class="or">หรือ</span>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="form-gruop text-center">
-                                <rounter-link to="/console/register" class="btn btn-register form-control">สมัครสมาชิก</rounter-link>
-                            </div>
-                        </div>
+                        
                     </div>
              </div>  
             </div>
@@ -84,7 +77,7 @@ export default {
     },
     methods:{
         Login(){
-            const apiURL = `http://localhost:5777/api/login/${this.username}/${this.password}`
+            const apiURL = `http://unistore-api.app.ruk-com.cloud/api/login/${this.username}/${this.password}`
             axios.post(apiURL,this.member).then((res)=>{
                 if(res.data != null){
                     if(res.data.isAdmin){

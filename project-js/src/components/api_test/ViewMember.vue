@@ -37,7 +37,7 @@ export default {
         }
     },
     created(){
-        let apiURL ="http://localhost:5777/api";
+        let apiURL ="http://unistore-api.app.ruk-com.cloud/api";
         axios.get(apiURL).then(res=>{
             this.Members = res.data
         }).catch(error=>{
@@ -46,7 +46,7 @@ export default {
     },
     methos:{
         delMember(id){
-            let apiURL =`http://localhost:5777/api/del-member/${id}`;
+            let apiURL =`http://unistore-api.app.ruk-com.cloud/api/del-member/${id}`;
             let indexOfArrayItem = this.Members.findIndex(i=>i._id === id);
             
             if(window.confirm("ต้องการลบข้อมูลใช่หรือไม่")){

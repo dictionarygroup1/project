@@ -74,9 +74,9 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="/api/logout">
+            <div class="w-100 d-flex justify-content-center p-2" style="cursor:pointer;" @click="Logout">
                 <i class="fa fa-power-off"></i>
-            </router-link>
+            </div>
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
@@ -883,9 +883,9 @@ export default {
             
             try{
                 
-                    axios.post('http://localhost:5777/upload/multi',formData).then(()=>{
-                      axios.post('http://localhost:5777/upload',formData2).then(()=>{
-                          const appURL = "http://localhost:5777/api/app/create";
+                    axios.post('http://unistore-api.app.ruk-com.cloud/upload/multi',formData).then(()=>{
+                      axios.post('http://unistore-api.app.ruk-com.cloud/upload',formData2).then(()=>{
+                          const appURL = "http://unistore-api.app.ruk-com.cloud/api/app/create";
                           axios.post(appURL,this.app).then(()=>{
                               this.$swal("เพิ่มข้อมูลสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อดำเนินการต่อ","success").then(()=>{
                                   location.reload();
@@ -906,7 +906,7 @@ export default {
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
               this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
-                 location.href ="http://localhost:8080/console";
+                  this.$router.push('/console')
               })
             }
         }

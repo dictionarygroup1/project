@@ -73,9 +73,9 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="#" v-on:click="Logout">
+            <div class="w-100 d-flex justify-content-center p-2" style="cursor:pointer;" @click="Logout">
                 <i class="fa fa-power-off"></i>
-            </router-link>
+            </div>
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
@@ -122,7 +122,7 @@
                           <tbody>
                             <tr align=center v-for="app in filterList" :key="app._id">
                                 <td>
-                                    <img :src="'http://localhost:8080/uploads/'+app.icon" style="width:40px">
+                                    <img :src="'http://unistore.app.ruk-com.cloud/uploads/'+app.icon" style="width:40px">
                                 </td>
                                 <td>
                                     {{app.app_name}}
@@ -805,7 +805,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = `http://localhost:5777/api/app/${this.search}`;
+        const apiURL = `http://unistore-api.app.ruk-com.cloud/api/app/${this.search}`;
         axios.get(apiURL).then(res=>{
             this.apps = res.data
         })
@@ -858,7 +858,7 @@ export default {
     ,
     methods:{
         delFn(id){
-            const apiURL = `http://localhost:5777/api/app/del/${id}`;
+            const apiURL = `http://unistore-api.app.ruk-com.cloud/api/app/del/${id}`;
             this.$swal({
                 title: 'คุณต้องการลบข้อมูลใช่หรือไม่',
                 type:'warning',
@@ -878,7 +878,7 @@ export default {
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
               this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
-                 location.href ="http://localhost:8080/console"
+                  this.$router.push('/console')
               })
             }
         }

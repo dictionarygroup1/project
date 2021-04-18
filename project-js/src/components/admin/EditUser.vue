@@ -74,9 +74,9 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="" @click="Logout">
+            <div class="w-100 d-flex justify-content-center p-2" style="cursor:pointer;" @click="Logout">
                 <i class="fa fa-power-off"></i>
-            </router-link>
+            </div>
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
@@ -795,7 +795,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = `http://localhost:5777/api/edit-member/${this.$route.params.id}`;
+        const apiURL = `http://unistore-api.app.ruk-com.cloud/api/edit-member/${this.$route.params.id}`;
         axios.get(apiURL).then(res=>{
             this.member = res.data
         })
@@ -834,7 +834,7 @@ export default {
     methods:{
         
         formSubmit(){
-            const apiURL = `http://localhost:5777/api/update-member/${this.$route.params.id}`;
+            const apiURL = `http://unistore-api.app.ruk-com.cloud/api/update-member/${this.$route.params.id}`;
             axios.put(apiURL,this.member).then(res=>{
                 console.log(res);
                 this.$swal("ดำเนินการสำเร็จ","กรุณากดปุ่ม OK เพื่อดำเนินการต่อ",'success').then(()=>{
@@ -849,7 +849,7 @@ export default {
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
               this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
-                 location.href ="http://localhost:8080/console";
+                  this.$router.push('/console')
               })
             }
         }

@@ -73,9 +73,9 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="#" v-on:click="Logout">
+            <div class="w-100 d-flex justify-content-center p-2" style="cursor:pointer;" @click="Logout">
                 <i class="fa fa-power-off"></i>
-            </router-link>
+            </div>
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
@@ -780,7 +780,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = "http://localhost:5777/api/";
+        const apiURL = "http://unistore-api.app.ruk-com.cloud/api/";
         axios.get(apiURL).then(res=>{
             this.members = res.data
             
@@ -818,7 +818,7 @@ export default {
     },
     methods:{
         delFn(id){
-            const apiURL = `http://localhost:5777/api/del-member/${id}`;
+            const apiURL = `http://unistore-api.app.ruk-com.cloud/api/del-member/${id}`;
             this.$swal({
                 title: 'คุณต้องการลบข้อมูลใช่หรือไม่',
                 icon:'warning',
@@ -838,7 +838,7 @@ export default {
             localStorage.removeItem('logged')
             if(localStorage.getItem('logged') == null){
               this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
-                 location.href ="http://localhost:8080/console";
+                  this.$router.push('/console')
               })
             }
         }

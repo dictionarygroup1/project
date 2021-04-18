@@ -16,6 +16,7 @@ memberRoute.route('/').get((req,res,next)=>{
     })
 })
 
+
 // Create member data
 memberRoute.route('/create-member').post((req,res,next)=>{
     MemberModel.create(req.body,(error,data)=>{

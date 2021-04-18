@@ -74,9 +74,9 @@
             <!-- sidebar-menu  -->
         </div>
         <div class="sidebar-footer">
-            <router-link to="#" v-on:click="Logout">
+            <div class="w-100 d-flex justify-content-center p-2" style="cursor:pointer;" @click="Logout">
                 <i class="fa fa-power-off"></i>
-            </router-link>
+            </div>
         </div>
     </nav>
     <main class="page-content" style="padding-left:260px">
@@ -808,16 +808,16 @@ export default {
     created(){
         let session = localStorage.getItem('logged')
         if(session == null){
-            location.href ="http://localhost:8080/console"
+            location.href ="http://unistore.app.ruk-com.cloud/console"
         }
 
         // Get Last App
-        const lastAPI = "http://localhost:5777/api/app/get_5"
+        const lastAPI = "http://unistore-api.app.ruk-com.cloud/api/app/get_5"
         axios.get(lastAPI).then((res)=>{
           this.apps = res.data;
         })
         // Get Member
-        const lastMemAPI = "http://localhost:5777/api/load_data"
+        const lastMemAPI = "http://unistore-api.app.ruk-com.cloud/api/load_data"
         axios.get(lastMemAPI).then((res)=>{
           this.members = res.data
         })
