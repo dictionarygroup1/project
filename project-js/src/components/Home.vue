@@ -1299,22 +1299,25 @@ export default {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
     // Get game  data
-    axios.get('http://unistore-api.app.ruk-com.cloud/api/app/home_load/เกม').then(res=>{
-        this.games = res.data;
-    })
-
-    // Get camera  data
-    axios.get('http://unistore-api.app.ruk-com.cloud/api/app/home_load/การถ่ายภาพ').then(res=>{
-        this.cameras = res.data;
-    })
-
-    // GET POPULAR APP
-    axios.get('http://unistore-api.app.ruk-com.cloud/api/app/get_pop').then(res=>{
-      this.pops = res.data
-    })
+    this.getData();
   }
   ,
   methods:{
+    async getData(){
+        await axios.get('http://unistore-api.app.ruk-com.cloud/api/app/home_load/เกม').then(res=>{
+          this.games = res.data;
+        })
+
+    // Get camera  data
+        await axios.get('http://unistore-api.app.ruk-com.cloud/api/app/home_load/การถ่ายภาพ').then(res=>{
+          this.cameras = res.data;
+        })
+
+    // GET POPULAR APP
+        await axios.get('http://unistore-api.app.ruk-com.cloud/api/app/get_pop').then(res=>{
+          this.pops = res.data
+       })
+    },
     onFilePicked(){
             this.regis.pic = this.$refs.file.files[0].name
             this.upload = this.$refs.file.files[0];
