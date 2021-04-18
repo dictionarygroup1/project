@@ -808,16 +808,16 @@ export default {
     created(){
         let session = localStorage.getItem('logged')
         if(session == null){
-            location.href ="http://unistore.app.ruk-com.cloud/console"
+            location.href ="http://localhost:8080/console"
         }
 
         // Get Last App
-        const lastAPI = "http://unistore-api.app.ruk-com.cloud/api/app/get_5"
+        const lastAPI = "http://localhost:4000/api/app/get_5"
         axios.get(lastAPI).then((res)=>{
           this.apps = res.data;
         })
         // Get Member
-        const lastMemAPI = "http://unistore-api.app.ruk-com.cloud/api/load_data"
+        const lastMemAPI = "http://localhost:4000/api/load_data"
         axios.get(lastMemAPI).then((res)=>{
           this.members = res.data
         })

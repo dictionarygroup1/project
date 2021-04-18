@@ -831,7 +831,7 @@ export default {
     },
     methods:{
         formSubmit(){
-            const apiURL = `http://unistore-api.app.ruk-com.cloud/api/create-member`;
+            const apiURL = `http://localhost:4000/api/create-member`;
             axios.post(apiURL,this.member).then(res=>{
                 console.log(res);
                 this.$swal("ดำเนินการสำเร็จ","กรุณากดปุ่ม OK เพื่อดำเนินการต่อ",'success').then(()=>{

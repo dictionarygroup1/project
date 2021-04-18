@@ -1076,8 +1076,8 @@ export default {
     } else {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
-   const downloadAPI = `http://unistore-api.app.ruk-com.cloud/api/down/show/${this.$route.params.id}`;
-   const AppAPI = `http://unistore-api.app.ruk-com.cloud/api/app/`
+   const downloadAPI = `http://localhost:4000/api/down/show/${this.$route.params.id}`;
+   const AppAPI = `http://localhost:4000/api/app/`
 
     const axiosOne = axios.get(downloadAPI);
     const axiosTwo = axios.get(AppAPI);
@@ -1106,7 +1106,7 @@ export default {
     })
 
     // GET MY PROFILE
-    const memberAPI = `http://unistore-api.app.ruk-com.cloud/api/edit-member/${this.$route.params.id}`
+    const memberAPI = `http://localhost:4000/api/edit-member/${this.$route.params.id}`
     axios.get(memberAPI,this.regis).then((res)=>{
         if(res.data != null){
             this.regis = res.data;
@@ -1135,11 +1135,11 @@ export default {
           })
         } else {
             // เช็คว่าเคยดาวน์โหลดแล้วหรือยัง
-            const checkAPI = `http://unistore-api.app.ruk-com.cloud/api/down/check_down/${this.login._id}/${id}`;
+            const checkAPI = `http://localhost:4000/api/down/check_down/${this.login._id}/${id}`;
             axios.get(checkAPI).then((data)=>{
               console.log(data.data);
               if(data.data == ""){
-                axios.post(`http://unistore-api.app.ruk-com.cloud/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
+                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
                   window.open(link);
                 })
               } else {
@@ -1173,8 +1173,8 @@ export default {
     EditUser(){
         const formData = new FormData();
         formData.append('file',this.upload)
-        axios.post('http://unistore-api.app.ruk-com.cloud/upload_mem',formData).then(()=>{
-            const updateAPI = `http://unistore-api.app.ruk-com.cloud/api/update-member/${this.$route.params.id}`;
+        axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
+            const updateAPI = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
             axios.put(updateAPI,this.regis).then((res)=>{
                 if(res.data != null){
                     this.$swal.fire("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{

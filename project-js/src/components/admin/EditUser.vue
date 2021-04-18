@@ -795,7 +795,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = `http://unistore-api.app.ruk-com.cloud/api/edit-member/${this.$route.params.id}`;
+        const apiURL = `http://localhost:4000/api/edit-member/${this.$route.params.id}`;
         axios.get(apiURL).then(res=>{
             this.member = res.data
         })
@@ -834,7 +834,7 @@ export default {
     methods:{
         
         formSubmit(){
-            const apiURL = `http://unistore-api.app.ruk-com.cloud/api/update-member/${this.$route.params.id}`;
+            const apiURL = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
             axios.put(apiURL,this.member).then(res=>{
                 console.log(res);
                 this.$swal("ดำเนินการสำเร็จ","กรุณากดปุ่ม OK เพื่อดำเนินการต่อ",'success').then(()=>{

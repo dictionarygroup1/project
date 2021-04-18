@@ -1128,10 +1128,10 @@ export default {
       this.login = JSON.parse(localStorage.getItem('mem_log'));
     }
     // Get game carsousel data
-    axios.get(`http://unistore-api.app.ruk-com.cloud/api/app/find/${this.$route.params.id}`).then(res=>{
+    axios.get(`http://localhost:4000/api/app/find/${this.$route.params.id}`).then(res=>{
         this.apps = res.data;
         let view = res.data.view + 1;
-        axios.put(`http://unistore-api.app.ruk-com.cloud/api/app/update_view/${this.$route.params.id}`,{view:view}).then(()=>{
+        axios.put(`http://localhost:4000/api/app/update_view/${this.$route.params.id}`,{view:view}).then(()=>{
         })
     })
 
@@ -1165,7 +1165,7 @@ export default {
       $_('#app_content').delay(500).fadeIn()
     },
     Login(){
-        const apiURL = `http://unistore-api.app.ruk-com.cloud/api/login/${this.member.username}/${this.member.password}`;
+        const apiURL = `http://localhost:4000/api/login/${this.member.username}/${this.member.password}`;
 
         axios.post(apiURL).then(res=>{
             if(res.data == null)
@@ -1205,11 +1205,11 @@ export default {
           })
         } else {
             // เช็คว่าเคยดาวน์โหลดแล้วหรือยัง
-            const checkAPI = `http://unistore-api.app.ruk-com.cloud/api/down/check_down/${this.login._id}/${id}`;
+            const checkAPI = `http://localhost:4000/api/down/check_down/${this.login._id}/${id}`;
             axios.get(checkAPI).then((data)=>{
               console.log(data.data);
               if(data.data == ""){
-                axios.post(`http://unistore-api.app.ruk-com.cloud/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
+                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
                   window.open(link);
                 })
               } else {
@@ -1230,10 +1230,10 @@ export default {
      Register(){
       const formData = new FormData();
       formData.append('file',this.upload);
-      axios.post(`http://unistore-api.app.ruk-com.cloud/api/chk_mem/${this.regis.username}`).then((res)=>{
+      axios.post(`http://localhost:4000/api/chk_mem/${this.regis.username}`).then((res)=>{
         if(res.data == ''){
-            axios.post('http://unistore-api.app.ruk-com.cloud/upload_mem',formData).then(()=>{
-              const appURL = "http://unistore-api.app.ruk-com.cloud/api/create-member";
+            axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
+              const appURL = "http://localhost:4000/api/create-member";
                 axios.post(appURL,this.regis).then(()=>{
                     this.$swal("สมัครสมาชิกสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อเข้าสู่ระบบ","success").then(()=>{
                         this.regis ={
