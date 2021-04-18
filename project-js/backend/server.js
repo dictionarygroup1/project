@@ -7,6 +7,7 @@ const multer = require('multer');
 const path = require('path')
 
 const upload = multer({
+    
    storage:multer.diskStorage({
        destination:(req,file,cb)=>{
             cb(null,`../public/uploads/`);
@@ -77,7 +78,7 @@ if(process.env.NODE_ENV == 'production'){
 }
 
 // Create PORT
-const port = process.env.PORT || 5777
+const port = process.env.PORT || 4000
 const server = app.listen(port,()=>{
     console.log('Connected to port ' + port);
 })
