@@ -805,7 +805,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = `http://localhost:4000/api/app/${this.search}`;
+        const apiURL = `http://localhost:5777/api/app/${this.search}`;
         axios.get(apiURL).then(res=>{
             this.apps = res.data
         })
@@ -858,7 +858,7 @@ export default {
     ,
     methods:{
         delFn(id){
-            const apiURL = `http://localhost:4000/api/app/del/${id}`;
+            const apiURL = `http://localhost:5777/api/app/del/${id}`;
             this.$swal({
                 title: 'คุณต้องการลบข้อมูลใช่หรือไม่',
                 type:'warning',

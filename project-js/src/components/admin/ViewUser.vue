@@ -780,7 +780,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = "http://localhost:4000/api/";
+        const apiURL = "http://localhost:5777/api/";
         axios.get(apiURL).then(res=>{
             this.members = res.data
             
@@ -818,7 +818,7 @@ export default {
     },
     methods:{
         delFn(id){
-            const apiURL = `http://localhost:4000/api/del-member/${id}`;
+            const apiURL = `http://localhost:5777/api/del-member/${id}`;
             this.$swal({
                 title: 'คุณต้องการลบข้อมูลใช่หรือไม่',
                 icon:'warning',

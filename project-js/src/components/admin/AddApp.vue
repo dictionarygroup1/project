@@ -883,9 +883,9 @@ export default {
             
             try{
                 
-                    axios.post('http://localhost:4000/upload/multi',formData).then(()=>{
-                      axios.post('http://localhost:4000/upload',formData2).then(()=>{
-                          const appURL = "http://localhost:4000/api/app/create";
+                    axios.post('http://localhost:5777/upload/multi',formData).then(()=>{
+                      axios.post('http://localhost:5777/upload',formData2).then(()=>{
+                          const appURL = "http://localhost:5777/api/app/create";
                           axios.post(appURL,this.app).then(()=>{
                               this.$swal("เพิ่มข้อมูลสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อดำเนินการต่อ","success").then(()=>{
                                   location.reload();

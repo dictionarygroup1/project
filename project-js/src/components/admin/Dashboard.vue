@@ -812,12 +812,12 @@ export default {
         }
 
         // Get Last App
-        const lastAPI = "http://localhost:4000/api/app/get_5"
+        const lastAPI = "http://localhost:5777/api/app/get_5"
         axios.get(lastAPI).then((res)=>{
           this.apps = res.data;
         })
         // Get Member
-        const lastMemAPI = "http://localhost:4000/api/load_data"
+        const lastMemAPI = "http://localhost:5777/api/load_data"
         axios.get(lastMemAPI).then((res)=>{
           this.members = res.data
         })

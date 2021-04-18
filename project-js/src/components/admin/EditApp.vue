@@ -818,7 +818,7 @@ export default {
             this.$router.push('/console');
         }
 
-        const apiURL = `http://localhost:4000/api/app/edit/${this.$route.params.id}`;
+        const apiURL = `http://localhost:5777/api/app/edit/${this.$route.params.id}`;
         axios.get(apiURL).then(res=>{
             this.app = res.data
         })
@@ -888,9 +888,9 @@ export default {
             }
             
             try{
-                axios.post('http://localhost:4000/upload/multi',formData).then(()=>{
-                    axios.post('http://localhost:4000/upload',formData2).then(()=>{
-                        const appURL = `http://localhost:4000/api/app/update/${this.$route.params.id}`;
+                axios.post('http://localhost:5777/upload/multi',formData).then(()=>{
+                    axios.post('http://localhost:5777/upload',formData2).then(()=>{
+                        const appURL = `http://localhost:5777/api/app/update/${this.$route.params.id}`;
                         axios.put(appURL,this.app).then(()=>{
                             this.$swal("เเก้ข้อมูลสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อดำเนินการต่อ","success").then((res)=>{
                                 console.log(res);
