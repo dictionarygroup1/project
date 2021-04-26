@@ -65,7 +65,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:false
 }))
-app.use(cors())
+,app.use(cors())
 // API
 app.use('/api',memberAPI);
 app.use('/api/app',appsAPI)

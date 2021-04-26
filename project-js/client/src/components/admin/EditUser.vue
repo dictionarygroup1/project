@@ -88,10 +88,13 @@
                     แก้ไขข้อมูลผู้ใช้
                   </div>
                   <div class="card-body">
-                    <form @submit.prevent="formSubmit">
+                    <form @submit.prevent="formSubmit" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="col-12 mb-3 d-flex justify-content-center">
+                                      <img id="preview" :src="'../../../uploads/profiles/' + member.pic" alt="" style="width:150px">
+                                    </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="app_name">ชื่อจริง</label>
                                         <input type="text" class="form-control" v-model="member.fname">
@@ -111,14 +114,14 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="dev">แก้ไขสถานะ</label>
-                                        <select v-model="member.isAdmin" class="form-select">
-                                           
-                                            <option >ผู้ใช้ทั่วไป</option>
-                                            <option >ผู้ดูแลระบบ</option>
+                                        <select v-model="member.isAdmin" class="form-select">   
+                                            <option :value="false">ผู้ใช้ทั่วไป</option>
+                                            <option :value="true">ผู้ดูแลระบบ</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6 mb-3 d-flex justify-content-end align-items-center">
-                                        <span>สร้างบัญชีเมื่อวันที่ : {{member.createon}}</span>
+                                    <div class="col-12 mb-3">
+                                      <label for="form-label" class="form-label">แก้ไขรูปภาพ</label>
+                                      <input type="file" @change="preview()" name="file" id="file" ref="file" class="form-control">
                                     </div>
                                     
                                     <div class="col-md-12 d-flex justify-content-end mb-5">
@@ -786,7 +789,8 @@ export default {
     data(){
         return {
             admin_data : JSON.parse(localStorage.getItem('logged')),
-            member:{}
+            member:{},
+            upload:''
         }
     },
     created(){
@@ -798,6 +802,7 @@ export default {
         const apiURL = `http://localhost:4000/api/edit-member/${this.$route.params.id}`;
         axios.get(apiURL).then(res=>{
             this.member = res.data
+           
         })
        
     },
@@ -832,18 +837,35 @@ export default {
         });
     },
     methods:{
-        
+      preview(){
+        this.member.pic = this.$refs.file.files[0].name
+        this.upload = this.$refs.file.files[0];
+        let reader = new FileReader();
+        reader.onload = (e)=>{
+            $('#preview').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(this.$refs.file.files[0]);
+        console.log(this.regis.pic);
+        },
+
         formSubmit(){
-            const apiURL = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
-            axios.put(apiURL,this.member).then(res=>{
-                console.log(res);
-                this.$swal("ดำเนินการสำเร็จ","กรุณากดปุ่ม OK เพื่อดำเนินการต่อ",'success').then(()=>{
-                    this.$router.push('/console/user/view_user')
-                })
-            }).catch(error=>{
-                console.log(error);
+            const updateAPI = `http://localhost:4000/api/update-member/${this.member._id}`;
+            const formData = new FormData();
+            formData.append('file',this.upload)
+
+            axios.post(`http://localhost:4000/upload_mem`,formData).then(()=>{
+              axios.put(updateAPI,this.member).then((res)=>{
+                if(res.data != null){
+                    this.$swal("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{
+                        
+                        location.reload();
+                    })
+                } else {
+                    this.$swal("ดำเนินการไม่สำเร็จ","เกิดข้อผิดพลาด ","error");
+                }
+              })
             })
-                
+            console.log("เห้อยย ท้อแท้สุดๆครับ"); 
         },
         Logout(){
             localStorage.removeItem('logged')

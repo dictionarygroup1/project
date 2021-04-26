@@ -130,7 +130,7 @@
       </div>
     </main>
 
-    <!-- เข้าสู่ระบบ -->
+      <!-- เข้าสู่ระบบ -->
     <div class="login_section" >
       <div class="login_form" style="position:relative">
         <form @submit.prevent="Login">
@@ -1109,7 +1109,7 @@ export default {
       }
   },
   methods:{
-     showLogin(){
+    showLogin(){
       $_('.login_section').fadeIn('slow');     
     },
     showRegis(){
@@ -1159,7 +1159,7 @@ export default {
             showCancelButton:true
           }).then((res)=>{
               if(res.isConfirmed === true){
-                $_('.login_section').toggleClass("show",1000); 
+                this.showLogin();
               }
           })
         } else {

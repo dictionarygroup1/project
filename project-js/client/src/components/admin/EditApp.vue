@@ -875,7 +875,6 @@ export default {
         
         },
         formSubmit(){
-            console.log(typeof this.upload.preview_icon);
             let multiple = [];
             const formData = new FormData();
             const formData2 = new FormData();
@@ -892,8 +891,7 @@ export default {
                     axios.post('http://localhost:4000/upload',formData2).then(()=>{
                         const appURL = `http://localhost:4000/api/app/update/${this.$route.params.id}`;
                         axios.put(appURL,this.app).then(()=>{
-                            this.$swal("เเก้ข้อมูลสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อดำเนินการต่อ","success").then((res)=>{
-                                console.log(res);
+                            this.$swal("เเก้ข้อมูลสำเร็จ","กรุณาคลิกปุ่ม OK เพื่อดำเนินการต่อ","success").then(()=>{
                                 this.$router.push('/console/app/view_app')
                             })
                         }).catch(err=>{

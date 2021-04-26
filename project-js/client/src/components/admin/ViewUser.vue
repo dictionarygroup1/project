@@ -90,7 +90,7 @@
                       <table class="table table-hover">
                           <thead>
                           <tr align=center>
-                            
+                                <th>ชื่อผู้ใช้</th>
                                 <th>ชื่อจริง</th>
                                 <th>นามสกุล</th>
                                 <th>สถานะ</th>
@@ -101,6 +101,9 @@
                             
                           <tbody>
                             <tr align=center v-for="member in members" :key="member._id">
+                                <td>
+                                  {{member.username}}
+                                </td>
                                 <td>
                                     {{member.fname}}
                                 </td>
@@ -817,6 +820,7 @@ export default {
         });
     },
     methods:{
+        
         delFn(id){
             const apiURL = `http://localhost:4000/api/del-member/${id}`;
             this.$swal({
