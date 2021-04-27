@@ -1303,18 +1303,18 @@ export default {
   }
   ,
   methods:{
-    async getData(){
-        await axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
+     getData(){
+         axios.get('http://localhost:4000/api/app/home_load/เกม').then(res=>{
           this.games = res.data;
         })
 
     // Get camera  data
-        await axios.get('http://localhost:4000/api/app/home_load/การถ่ายภาพ').then(res=>{
+         axios.get('http://localhost:4000/api/app/home_load/การถ่ายภาพ').then(res=>{
           this.cameras = res.data;
         })
 
     // GET POPULAR APP
-        await axios.get('http://localhost:4000/api/app/get_pop').then(res=>{
+         axios.get('http://localhost:4000/api/app/get_pop').then(res=>{
           this.pops = res.data
        })
     },
@@ -1384,14 +1384,19 @@ export default {
             // เช็คว่าเคยดาวน์โหลดแล้วหรือยัง
             const checkAPI = `http://localhost:4000/api/down/check_down/${this.login._id}/${id}`;
             axios.get(checkAPI).then((data)=>{
-              console.log(data.data);
-              if(data.data == ""){
-                axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
-                  window.open(link);
+
+              axios.get(`http://localhost:4000/api/app/edit/${id}`).then((download_count)=>{
+                let download = {download:download_count.data.download + 1}
+                axios.put(`http://localhost:4000/api/app/update/download/${id}`,download).then(()=>{
+                  if(data.data == ""){
+                    axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
+                      window.open(link)
+                    })
+                  } else {
+                    window.open(link);
+                  }
                 })
-              } else {
-                window.open(link);
-              }
+              })
             })
         }
     },

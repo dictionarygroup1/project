@@ -5,7 +5,7 @@
 
             <div class="sidebar-header">
                 <div class="user-pic">
-                   <img src="../../assets/test.png" alt="">
+                   <img :src="`../../../uploads/profiles/${admin_data.pic}`" alt="">
               
                 </div>
                 <div class="user-info">
@@ -24,25 +24,23 @@
                 <ul>
                    
                     <li class="header-menu">
-                        <router-link to="#">
                             <span>เมนูหลัก</span>
-                        </router-link>
                     </li>
                     <li > 
                         <router-link to="/console/dashboard">
-                          <img src="../../assets/material-dashboard.svg" alt="">
+                          <i class="fa fa-tachometer-alt"></i>
                           <span>แดชบอร์ด</span>    
                        </router-link>
                     </li>
                     <li class="sidebar-dropdown">
                         <router-link to="#">
-                            <img src="../../assets/ionic-ios-apps.svg">
+                            <i class="fab fa-app-store-ios"></i>
                             <span>แอปพลิเคชัน</span>
 
                         </router-link>
                         <div class="sidebar-submenu">
                             <ul>
-                            
+                                
                                 <li>
                                     <router-link to="/console/app/view_app">แอปพลิเคชันทั้งหมด</router-link>
                                 </li>
@@ -54,7 +52,7 @@
                     </li>
                     <li class="sidebar-dropdown">
                         <router-link to="#">
-                            <img src="../../assets/ionic-ios-contact.svg">
+                            <i class="fas fa-user"></i>
                             <span>ผู้ใช้</span>
                         </router-link>
                         <div class="sidebar-submenu">
@@ -68,7 +66,18 @@
                             </ul>
                         </div>
                     </li>
-                    
+                    <li >
+                        <router-link to="/console/download">
+                          <i class="fas fa-download"></i>
+                          <span>จำนวนดาวน์โหลด</span>
+                        </router-link>
+                    </li>
+                    <li>
+                      <router-link to="/console/editme">
+                      <i class="fas fa-user-cog"></i>
+                        <span>แก้ไขข้อมูลส่วนตัว</span>
+                      </router-link>
+                    </li>
                 </ul>
             </div>
             <!-- sidebar-menu  -->
@@ -145,13 +154,10 @@
 body{
   font-family: 'Kanit', sans-serif!important;
 }
-img.del_preview {
-    cursor: pointer;
-}
 input#app_pre {
     opacity: 0;
 }
-#preview_app_list , .preview_app {
+#preview_app_list {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -229,7 +235,7 @@ label.app_pre_upload {
   .sidebar-wrapper .sidebar-brand > a,
   .sidebar-wrapper .sidebar-dropdown > a:after,
   .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before,
-  .sidebar-wrapper ul li a img,
+  .sidebar-wrapper ul li a i,
   .page-wrapper .page-content,
   .sidebar-wrapper .sidebar-search input.search-menu,
   .sidebar-wrapper .sidebar-search .input-group-text,
@@ -380,7 +386,7 @@ label.app_pre_upload {
     margin-top: 4px;
   }
   
-  .sidebar-wrapper .sidebar-header .user-info .user-status img {
+  .sidebar-wrapper .sidebar-header .user-info .user-status i {
     font-size: 8px;
     margin-right: 4px;
     color: #5cb85c;
@@ -414,7 +420,7 @@ label.app_pre_upload {
     padding: 8px 30px 8px 20px;
   }
   
-  .sidebar-wrapper .sidebar-menu ul li a img {
+  .sidebar-wrapper .sidebar-menu ul li a i {
     margin-right: 10px;
     font-size: 12px;
     width: 25px;
@@ -423,7 +429,7 @@ label.app_pre_upload {
     border-radius: 4px;
   }
   
-  .sidebar-wrapper .sidebar-menu ul li a:hover > img::before {
+  .sidebar-wrapper .sidebar-menu ul li a:hover > i::before {
     display: inline-block;
     animation: swing ease-in-out 0.5s 1 alternate;
   }
@@ -663,15 +669,15 @@ label.app_pre_upload {
       color: #ffffff;
   }
   
-  .chiller-theme .sidebar-wrapper ul li:hover a img,
+  .chiller-theme .sidebar-wrapper ul li:hover a i,
   .chiller-theme .sidebar-wrapper .sidebar-dropdown .sidebar-submenu li a:hover:before,
   .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu:focus+span,
-  .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a img {
+  .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
       color: #16c7ff;
       text-shadow:0px 0px 10px rgba(22, 199, 255, 0.5);
   }
   
-  .chiller-theme .sidebar-wrapper .sidebar-menu ul li a img,
+  .chiller-theme .sidebar-wrapper .sidebar-menu ul li a i,
   .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div,
   .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
   .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text {
@@ -857,7 +863,7 @@ export default {
               axios.put(updateAPI,this.member).then((res)=>{
                 if(res.data != null){
                     this.$swal("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{
-                        
+                        localStorage.setItem('logged',this.res.data);
                         location.reload();
                     })
                 } else {
@@ -865,7 +871,6 @@ export default {
                 }
               })
             })
-            console.log("เห้อยย ท้อแท้สุดๆครับ"); 
         },
         Logout(){
             localStorage.removeItem('logged')

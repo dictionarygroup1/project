@@ -38,6 +38,16 @@ appRoute.route('/update_view/:id').put((req,res,next)=>{
     })
 })
 
+// Update Download
+appRoute.route('/update/download/:id').put((req,res,next)=>{
+    AppsModel.findByIdAndUpdate(req.params.id,{
+        $set: req.body
+    }, (error,data)=>{
+        if(error) return next(error)
+        else res.json(data)
+    })
+})
+
 // EDIT APP
 appRoute.route('/edit/:id').get((req,res,next)=>{
     AppsModel.findById(req.params.id,(error,data)=>{

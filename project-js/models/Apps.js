@@ -28,6 +28,11 @@ let appsSchema = new Schema({
         default:0
     }
     ,
+    download:{
+        type:Number,
+        default:0
+    },
+
     create_on:{
         type:Date,
         default:Date.now
