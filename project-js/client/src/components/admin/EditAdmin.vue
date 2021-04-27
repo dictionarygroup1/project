@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 <div class="page-wrapper chiller-theme">
     <nav id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
@@ -102,33 +102,33 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-12 mb-3 d-flex justify-content-center">
-                                      <img id="preview" :src="'../../../uploads/profiles/' + member.pic" alt="" style="width:150px">
+                                      <img id="preview" :src="'../../../uploads/profiles/' + admin_data.pic" alt="" style="width:150px">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="app_name">ชื่อจริง</label>
-                                        <input type="text" class="form-control" v-model="member.fname">
+                                        <input type="text" class="form-control" v-model="admin_data.fname">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="des">นามสกุล</label>
-                                        <input type="text" class="form-control" v-model="member.lname">
+                                        <input type="text" class="form-control" v-model="admin_data.lname">
                                         
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="category">ชื่อผู้ใช้</label>
-                                        <input type="text" class="form-control" v-model="member.username">
+                                        <input type="text" class="form-control" v-model="admin_data.username">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="dev">รหัสผ่าน</label>
-                                        <input type="password" v-model="member.password" class="form-control">
+                                        <input type="password" v-model="admin_data.password" class="form-control">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="dev">แก้ไขสถานะ</label>
-                                        <select v-model="member.isAdmin" class="form-select">   
+                                        <select v-model="admin_data.isAdmin" class="form-select">   
                                             <option :value="false">ผู้ใช้ทั่วไป</option>
                                             <option :value="true">ผู้ดูแลระบบ</option>
                                         </select>
                                     </div>
-                                    <div class="col-12 mb-3">
+                                    <div class="col-6 mb-3">
                                       <label for="form-label" class="form-label">แก้ไขรูปภาพ</label>
                                       <input type="file" @change="preview()" name="file" id="file" ref="file" class="form-control">
                                     </div>
@@ -795,7 +795,6 @@ export default {
     data(){
         return {
             admin_data : JSON.parse(localStorage.getItem('logged')),
-            member:{},
             upload:''
         }
     },
@@ -804,12 +803,6 @@ export default {
         if(session == ""){
             this.$router.push('/console');
         }
-
-        const apiURL = `http://localhost:4000/api/edit-member/${this.$route.params.id}`;
-        axios.get(apiURL).then(res=>{
-            this.member = res.data
-           
-        })
        
     },
     mounted(){
@@ -844,7 +837,7 @@ export default {
     },
     methods:{
       preview(){
-        this.member.pic = this.$refs.file.files[0].name
+        this.admin_data.pic = this.$refs.file.files[0].name
         this.upload = this.$refs.file.files[0];
         let reader = new FileReader();
         reader.onload = (e)=>{
@@ -855,18 +848,15 @@ export default {
         },
 
         formSubmit(){
-            const updateAPI = `http://localhost:4000/api/update-member/${this.member._id}`;
+            const updateAPI = `http://localhost:4000/api/update-member/${this.admin_data._id}`;
             const formData = new FormData();
             formData.append('file',this.upload)
 
             axios.post(`http://localhost:4000/upload_mem`,formData).then(()=>{
-              axios.put(updateAPI,this.member).then((res)=>{
+              axios.put(updateAPI,this.admin_data).then((res)=>{
                 if(res.data != null){
                     this.$swal("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{
-                        if(res.data.isAdmin){
-                           localStorage.setItem('logged',this.res.data);
-
-                        }
+                        localStorage.setItem('logged',this.res.data);
                         location.reload();
                     })
                 } else {

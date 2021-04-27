@@ -108,24 +108,20 @@
                           </thead>
                             
                           <tbody>
-                            <tr align=center v-for="member in members" :key="member._id">
+                            <tr align=center v-for="app in apps" :key="app._id">
                                 <td>
-                                  {{member.username}}
+                                  <img :src="`../../uploads/${app.icon}`" width="50">
                                 </td>
                                 <td>
-                                    {{member.fname}}
+                                    {{app.app_name}}
                                 </td>
                                 <td>
-                                    {{member.lname}}
+                                    {{app.category}}
                                 </td>
                                 <td>
-                                    <p v-if="member.isAdmin === true">ผู้ดูแลระบบ</p>
-                                    <p v-else>ผู้ใช้ทั่วไป</p>
+                                    {{app.download}}
                                 </td>
-                                <td>
-                                    <router-link  class="btn btn-warning" style="margin-right:1rem;" :to="{name:'EditUser',params:{id:member._id}}">แก้ไข</router-link>
-                                    <button :disabled="admin_data._id === member._id" type="button" @click.prevent="delFn(member._id)" class="btn btn-danger" >ลบ</button>
-                                </td>
+
                             </tr>
                         </tbody>
                       </table>
@@ -816,23 +812,9 @@ export default ({
        } 
     },
     created(){
-        //let temp = [];
-        const loadAPI = "http://localhost:4000/api/down/view"
-        axios.get(loadAPI).then(download_res=>{
-            this.downloads = download_res.data
-            axios.get("http://localhost:4000/api/app/").then((app_res)=>{
-                let app_temp = app_res.data;
-                this.apps = app_temp;
-                // Count Download
-                //let count = 0 ;
-                // PUSH DATA
-                console.log(app_temp[0]._id.includes(this.downloads.app_id));
-            
-                console.log(app_temp[0]._id);
-                console.log(this.apps.filter((value)=>{
-                    return value._id.includes(this.downloads[0].app_id)
-                }));
-            })
+        const loadAPI = "http://localhost:4000/api/app/download"
+        axios.get(loadAPI).then((res)=>{
+          this.apps = res.data
         })
     }
     

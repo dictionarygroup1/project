@@ -72,7 +72,7 @@
             <div class="account" v-show="isLogin" style="position:relative">
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
                   <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
-                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
+                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="height:40px;width: 40px;border-radius: 50%;">
                   <span style="color : #707070 ; padding-left:10px"> {{login.fname + ' ' + login.lname }}</span>
               </router-link>
                 

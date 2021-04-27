@@ -133,4 +133,10 @@ appRoute.route('/home_load/:category').get((req,res,next)=>{
     }).limit(12)
 })
 
+appRoute.route('/download').get((req,res,next)=>{
+    AppsModel.find((error,data)=>{
+        if(error) return next(error)
+        else res.json(data)
+    }).sort({download:-1})
+})
 module.exports = appRoute

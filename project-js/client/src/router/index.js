@@ -17,6 +17,7 @@ import ViewUser from "@/components/admin/ViewUser.vue";
 import AddUser from "@/components/admin/AddUser.vue";
 import EditUser from "@/components/admin/EditUser.vue";
 import Download from "@/components/admin/Download.vue"
+import EditAdmin from "@/components/admin/EditAdmin.vue"
 
 const routes = [
   {
@@ -104,6 +105,11 @@ const routes = [
     path:"/console/download",
     name:"Download",
     component:Download
+  }
+  ,{
+    path:"/console/editme",
+    name:"EditAdmin",
+    component:EditAdmin
   }
 ];
 

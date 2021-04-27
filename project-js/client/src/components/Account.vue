@@ -68,7 +68,7 @@
             <div class="account" v-show="isLogin" style="position:relative">
               <router-link :to="{name:'Account',params:{id:login._id}}" style="display: block;width: 100%;text-align: center;">
                   <img v-if="!isLogin" src="../assets/ionic-ios-contact-gray.svg" alt=""> 
-                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;">
+                  <img v-else :src="'../../uploads/profiles/' + login.pic" alt="" style="width: 40px;border-radius: 50%;height:40px">
                   <span style="color : #707070 ; padding-left:10px"> {{login.fname}}</span>
               </router-link>
                 
@@ -89,7 +89,7 @@
                   </div>
                   <div class="right d-flex justify-content-end w-100 align-items-center">
                     <button style="background:none;border:none" class="home-link" @click="close">
-                        <img :src="'../../uploads/profiles/'+login.pic" width="40" style="margin-right:10px;border-radius:50%" alt="" >    แก้ไขข้อมูล
+                        <img :src="'../../uploads/profiles/'+login.pic" width="40" height="40" style="margin-right:10px;border-radius:50%" alt="" >    แก้ไขข้อมูล
                     </button>
                   </div>
               </div>
@@ -106,7 +106,7 @@
                   </div>
                   <div class="col-md-5 mt-2 p-0">
                     <div class="app-name">
-                      <router-link style="text-decoration:none"  :to="{name:'ViewApp',params:{id:app.app_id}}">
+                      <router-link style="text-decoration:none"  :to="{name:'ViewApp',params:{id:app._id}}">
                         {{app.app_name}}
                       </router-link>
                     </div>
