@@ -1,4 +1,4 @@
-![image](project-js/client/public/icon.png)
+
 # Project Javascript (UnitStore)
 ## นำเสนอ อาจารย์อนิราช มิ่งขวัญ
 
