@@ -23,7 +23,7 @@
                                 <input type="password" v-model="password" placeholder="Password" required class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-12 mb-1">
+                        <div class="col-md-12 mb-4">
                             <div class="form-gruop">
                                 <button type="submit" class="btn btn-violet form-control"> เข้าสู่ระบบ </button>
                             </div>

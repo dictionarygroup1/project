@@ -637,7 +637,7 @@ label.app_pre_upload {
   /*-----------------------------chiller-theme-------------------------------------------------*/
   
   .chiller-theme .sidebar-wrapper {
-      background:#EFEFEF;
+      background:white;
   }
   /*
   .chiller-theme .sidebar-wrapper .sidebar-header,
