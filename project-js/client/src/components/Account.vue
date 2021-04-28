@@ -1175,17 +1175,21 @@ export default {
             reader.readAsDataURL(this.$refs.file.files[0]);
             console.log(this.regis.pic);
         },
-    EditUser(){
+       EditUser(){
         const formData = new FormData();
         formData.append('file',this.upload)
         axios.post('http://localhost:4000/upload_mem',formData).then(()=>{
             const updateAPI = `http://localhost:4000/api/update-member/${this.$route.params.id}`;
             axios.put(updateAPI,this.regis).then((res)=>{
                 if(res.data != null){
+                  axios.get(`http://localhost:4000/api/edit-member/${this.login._id}`).then((update)=>{
                     this.$swal.fire("บันทึกข้อมูลสำเร็จ","คลิก OK เพื่อดำเนินการต่อ","success").then(()=>{
-                        localStorage.setItem('mem_log',JSON.stringify(res.data));
+                        localStorage.removeItem('mem_log');
+                        localStorage.setItem('mem_log',JSON.stringify(update.data))
                         location.reload();
                     })
+                  })
+                    
                 } else {
                     this.$swal.fire("ดำเนินการไม่สำเร็จ","เกิดข้อผิดพลาด ","error");
                 }
