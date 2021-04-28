@@ -129,7 +129,7 @@
                                         <label class="form-label" for="dev">ชื่อผู้พัฒนา</label>
                                         <input type="text" class="form-control" v-model="app.dev_name">
                                     </div>
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-12 mb-3">
                                         <label class="form-label" for="link">ลิงค์ดาวน์โหลด</label>
                                         <input type="text" class="form-control" id="link" v-model="app.link">
                                     </div>

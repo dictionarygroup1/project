@@ -122,7 +122,7 @@
                       แอปพลิเคชันล่าสุด
                     </div>
                     <div class="card-content round-5">
-                      <table class="table table-hover">
+                      <table class="table table-hover" style="font-size:14px">
                         <thead>
                           <tr align=center>
                             <th>ชื่อแอปพลิเคชั่น</th>
@@ -149,7 +149,7 @@
                       ผู้ใช้ที่เพิ่มล่าสุด
                     </div>
                     <div class="card-content round-5">
-                      <table class="table table-hover">
+                      <table class="table table-hover" style="font-size:14px">
                         <thead>
                           <tr align=center>
                             <th>ชื่อจริง - นามสกุล</th>
