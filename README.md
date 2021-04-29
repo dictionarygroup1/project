@@ -25,6 +25,8 @@
     ```
       npm run dev
     ```
+- เข้าแบบ online ได้ที่ลิงค์
+  [UNI STORE](http://unistore.app.ruk-com.cloud/)
 
 ## สมาชิกในกลุ่ม
 |   ชื่อ  |   นามสกุล  |   รหัสนักศึกษา   |
