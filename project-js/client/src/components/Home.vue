@@ -1388,7 +1388,7 @@ export default {
               axios.get(`http://localhost:4000/api/app/edit/${id}`).then((download_count)=>{
                 let download = {download:download_count.data.download + 1}
                 axios.put(`http://localhost:4000/api/app/update/download/${id}`,download).then(()=>{
-                  if(data.data == ""){
+                  if(data.data == "" || data.data == null ){
                     axios.post(`http://localhost:4000/api/down/download`,{app_id:id,app_name:name,mem_id:this.login._id}).then(()=>{
                       window.open(link)
                     })
