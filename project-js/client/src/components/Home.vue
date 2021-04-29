@@ -1377,7 +1377,7 @@ export default {
             showCancelButton:true
           }).then((res)=>{
               if(res.isConfirmed === true){
-                $_('.login_section').toggleClass("show",1000); 
+                this.showLogin();
               }
           })
         } else {

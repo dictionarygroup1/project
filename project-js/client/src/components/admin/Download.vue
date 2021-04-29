@@ -816,6 +816,16 @@ export default ({
         axios.get(loadAPI).then((res)=>{
           this.apps = res.data
         })
+    },
+    methods:{
+        Logout(){
+            localStorage.removeItem('logged')
+            if(localStorage.getItem('logged') == null){
+              this.$swal("ออกจากระบบสำเร็จ",'คลิกปุ่ม OK เพื่อดำเนินการต่อ','success').then(()=>{
+                 location.reload();
+              })
+            }
+        }
     }
     
 })
